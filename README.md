@@ -8,7 +8,7 @@ Here I keep a collection of my publication.
     [Arxiv link](https://arxiv.org/abs/1805.00955).
 2.  [Air cavities at the inner cylinder of turbulent Taylor–Couette flow](https://www.sciencedirect.com/science/article/abs/pii/S0301932217309503?via%3Dihub)\
     International Journal of Multiphase Flow 105 (2018)\
-    Ruben A.Verschoof, *Dennis Bakhuis*, Pim A.Bulleea, Sander G.Huisman, Chao Sun, and Detlef Lohse.\
+    Ruben A.Verschoof, *Dennis Bakhuis*, Pim A.Bullee, Sander G.Huisman, Chao Sun, and Detlef Lohse.\
     [Arxiv link](https://arxiv.org/abs/1712.02221).
 3.  [Mixed insulating and conducting thermal boundary conditions in Rayleigh–Bénard convection](https://www.cambridge.org/core/journals/journal-of-fluid-mechanics/article/mixed-insulating-and-conducting-thermal-boundary-conditions-in-rayleighbenard-convection/BE6B1738E0575AF7DF468CC9FDA96106)\
     Journal of Fluid Mechanics 835, 246--511 (2018) *open-access*\
