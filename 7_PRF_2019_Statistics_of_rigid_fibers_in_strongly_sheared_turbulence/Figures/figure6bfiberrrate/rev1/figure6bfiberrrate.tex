@@ -1,0 +1,124 @@
+\documentclass[tikz,border=5pt]{standalone}
+\usepackage{pgfplots}
+\usepackage{amsmath}
+\usepackage{siunitx}
+
+\usepgfplotslibrary{units}
+\usepgfplotslibrary{fillbetween}
+
+% original colors
+\definecolor{color1}{RGB}{166,118,29}
+\definecolor{color2}{RGB}{217,95,2}
+\definecolor{color3}{RGB}{231,41,138}
+\definecolor{color4}{RGB}{117,112,179}
+\definecolor{color5}{RGB}{27,158,119}
+\definecolor{color6}{RGB}{102,166,30}
+\definecolor{color7}{RGB}{230,171,2}
+
+% more colors
+\definecolor{color8}{RGB}{173,216,230} % light blue
+\definecolor{color9}{RGB}{0,0,255} % blue
+\definecolor{color10}{RGB}{255,0,0} % red
+\definecolor{color11}{RGB}{0,255,0} % green
+
+\begin{document}
+\begin{tikzpicture}
+  \begin{axis}[
+    clip mode=individual,
+    xmin=-4,
+    xmax=4,
+    ymin=0,
+    ymax=0.6,
+    enlargelimits=false,
+    axis on top=true,
+    xlabel=$\dot{\theta}_p$\vphantom{$(r - r_i) / (r_o - r_i)$},
+    ylabel=PDF($\dot{\theta}_p$),
+    x unit=\si{deg \per \second},
+    legend pos=north west,
+    legend style={draw=none, 
+                  %font=\footnotesize,
+                  fill=none,
+    },
+    legend cell align=left,
+    legend columns=1, 
+    %legend style={k
+                %% the /tikz/ prefix is necessary here...
+                %% otherwise, it might end-up with `/pgfplots/column 2`
+                %% which is not what we want. compare pgfmanual.pdf
+        %/tikz/column 2/.style={
+            %column sep=-2.0cm,
+        %},
+    %},
+    width = 6.2cm,
+    height = 5.0cm,
+    ylabel near ticks,
+    %xlabel near ticks,
+  ]
+
+  \addplot+[
+      color=color9,
+      opacity=1,
+      only marks,
+      very thick,
+      mark size=0.1mm,
+      forget plot,
+   ] table [
+    x = bins,
+    y = hist,
+    col sep=comma,
+] {rotalldata.csv};
+%%\addlegendentryexpanded{Fibers (average)}
+
+  \addplot+[
+        fill=color10,
+        fill opacity=0.3,
+        draw opacity=0,
+        mark=none,
+        area legend,
+    ] table [
+        x = bins,
+        y = hist,
+        col sep=comma,
+    ] {rotcw.csv} \closedcycle;
+    \addlegendentryexpanded{cw};
+
+  \addplot+[
+        fill=color11,
+        fill opacity=0.3,
+        draw opacity=0,
+        mark=none,
+        area legend,
+    ] table [
+        x = bins,
+        y = hist,
+        col sep=comma,
+    ] {rotccw.csv} \closedcycle;
+    \addlegendentryexpanded{ccw};
+
+
+ \end{axis}
+
+\node at (-1.0, 3.2) {(b)};
+
+%\begin{scope}[
+        %xshift=0.9cm,
+        %yshift=2cm,
+        %rotate=90
+    %]
+    %\draw[fill=color10, opacity=0.3, draw opacity=0]
+            %(-1,-0.2) rectangle (1, 0.2);
+    %\node[black!80, anchor=center, rotate=90] at (0,0) {cw rotation};
+%\end{scope}
+
+%\begin{scope}[
+        %xshift=3.8cm,
+        %yshift=2cm,
+        %rotate=90
+    %]
+    %\draw[fill=color11, opacity=0.3, draw opacity=0]
+            %(-1,-0.2) rectangle (1, 0.2);
+    %\node[black!80, anchor=center, rotate=90] at (0,0) {ccw rotation};
+%\end{scope}
+
+\end{tikzpicture} 
+\end{document}

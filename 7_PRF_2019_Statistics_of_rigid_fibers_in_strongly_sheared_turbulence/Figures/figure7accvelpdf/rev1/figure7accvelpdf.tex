@@ -1,0 +1,361 @@
+\documentclass[tikz,border=5pt]{standalone}
+\usepackage{pgfplots}
+\usepackage{amsmath}
+\usepackage{siunitx}
+\usepackage{xcolor}
+
+% original colors
+\definecolor{color1}{RGB}{166,118,29}
+\definecolor{color2}{RGB}{217,95,2}
+\definecolor{color3}{RGB}{231,41,138}
+\definecolor{color4}{RGB}{117,112,179}
+\definecolor{color5}{RGB}{27,158,119}
+\definecolor{color6}{RGB}{102,166,30}
+\definecolor{color7}{RGB}{230,171,2}
+
+\definecolor{blue(pigment)}{rgb}{0.2, 0.2, 0.6}
+\definecolor{darkblue}{rgb}{0.0, 0.0, 0.55}
+\definecolor{charcoal}{rgb}{0.21, 0.27, 0.31}
+
+\begin{document}
+\begin{tikzpicture}
+
+\newcommand{\mleft}{6.5cm}
+\newcommand{\mdown}{-4.8cm}
+
+\begin{scope}[
+    xshift=0cm,
+    yshift=0cm,
+]
+  \begin{semilogyaxis}[
+    clip mode=individual,
+    xmin=-5,
+    xmax=5,
+    ymin=5e-6,
+    ymax=3,
+    enlargelimits=false,
+    axis on top=true,
+    xlabel=$\text{u}_\theta / \left< \text{u}_\theta^2 \right>^{1/2}$,
+    ylabel=PDF($\text{u}_\theta / \left< \text{u}_\theta^2 \right>^{1/2}$),
+    %legend pos=south east,
+    legend style={draw=none, 
+                  font=\footnotesize,
+                  fill=none,
+    },
+    legend style={at={(0.52, -0.01)}, anchor=south},
+    legend cell align=left,
+    reverse legend,
+    width = 6.2cm,
+    height = 5.0cm,
+    ylabel near ticks,
+    xlabel near ticks,
+    xtick={-5, -2.5, 0, 2.5, 5},
+  ]
+  \addplot+[
+    color=color1,
+    mark=none,
+    very thick,
+    line join=round,
+   ] table [
+    x = bins,
+    y = hist,
+    col sep=comma,
+] {vtheta_0.0025_8.27e+04.csv};
+\addlegendentryexpanded{Re$_i = \num{8.3e4}$}
+
+  \addplot+[
+    color=color3,
+    mark=none,
+    very thick,
+    line join=round,
+   ] table [
+    x = bins,
+    y = hist,
+    col sep=comma,
+] {vtheta_0.0025_1.65e+05.csv};
+\addlegendentryexpanded{Re$_i = \num{1.7e5}$}
+
+  \addplot+[
+    color=color5,
+    mark=none,
+    very thick,
+    line join=round,
+   ] table [
+    x = bins,
+    y = hist,
+    col sep=comma,
+] {vtheta_0.0025_2.48e+05.csv};
+\addlegendentryexpanded{Re$_i = \num{2.5e5}$}
+
+  \addplot+[
+    color=charcoal,
+    mark=none,
+    very thick,
+    %dash pattern=on 1pt off 3pt on 3pt off 3pt,
+    dotted,
+    forget plot,
+    line join=round,
+   ] table [
+    x = bins,
+    y = hist,
+    col sep=comma,
+] {standardgaussian5.csv};
+
+ \end{semilogyaxis}
+ \node at (-1.0, 3.4) {(a)};
+ \node at (0.0, 3.45) [anchor=north west]{$\alpha = \SI{0.025}{\percent}$};
+\end{scope}
+
+\begin{scope}[
+    xshift=\mleft,
+    yshift=0cm,
+]
+  \begin{semilogyaxis}[
+    clip mode=individual,
+    xmin=-5,
+    xmax=5,
+    ymin=5e-6,
+    ymax=2,
+    enlargelimits=false,
+    axis on top=true,
+    xlabel=$\text{u}_\theta / \left< \text{u}_\theta^2 \right>^{1/2}$,
+    ylabel=PDF($\text{u}_\theta / \left< \text{u}_\theta^2 \right>^{1/2}$),
+    %legend pos=south east,
+    legend style={draw=none, 
+                  font=\footnotesize,
+                  fill=none,
+    },
+    legend style={at={(0.52, 0)}, anchor=south},
+    legend cell align=left,
+    reverse legend,
+    width = 6.2cm,
+    height = 5.0cm,
+    ylabel near ticks,
+    xlabel near ticks,
+    xtick={-5, -2.5, 0, 2.5, 5},
+  ]
+
+  \addplot+[
+    color=color1,
+    mark=none,
+    very thick,
+    forget plot,
+    line join=round,
+   ] table [
+    x = bins,
+    y = hist,
+    col sep=comma,
+] {vtheta_0.01_8.27e+04.csv};
+
+  \addplot+[
+    color=color3,
+    mark=none,
+    very thick,
+    forget plot,
+    line join=round,
+   ] table [
+    x = bins,
+    y = hist,
+    col sep=comma,
+] {vtheta_0.01_1.65e+05.csv};
+
+  \addplot+[
+    color=color5,
+    mark=none,
+    very thick,
+    forget plot,
+    line join=round,
+   ] table [
+    x = bins,
+    y = hist,
+    col sep=comma,
+] {vtheta_0.01_2.48e+05.csv};
+
+  \addplot+[
+    color=charcoal,
+    mark=none,
+    very thick,
+    dash pattern=on 1pt off 3pt on 3pt off 3pt,
+    line join=round,
+   ] table [
+    x = bins,
+    y = hist,
+    col sep=comma,
+] {standardgaussian4.csv};
+\addlegendentryexpanded{Gaussian}
+
+ \end{semilogyaxis}
+ \node at (-1.0, 3.4) {(b)};
+ \node at (0.0, 3.45) [anchor=north west]{$\alpha = \SI{0.1}{\percent}$};
+\end{scope}
+
+\begin{scope}[
+    xshift=0cm,
+    yshift=\mdown,
+]
+  \begin{semilogyaxis}[
+    clip mode=individual,
+    xmin=-15,
+    xmax=15,
+    ymin=1e-7,
+    ymax=1,
+    enlargelimits=false,
+    axis on top=true,
+    xlabel=$a_\theta / \left< a_\theta^2 \right>^{1/2}$,
+    ylabel=PDF($a_\theta / \left< a_\theta^2 \right>^{1/2}$),
+    %legend pos=south east,
+    legend style={draw=none, 
+                  font=\footnotesize,
+                  fill=none,
+    },
+    legend style={at={(0.48, -0.01)}, anchor=south},
+    legend cell align=left,
+    reverse legend,
+    width = 6.2cm,
+    height = 5.0cm,
+    ylabel near ticks,
+    xlabel near ticks,
+    xtick={-15, -7.5, 0, 7.5, 15},
+  ]
+  \addplot+[
+    color=color1,
+    mark=none,
+    very thick,
+    line join=round,
+   ] table [
+    x = bins,
+    y = hist,
+    col sep=comma,
+] {atheta_0.0025_8.27e+04.csv};
+\addlegendentryexpanded{Re$_i = \num{8.3e4}$}
+
+  \addplot+[
+    color=color3,
+    mark=none,
+    very thick,
+    line join=round,
+   ] table [
+    x = bins,
+    y = hist,
+    col sep=comma,
+] {atheta_0.0025_1.65e+05.csv};
+\addlegendentryexpanded{Re$_i = \num{1.7e5}$}
+
+  \addplot+[
+    color=color5,
+    mark=none,
+    very thick,
+    line join=round,
+   ] table [
+    x = bins,
+    y = hist,
+    col sep=comma,
+] {atheta_0.0025_2.48e+05.csv};
+\addlegendentryexpanded{Re$_i = \num{2.5e5}$}
+
+  \addplot+[
+    color=black,
+    mark=none,
+    very thick,
+    dashed,
+    %dash pattern=on 2pt off 2pt on 2pt off 2pt,
+    forget plot,
+    line join=round,
+   ] table [
+    x = bins,
+    y = hist,
+    col sep=comma,
+] {curvefitMordant200415.csv};
+\node at (axis cs: -15.4, 1) [anchor=north west]{$\alpha = \SI{0.025}{\percent}$};
+
+ \end{semilogyaxis}
+ \node at (-1.0, 3.4) {(c)};
+\end{scope}
+
+\begin{scope}[
+    xshift=\mleft,
+    yshift=\mdown,
+]
+  \begin{semilogyaxis}[
+    clip mode=individual,
+    xmin=-15,
+    xmax=15,
+    ymin=1e-7,
+    ymax=1,
+    enlargelimits=false,
+    axis on top=true,
+    xlabel=$a_\theta / \left< a_\theta^2 \right>^{1/2}$,
+    ylabel=PDF($a_\theta / \left< a_\theta^2 \right>^{1/2}$),
+    %legend pos=south east,
+    legend style={draw=none, 
+                  font=\footnotesize,
+                  fill=none,
+    },
+    legend style={at={(0.48, 0)}, anchor=south},
+    legend cell align=left,
+    reverse legend,
+    width = 6.2cm,
+    height = 5.0cm,
+    ylabel near ticks,
+    xlabel near ticks,
+    xtick={-15, -7.5, 0, 7.5, 15},
+  ]
+
+  \addplot+[
+    color=color1,
+    mark=none,
+    very thick,
+    forget plot,
+    line join=round,
+   ] table [
+    x = bins,
+    y = hist,
+    col sep=comma,
+] {atheta_0.01_8.27e+04.csv};
+
+  \addplot+[
+    color=color3,
+    mark=none,
+    very thick,
+    forget plot,
+    line join=round,
+   ] table [
+    x = bins,
+    y = hist,
+    col sep=comma,
+] {atheta_0.01_1.65e+05.csv};
+
+  \addplot+[
+    color=color5,
+    mark=none,
+    very thick,
+    forget plot,
+    line join=round,
+   ] table [
+    x = bins,
+    y = hist,
+    col sep=comma,
+] {atheta_0.01_2.48e+05.csv};
+
+  \addplot+[
+    color=black,
+    mark=none,
+    very thick,
+    %dashed,
+    dash pattern=on 2pt off 2pt on 2pt off 2pt,
+    line join=round,
+   ] table [
+    x = bins,
+    y = hist,
+    col sep=comma,
+] {curvefitMordant200415.csv};
+\addlegendentryexpanded{Mordant \textit{et al.} 2004}
+
+\node at (axis cs: -15.4, 1) [anchor=north west]{$\alpha = \SI{0.1}{\percent}$};
+
+ \end{semilogyaxis}
+ \node at (-1.0, 3.4) {(d)};
+\end{scope}
+ 
+\end{tikzpicture} 
+\end{document}

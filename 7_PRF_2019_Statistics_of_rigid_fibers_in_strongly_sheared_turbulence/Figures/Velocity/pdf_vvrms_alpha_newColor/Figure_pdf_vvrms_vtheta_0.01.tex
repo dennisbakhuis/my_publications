@@ -1,0 +1,96 @@
+\documentclass[tikz,border=5pt]{standalone}
+\usepackage{pgfplots}
+\usepackage{amsmath}
+\usepackage{siunitx}
+\usepackage{xcolor}
+
+% original colors
+\definecolor{color1}{RGB}{166,118,29}
+\definecolor{color2}{RGB}{217,95,2}
+\definecolor{color3}{RGB}{231,41,138}
+\definecolor{color4}{RGB}{117,112,179}
+\definecolor{color5}{RGB}{27,158,119}
+\definecolor{color6}{RGB}{102,166,30}
+\definecolor{color7}{RGB}{230,171,2}
+
+\begin{document}
+\begin{tikzpicture}
+  \begin{semilogyaxis}[
+    clip mode=individual,
+    xmin=-6.0,
+    xmax=5.2,
+    ymin=1e-6,
+    ymax=1,
+    enlargelimits=false,
+    axis on top=true,
+    xlabel=$v_\theta / \left< v_\theta^2 \right>^{1/2}$,
+    ylabel=$\text{PDF}$,
+    %legend pos=south east,
+    legend style={draw=none, 
+                  font=\footnotesize,
+                  fill=none,
+    },
+    legend style={at={(0.5, 0)}, anchor=south},
+    legend cell align=left,
+    reverse legend,
+    width = 6.2cm,
+    height = 5.7cm,
+    ylabel near ticks,
+    xtick={-5, -2, 0, 2,5}
+  ]
+
+  \addplot+[
+    color=color1,
+    mark=none,
+    very thick,
+    line join=round,
+   ] table [
+    x = bins,
+    y = hist,
+    col sep=comma,
+] {vtheta_0.01_8.27e+04.csv};
+\addlegendentryexpanded{Re$_i = \num{8.3e4}$}
+
+  \addplot+[
+    color=color3,
+    mark=none,
+    very thick,
+    line join=round,
+   ] table [
+    x = bins,
+    y = hist,
+    col sep=comma,
+] {vtheta_0.01_1.65e+05.csv};
+\addlegendentryexpanded{Re$_i = \num{1.7e5}$}
+
+  \addplot+[
+    color=color5,
+    mark=none,
+    very thick,
+    line join=round,
+   ] table [
+    x = bins,
+    y = hist,
+    col sep=comma,
+] {vtheta_0.01_2.48e+05.csv};
+\addlegendentryexpanded{Re$_i = \num{2.5e5}$}
+
+  \addplot+[
+    color=black,
+    mark=none,
+    very thick,
+    line join=round,
+    dashed,
+    forget plot,
+   ] table [
+    x = bins,
+    y = hist,
+    col sep=comma,
+] {standardgaussian5.csv};
+\node at (axis cs: -6.1, 1) [anchor=north west]{$\alpha = \SI{0.1}{\percent}$};
+
+ \end{semilogyaxis}
+
+ 
+\end{tikzpicture} 
+\end{document}

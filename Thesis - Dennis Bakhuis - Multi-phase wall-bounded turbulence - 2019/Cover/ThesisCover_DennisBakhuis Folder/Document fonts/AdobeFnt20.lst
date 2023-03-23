@@ -1,0 +1,31 @@
+%!Adobe-FontList 1.20
+%Locale:0x409
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:Type1
+FontName:FrutigerLTStd-BoldCn
+FamilyName:Frutiger LT Std
+StyleName:67 Bold Condensed
+MenuName:Frutiger LT Std 47 Light Cn
+StyleBits:2
+WeightClass:700
+WidthClass:3
+AngleClass:0
+FullName:Frutiger LT Std 67 Bold Condensed
+WritingScript:Roman
+OutlineFileName:/Users/dennis/Dropbox/PhD/Thesis/Cover/ThesisCover_DennisBakhuis Folder/Document fonts/FrutigerLTStd-BoldCn.otf
+DataFormat:sfntData
+UsesStandardEncoding:yes
+isCFF:yes
+hasSVG:no
+VariableFontType:NonVariableFont
+FileLength:31036
+FileModTime:209881774
+DesignSize:120
+NameArray:0,Mac,18,Frutiger LT Std 67 Bold Cn
+NameArray:0,Mac,4,Frutiger LT Std 67 Bold Condensed
+NameArray:0,Win,1,Frutiger LT Std 47 Light Cn
+NameArray:0,Win,16,Frutiger LT Std
+%EndFont
+

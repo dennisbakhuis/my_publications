@@ -1,0 +1,177 @@
+\documentclass[tikz,border=5pt]{standalone}
+\usepackage{pgfplots}
+\usepackage{amsmath}
+\usepackage{siunitx}
+
+\usepgfplotslibrary{units}
+\usepgfplotslibrary{fillbetween}
+
+% original colors
+\definecolor{color1}{RGB}{166,118,29}
+\definecolor{color2}{RGB}{217,95,2}
+\definecolor{color3}{RGB}{231,41,138}
+\definecolor{color4}{RGB}{117,112,179}
+\definecolor{color5}{RGB}{27,158,119}
+\definecolor{color6}{RGB}{102,166,30}
+\definecolor{color7}{RGB}{230,171,2}
+
+% more colors
+\definecolor{color8}{RGB}{173,216,230} % light blue
+\definecolor{color9}{RGB}{0,0,255} % blue
+\definecolor{color10}{RGB}{255,0,0} % blue
+
+\begin{document}
+\begin{tikzpicture}
+  \begin{axis}[
+    clip mode=individual,
+    xmin=0,
+    xmax=1,
+    ymin=0,
+    ymax=1,
+    enlargelimits=false,
+    axis on top=true,
+    %xlabel=$(r - r_i) / (r_o - r_i)$\vphantom{$\dot{\theta}_p$},
+    xlabel=$\tilde{r}$\vphantom{$\dot{\theta}_p$},
+    ylabel=$\text{v}_\theta/\text{u}_i$,
+    %y unit=\si{\percent},
+    %legend pos=north east,
+    legend style={draw=none, 
+                  font=\footnotesize,
+                  fill=none,
+    },
+    legend style={at={(1.00, 1.00)}, anchor=north east},
+    legend cell align=left,
+    legend columns=1, 
+    %legend style={
+                %% the /tikz/ prefix is necessary here...
+                %% otherwise, it might end-up with `/pgfplots/column 2`
+                %% which is not what we want. compare pgfmanual.pdf
+        %/tikz/column 2/.style={
+            %column sep=-2.0cm,
+        %},
+    %},
+    %reverse legend,
+    width = 6.2cm,
+    height = 5.0cm,
+    ylabel near ticks,
+    %minor ytick={-2,-1,0,1,2,3,4,5,6,7,8,9},
+    %xtick pos=left,
+  ]
+
+  \addplot+[
+      color=color9,
+      opacity=1,
+      mark=none,
+      very thick,
+    line join=round,
+   ] table [
+    x = r,
+    y = unorm,
+    col sep=comma,
+] {velocitydata.csv};
+\addlegendentryexpanded{$\left< \text{v}_\theta \right>$}
+
+  \addplot+[
+        draw=none,
+        forget plot,
+        name path=umin,
+        mark=none
+    ] table [
+        x = r,
+        y = stdmin,
+        col sep=comma,
+    ] {velocitydata.csv};
+
+  \addplot+[
+        draw=none,
+        forget plot,
+        name path=umax,
+        mark=none
+    ] table [
+        x = r,
+        y = stdmax,
+        col sep=comma,
+    ] {velocitydata.csv};
+
+   \addplot+[
+        fill=color8,
+        draw=color9,
+        opacity=0.6,
+        thin,
+   ]
+   fill between[
+        of = umin and umax
+   ];
+   \addlegendentryexpanded{$\left< \text{v}_\theta \right> \pm \sigma$}
+
+  \addplot+[
+        draw=none,
+        forget plot,
+        name path=umin,
+        mark=none,
+        line join=round,
+    ] table [
+        x = r,
+        y = umin,
+        col sep=comma,
+    ] {velocitydata.csv};
+
+  \addplot+[
+        draw=none,
+        forget plot,
+        name path=umax,
+        mark=none,
+        line join=round,
+    ] table [
+        x = r,
+        y = umax,
+        col sep=comma,
+    ] {velocitydata.csv};
+
+   \addplot+[
+        fill=color8,
+        draw=color9,
+        opacity=0.3,
+        thin,
+        line join=round,
+   ]
+   fill between[
+        of = umin and umax
+   ];
+   %\addlegendentryexpanded{$\left< \text{v}_\theta \right> - 
+   %\text{min}(\text{v}_\theta) / \left< \text{v}_\theta \right> + \text{max}(
+   %\text{v}_\theta)$}
+   \addlegendentryexpanded{$\left< \text{v}_\theta \right> \pm $ min/max}
+   %\addlegendentryexpanded{Fibers (min/max)}
+
+  \addplot+[
+        color=color10,
+        mark=none,
+        densely dashed,
+        thick,
+        line join=round,
+     ] table [
+      x = rnorm,
+      y = vtheta,
+      col sep=comma,
+  ] {SH_re1e6.csv};
+  %\addlegendentryexpanded{Huisman \textit{et al.} 2012}
+
+ \end{axis}
+
+\node at (-1.0, 3.2) {(a)};
+
+\begin{scope}[
+    xshift=1mm,
+    yshift=3.5mm
+]
+    \node at (0cm, 0cm) (1) {};
+    \node at (0.8cm, 0cm) (2) {};
+
+    \draw[red, dashed, thick] (1) -- (2);
+    \path[black] (2) node[right=-1mm]{\footnotesize $\text{u}_\theta /
+                \text{u}_i$ Huisman \emph{et al.} 2013};
+\end{scope}
+
+\end{tikzpicture} 
+\end{document}

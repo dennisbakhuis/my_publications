@@ -1,0 +1,508 @@
+% arara: pdflatex
+
+\documentclass[
+    tikz,%
+    border={0mm 0mm 0mm 0mm},% left bottom right top
+]{standalone}
+\usepackage{pgfplots}
+\usepackage{amsmath}
+\usepackage{siunitx}
+\usetikzlibrary{arrows,decorations.markings}
+\usepgfplotslibrary{colormaps}
+
+\usepgfplotslibrary{units}
+% \usetikzlibrary{automata, positioning}
+
+% remove arrows from second axis
+\pgfplotsset{ every non boxed x axis/.append style={x axis line style=-},
+     every non boxed y axis/.append style={y axis line style=-}}
+
+\def\AddLabel(#1,#2)#3{\node [align = center] at (axis cs: #1,#2) {#3};}%
+
+% Style to select only points from #1 to #2 (inclusive)
+\pgfplotsset{select coords between index/.style 2 args={
+    x filter/.code={
+        \ifnum\coordindex<#1\def\pgfmathresult{}\fi
+        \ifnum\coordindex>#2\def\pgfmathresult{}\fi
+    }
+}}
+
+% complete set
+\definecolor{color1}{RGB}{204,235,197}
+\definecolor{color2}{RGB}{190,222,192}
+\definecolor{color3}{RGB}{176,210,187}
+\definecolor{color4}{RGB}{162,198,182}
+\definecolor{color5}{RGB}{148,186,177}
+\definecolor{color6}{RGB}{134,173,172}
+\definecolor{color7}{RGB}{120,161,167}
+\definecolor{color8}{RGB}{106,149,163}
+\definecolor{color9}{RGB}{92,137,158}
+\definecolor{color10}{RGB}{77,125,153}
+\definecolor{color11}{RGB}{64,112,148}
+\definecolor{color12}{RGB}{49,100,143}
+\definecolor{color13}{RGB}{35,88,138}
+\definecolor{color14}{RGB}{21,76,133}
+\definecolor{color15}{RGB}{8,64,129}
+
+\pgfplotsset{
+  colormap={mycolormap}{% blue to red
+      rgb255=(204,235,197)
+      rgb255=(190,222,192)
+      rgb255=(176,210,187)
+      rgb255=(162,198,182)
+      rgb255=(148,186,177)
+      rgb255=(134,173,172)
+      rgb255=(120,161,167)
+      rgb255=(106,149,163)
+      rgb255=(92,137,158)
+      rgb255=(77,125,153)
+      rgb255=(64,112,148)
+      rgb255=(49,100,143)
+      rgb255=(35,88,138)
+      rgb255=(21,76,133)
+      rgb255=(8,64,129)
+  }
+}
+
+\begin{document}
+\begin{tikzpicture}
+% Nature settings:
+% For guidance, Nature’s standard figure sizes are 89 mm (single column) and
+    % 183 mm (double column) and the full depth of the page is 247 mm.
+% Draw exact dimensions bounding box
+\newcommand{\figwidth}{8.64cm}
+\newcommand{\figheight}{5.85cm}
+\newcommand{\goldenratio}{1.618033988749895}
+\newcommand{\axiswidth}{7.54cm}
+\newcommand{\axisheight}{\axiswidth/\goldenratio} % golden ratio
+\newcommand{\startx}{1.05cm}
+\newcommand{\starty}{0.72cm}
+
+\newcommand{\insetwidth}{3.5cm}
+\newcommand{\insetheight}{2.00cm}
+
+\draw[use as bounding box, white] (0,0) rectangle (\figwidth,\figheight);
+
+ \begin{semilogxaxis}[
+    xshift=\startx,
+    yshift=\starty,
+    clip mode=individual,
+    xmin=1.4e11, xmax=3e13,
+    ymin=0.004, ymax=0.007,
+    enlargelimits=false,
+    axis on top=true,
+    xlabel=$\text{Ta}$,
+    % x unit=\si{\hertz},
+    ylabel=$\text{Nu}_\omega \text{Ta}^{-0.4}$,
+    % y unit=\si{\newton\metre},
+    legend pos=north west,
+    legend style={draw=none, 
+                  font=\footnotesize,
+                  fill=none,
+                 },
+    legend cell align=left,
+    % legend style={at={(1.01, 0.55)}, anchor=east},
+    % x unit=\si{\percent},
+    width = \axiswidth,
+    height = \axisheight,
+    scale only axis,
+    ylabel near ticks, 
+    % xtick={5, 7, 10, 15, 20},
+    % xticklabels={5, 7, 10, 15, 20},
+    % ytick={100, 1000},
+    minor y tick num= 9,
+    % yticklabels={100, 1000},
+    % minor ytick={2,3,4,6,7,8,9,30,40},
+    % minor xtick={6,8,9,11,12,13,14,16,17,18,19},
+    xlabel style={yshift=2.0mm},
+    % ylabel style={yshift=-1.5mm},
+    ytick pos=left,
+  ]
+
+  \addplot+[
+    color=color1,
+    no marks,
+    solid,
+    very thick,
+    line join=round,
+   ] table [
+    x = t0,
+    y = a0,
+    col sep=comma,
+  ] {tavsnuwta.csv};
+  \addplot+[
+    color=color1,
+    no marks,
+    solid,
+    very thick,
+    line join=round,
+   ] table [
+    x = t0_1,
+    y = a0_1,
+    col sep=comma,
+  ] {tavsnuwta.csv};
+  \addplot+[
+    color=color1,
+    no marks,
+    solid,
+    very thick,
+    line join=round,
+   ] table [
+    x = t0_2,
+    y = a0_2,
+    col sep=comma,
+  ] {tavsnuwta.csv};
+  \addplot+[
+    color=color2,
+    no marks,
+    solid,
+    % mark=o,
+    very thick,
+    line join=round,
+   ] table [
+    x = t5,
+    y = a5,
+    col sep=comma,
+  ] {tavsnuwta.csv};
+  \addplot+[
+    color=color2,
+    no marks,
+    solid,
+    % mark=o,
+    very thick,
+    line join=round,
+   ] table [
+    x = t5_1,
+    y = a5_1,
+    col sep=comma,
+  ] {tavsnuwta.csv};
+  \addplot+[
+    color=color3,
+    no marks,
+    solid,
+    % mark=o,
+    very thick,
+    line join=round,
+   ] table [
+    x = t10,
+    y = a10,
+    col sep=comma,
+  ] {tavsnuwta.csv};
+  \addplot+[
+    color=color3,
+    no marks,
+    solid,
+    % mark=o,
+    very thick,
+    line join=round,
+   ] table [
+    x = t10_1,
+    y = a10_1,
+    col sep=comma,
+  ] {tavsnuwta.csv};
+  \addplot+[
+    color=color4,
+    no marks,
+    solid,
+    % mark=o,
+    very thick,
+    line join=round,
+   ] table [
+    x = t20,
+    y = a20,
+    col sep=comma,
+  ] {tavsnuwta.csv};
+  \addplot+[
+    color=color4,
+    no marks,
+    solid,
+    % mark=o,
+    very thick,
+    line join=round,
+   ] table [
+    x = t20_1,
+    y = a20_1,
+    col sep=comma,
+  ] {tavsnuwta.csv};
+  \addplot+[
+    color=color5,
+    no marks,
+    solid,
+    % mark=o,
+    very thick,
+    line join=round,
+   ] table [
+    x = t30,
+    y = a30,
+    col sep=comma,
+  ] {tavsnuwta.csv};
+  \addplot+[
+    color=color5,
+    no marks,
+    solid,
+    % mark=o,
+    very thick,
+    line join=round,
+   ] table [
+    x = t30_1,
+    y = a30_1,
+    col sep=comma,
+  ] {tavsnuwta.csv};
+  \addplot+[
+    color=color6,
+    no marks,
+    solid,
+    % mark=o,
+    very thick,
+    line join=round,
+   ] table [
+    x = t40,
+    y = a40,
+    col sep=comma,
+  ] {tavsnuwta.csv};
+  \addplot+[
+    color=color6,
+    no marks,
+    solid,
+    % mark=o,
+    very thick,
+    line join=round,
+   ] table [
+    x = t40_1,
+    y = a40_1,
+    col sep=comma,
+  ] {tavsnuwta.csv};
+  \addplot+[
+    color=color7,
+    no marks,
+    solid,
+    % mark=o,
+    very thick,
+    line join=round,
+   ] table [
+    x = t50,
+    y = a50,
+    col sep=comma,
+  ] {tavsnuwta.csv};
+  \addplot+[
+    color=color7,
+    no marks,
+    solid,
+    % mark=o,
+    very thick,
+    line join=round,
+   ] table [
+    x = t50_1,
+    y = a50_1,
+    col sep=comma,
+  ] {tavsnuwta.csv};
+  \addplot+[
+    color=color8,
+    no marks,
+    solid,
+    % mark=o,
+    very thick,
+    line join=round,
+   ] table [
+    x = t60,
+    y = a60,
+    col sep=comma,
+  ] {tavsnuwta.csv};
+  \addplot+[
+    color=color8,
+    no marks,
+    solid,
+    % mark=o,
+    very thick,
+    line join=round,
+   ] table [
+    x = t60_1,
+    y = a60_1,
+    col sep=comma,
+  ] {tavsnuwta.csv};
+  \addplot+[
+    color=color9,
+    no marks,
+    solid,
+    % mark=o,
+    very thick,
+    line join=round,
+   ] table [
+    x = t65,
+    y = a65,
+    col sep=comma,
+  ] {tavsnuwta.csv};
+  \addplot+[
+    color=color9,
+    no marks,
+    solid,
+    % mark=o,
+    very thick,
+    line join=round,
+   ] table [
+    x = t65_1,
+    y = a65_1,
+    col sep=comma,
+  ] {tavsnuwta.csv};
+  \addplot+[
+    color=color10,
+    no marks,
+    solid,
+    % mark=o,
+    very thick,
+    line join=round,
+   ] table [
+    x = t70,
+    y = a70,
+    col sep=comma,
+  ] {tavsnuwta.csv};
+  \addplot+[
+    color=color10,
+    no marks,
+    solid,
+    % mark=o,
+    very thick,
+    line join=round,
+   ] table [
+    x = t70_1,
+    y = a70_1,
+    col sep=comma,
+  ] {tavsnuwta.csv};
+  \addplot+[
+    color=color11,
+    no marks,
+    solid,
+    % mark=o,
+    very thick,
+    line join=round,
+   ] table [
+    x = t75,
+    y = a75,
+    col sep=comma,
+  ] {tavsnuwta.csv};
+  \addplot+[
+    color=color11,
+    no marks,
+    solid,
+    % mark=o,
+    very thick,
+    line join=round,
+   ] table [
+    x = t75_1,
+    y = a75_1,
+    col sep=comma,
+  ] {tavsnuwta.csv};
+  \addplot+[
+    color=color12,
+    no marks,
+    solid,
+    % mark=o,
+    very thick,
+    line join=round,
+   ] table [
+    x = t80,
+    y = a80,
+    col sep=comma,
+  ] {tavsnuwta.csv};
+  \addplot+[
+    color=color12,
+    no marks,
+    solid,
+    % mark=o,
+    very thick,
+    line join=round,
+   ] table [
+    x = t80_1,
+    y = a80_1,
+    col sep=comma,
+  ] {tavsnuwta.csv};
+  \addplot+[
+    color=color13,
+    no marks,
+    solid,
+    % mark=o,
+    very thick,
+    line join=round,
+   ] table [
+    x = t90,
+    y = a90,
+    col sep=comma,
+  ] {tavsnuwta.csv};
+  \addplot+[
+    color=color13,
+    no marks,
+    solid,
+    % mark=o,
+    very thick,
+    line join=round,
+   ] table [
+    x = t90_1,
+    y = a90_1,
+    col sep=comma,
+  ] {tavsnuwta.csv};
+  \addplot+[
+    color=color14,
+    no marks,
+    solid,
+    % mark=o,
+    very thick,
+    line join=round,
+   ] table [
+    x = t95,
+    y = a95,
+    col sep=comma,
+  ] {tavsnuwta.csv};
+  \addplot+[
+    color=color15,
+    no marks,
+    solid,
+    % mark=o,
+    very thick,
+    line join=round,
+   ] table [
+    x = t100,
+    y = a100,
+    col sep=comma,
+  ] {tavsnuwta.csv};
+
+
+ \end{semilogxaxis}
+
+
+\begin{axis}[
+    xshift=\startx + 0.25cm,
+    yshift=\starty + 4.70cm,
+    name=colorbar,
+    hide axis,
+    scale only axis,
+    height=0pt,
+    width=0pt,
+    colormap name =mycolormap,
+    colorbar horizontal,
+    point meta min=0,
+    point meta max=100,
+    colorbar style={
+        width=4.5cm,
+        height=0.40cm,
+        % height=5cm,
+        % ytick={-0.07,-0.03,0,0.03,0.07},
+        xtick={0,25,50,75,100},
+        % minor y tick num=6,
+        % yticklabels={0},
+        scaled ticks=false,
+        xlabel=$\alpha$,
+        x unit=\si{\percent},
+        xlabel near ticks,
+        % xticklabel pos=left,
+        xlabel style={yshift=+0.1cm},
+        tick style={draw opacity=0},
+    }]
+    \addplot [draw=none] coordinates {(0,0)};
+\end{axis}
+
+%  \draw[black] (2.5cm, 1.8cm) -- ++(0cm, 1cm);
+%  \draw[black] (2.70cm, 1.8cm) -- ++(0cm, 1cm);
+
+
+\end{tikzpicture} 
+\end{document}

@@ -1,0 +1,970 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Chapter definitions %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Chapter title
+\renewcommand{\mychaptertitle}{%
+Mixed boundary thermal conditions\\ in Rayleigh-B\'enard convection%
+}
+% Chapter short title
+\renewcommand{\mychaptershorttitle}{%
+Mixed boundary conditions in Rayleigh-B\'enard convection%
+}
+% Chapter authors
+\renewcommand{\mychapterauthors}{%
+\textbf{Dennis~Bakhuis}, %
+Rodolfo~Ostilla-M\'onico, %
+Erwin~P.~van~der~Poel, %
+Roberto~Verzicco, %
+and %
+Detlef~Lohse
+\textit{%
+Mixed insulating and conducting thermal boundary conditions in
+Rayleigh-B\'enard convection}, J. Fluid Mech. \textbf{835}, 491--511 (2018).
+}
+% Chapter abstract
+\renewcommand{\mychapterabstract}{%
+A series of direct numerical simulations of Rayleigh-B\'enard convection, the
+flow in a fluid layer heated from below and cooled from above, were conducted
+to investigate the effect of mixed insulating and conducting boundary
+conditions on convective flows.  Rayleigh numbers between $\Ray=10^7$ and
+$\Ray=10^9$ were considered, for Prandtl numbers $\Pran=1$ and $\Pran=10$.
+The bottom plate was divided into patterns of conducting and insulating
+stripes.  The size ratio between these stripes was fixed to unity and the
+total number of stripes was varied.  Global quantities such as the heat
+transport and average bulk temperature and local quantities such as the
+temperature just below the insulating boundary wall were investigated.  For
+the case with the top boundary divided into two halves, one conducting and one
+insulating, the heat transfer was found to be approximately two thirds of the
+fully conducting case.  Increasing the pattern frequency increased the heat
+transfer which asymptotically approached the fully conducting case, even if
+only half of the surface is conducting.  Fourier analysis of the temperature
+field revealed that the imprinted pattern of the plates is diffused in the
+thermal boundary layers, and cannot be detected in the bulk.  With
+conducting-insulating patterns on both plates, the trends previously described
+were similar, however, the half-and-half division led to a heat transfer of
+about a half of the fully conducting case instead of two-thirds.  The effect
+of the ratio of conducting and insulating areas was also analyzed, and it was
+found that even for systems with a top plate with only $25\%$ conducting
+surface, heat-transport of $60\%$ of the fully conducting case can be seen.
+}
+\renewcommand{\mychaptermark}{Mixed boundary conditions}
+\renewcommand{\mychapterlabel}{chap:mixedbc}
+\renewcommand{\mychaptericon}{fig/swchapter5.png}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Create Chapter Header %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\input{chapterheader}
+%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% end title page %%%%
+%%%%%%%%%%%%%%%%%%%%%%%%
+\graphicspath{{ChapterFour/fig/}}
+\section{Introduction}
+Natural convection is a common and important phenomenon
+which is omnipresent in Nature.  It leads to the transfer of internal energy,
+within an unstably stratified fluid layer, via a buoyancy induced flow.  Ocean
+currents, which are driven by gradients in density and salinity
+\citep{Marshall1999,Wirth2006}, and the mantle convection inside the Earth, which drives
+the plate tectonics and generates the geomagnetic field
+\citep{McKenzie1974, Glatzmaier1995},
+are two examples of natural convection.  Even outside of our planet, at the
+most distant stars, convection is of tremendous importance
+\citep{Spiegel1971,Cattaneo2003}.
+
+An idealized system that is commonly used to study natural convection, as it
+is mathematically well-defined and can be reproduced in a laboratory
+experiment, is  Rayleigh-B\'enard (RB) convection \citep{Normand1977, Ahlers2009,Lohse2010,
+Chilla2012}.  The RB system consists of a fluid in a container, that is heated from
+below and cooled from above.  The fluid is subject to an external
+gravitational field $g$.  Apart from the geometric ones, this system has two
+non-dimensional control parameters, namely the Rayleigh number $\Ray = \beta g
+\Delta H^3 / \nu \kappa$, which measures the strength of the thermal driving,
+and the Prandtl number $\Pran = \nu / \kappa$, a property of the fluid, where
+$\beta$ and $\kappa$ are the isobaric thermal expansion and temperature
+diffusivity coefficients of the fluid, $H$ the system height, $\Delta$ the
+applied temperature difference between the plates, and $\nu$ the kinematic
+viscosity.  Depending on the geometry of the system, other control parameters
+such as the aspect ratio of the system, $\Gamma = L / H$ appear, where $L$ is
+a characteristic horizontal length of the system.
+
+Above a certain critical Rayleigh number, RB flow is linearly unstable, and
+any perturbation will cause the onset of convection. This critical value is
+determined by the properties of the fluid and the boundary conditions (BC) of
+the RB system. If the thermal driving of the system is far
+above the critical $\Ray$, the flow becomes turbulent. This dramatically
+increases the heat transfer with respect to the purely conductive case.
+Modeling this heat transfer is essential for understanding what is going on
+inside stars, the Earth's mantle and many other systems. RB experiments (and
+simulations) typically consist of a bottom and a top plate which have
+homogeneous boundary conditions, and lateral boundary conditions which are
+either periodic (simulations) to mimic laterally unconfined systems or
+adiabatic (experiments) to account for a lateral confinement that minimizes
+the heat losses.
+
+However, these idealized systems assume that both the top and bottom plates
+have perfectly homogeneous conducting surfaces while for all real physical
+systems, there is a certain degree of imperfection.  In Nature we see such
+inhomogeneities; for example, the fractures in ice floes \citep{Marcq2012} or the
+much debated insulating effects of continents on mantle convection
+\citep{Lenardic2005}.  Other examples include convection over mixed (agricultural)
+vegetation and cities \citep{Zhao2014}.  In engineering applications, or in RB
+experiments these can be small defects or dirt at the conducting plates, which
+could result in lower than optimal heat transport. The limiting
+cases of the boundary conditions are constant heat flux boundary
+conditions, constant temperature boundary conditions, or thermally
+insulating boundary conditions with no heat flux.  The difference in heat
+transfer between the first two types of boundary conditions, Dirichlet and
+von Neumann, was found to be negligible at large $\Ray$ DNS
+\citep{Johnston2007,
+Johnston2009, Stevens2011}, but the increase in flow strength under fixed-temperature
+BC cannot be neglected \citep{Huang2015}. Accounting for a finite conductivity
+of the thermal sources can lead to significant reduction in the heat transport
+\citep{Verzicco2004}.
+
+Temperature boundary conditions can also be spatially and temporally varying.
+% The study of the effects of these imperfect boundary conditions goes back to
+% \cite{Kelly1978} and later \cite{Yoo1991} who applied sinusoidal temperature
+% boundary conditions on both plates, which mimic plates with embedded heaters.
+A way to study imperfections is to apply sinusoidal temperature boundary
+conditoins on both plates to mimic plates with embedded heaters
+\citep{Kelly1978,
+Yoo1991}. These plates are locally hotter, when closer to the heater elements.
+
+% \cite{Jin2008} showed that the Nusselt number is increased when the energy input
+% into the system from the plates is periodically pulsed instead of stationary.
+The Nusselt number is increased when the energy input
+into the system from the plates is periodically pulsed instead of stationary
+\citep{Jin2008}.
+Recent experiments using insulating lids at the top
+boundary of a RB cell showed that with increasing insulating fraction the same
+amount of heat goes through a smaller cooling area\citep{Wang2017}.   Some
+simulations of inhomogeneous boundary conditions have also been
+performed.
+% \cite{Cooper2013} simulated two and three-dimensional
+% Rayleigh-B\'enard systems of mixed adiabatic-conducting boundary
+% conditions at one plate at moderate Rayleigh numbers, with a
+% geophysical focus, finding that the distribution of the patches caused
+% changes in the flow configuration, the bulk temperature and the
+% Nusselt number.
+Simulations of two and three-dimensional
+Rayleigh-B\'enard systems of mixed adiabatic-conducting boundary
+conditions at one plate at moderate Rayleigh numbers, with a
+geophysical focus, showed that the distribution of the patches caused
+changes in the flow configuration, the bulk temperature and the
+Nusselt number \citep{Cooper2013}.
+% The simulations by \cite{Ripesi2014} added non-conducting
+% defects in the form of periodic patches to the top plate of a
+Defects in the form of periodic non-conducting patches were added to the top
+plate of a two-dimensional numerical RB system \citep{Ripesi2014} to
+% two-dimensional numerical RB system, and studied both the transition
+% to turbulence of RB flow, finding a delay in this transition when
+% defects were present, and the fully turbulent regime, finding a
+% decrease in Nusselt number when the patch wavelength was larger than the
+% characteristic thermal boundary layer scale. 
+study both, the transition to turbulence of RB flow, finding a delay in this
+transition when defects were present, and the fully turbulent regime, finding
+a decrease in Nusselt number when the patch wavelength was larger than the
+characteristic thermal boundary layer scale. 
+
+Here, we extend the research of Ripesi \textit{et. al.} by applying non-conducting stripe
+patterns to a three-dimensional RB system.  We will focus on the fully
+turbulent regime instead of the transition to turbulence,
+and consider a wider range of patterns at higher $\Ray$, extending 
+previous work at lower Rayleigh numbers \citep{Cooper2013}.  We start by
+applying distributions of striped insulating patterns to the top boundary
+only, and study the dependence of both local and global variables, e.g.
+effective heat transfer and average bulk temperature, on the number of
+stripes.  For most of the study, we keep the conducting to insulating areas
+equal to each other, but the effect of this ratio is also studied, which
+mimics the degree of imperfections and pollution on the plates.  We also study
+the effect of applying the same pattern to both plates and the role of the
+pattern geometry by applying a two-dimensional checkerboard
+insulating-conducting pattern on the top plate. Checkerboards and stripes can
+be seen as the two limiting cases for the pattern geometry.
+
+This \docname is organized as follows: First, in \refsec{NumericalMethod}
+we detail the geometry and numerical method.  In the next section, the results
+for the stripe pattern variations will be discussed where both conducting and
+insulating areas are kept constant.  This is first done on the top plate and
+later the pattern is applied on both plates.  A Fourier analysis was performed
+to study the penetration depth of the pattern imprint in the flow.  In
+\refsec{BothPlates} a pattern is added to both plates, in
+\refsec{VariationFraction}, we present and discuss the results for varying
+the ratio of conducting to insulating surface while keeping the number of
+divisions constant and in \refsec{mixedTwoDimensions} we present the results
+for a plate with a checkerboard pattern instead of a striped pattern.  The
+\docname is concluded by presenting the conclusions and outlook in
+\refsec{Conclusion}.
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Numerical method}\label{NumericalMethod}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+In this numerical study, we solve the incompressible Navier-Stokes equations
+within the Boussinesq approximation for RB. In non-dimensional form, these
+read:
+%
+\begin{equation} \begin{aligned} \frac{D \boldsymbol{u}}{Dt} &= -\nabla P +
+    \left( \frac{\Pran}{\Ray} \right)^{1/2} \nabla^2 \boldsymbol{u} + \theta
+    \hat{z}, \\ \frac{D \theta}{Dt} &= \frac{1}{\left( \Pran \Ray
+    \right)^{1/2}} \nabla^2 \theta, \\ \nabla \cdot \boldsymbol{u} &= 0,
+\end{aligned} \end{equation}
+%
+where $u$ is the non-dimensional velocity, $P$ is the non-dimensional
+pressure, $\theta$ is the non-dimensional temperature, and $\hat{z}$ is the
+unit vector pointing in the direction opposite to gravity $g$.  For
+non-dimensionalization, the temperature scale is the temperature difference
+between the plates $\Delta$, the length scale their distance $H$ and the
+velocity scale is the free-fall velocity $U_f = \sqrt{g\beta \Delta H}$.
+
+We consider a geometry which is a horizontally doubly-periodic cuboid. The
+domain has horizontal periodicity lengths of $L_x$ and $L_y$, and a vertical
+dimension $H$, such that $L_x/H = L_y/H = 1$.  These variables with a tilde
+superscript denote their non-dimensional counterparts.  The equations were
+discretized using an energy-conserving second-order finite-difference scheme,
+and a fractional time-step for time marching using a third-order low-storage
+Runge-Kutta scheme for the non-linear terms, and a second order
+Adams-Bashworth scheme for all viscous and conducting terms
+\citep{Verzicco1996,vanderPoel2015}.  The code was heavily parallelized to run
+on hundreds or even thousands of cores simultaneously and was validated many
+times \citep{Stevens2010,Stevens2011, vanderPoel2015}.  Recently, the code was
+open-sourced and is available for download at \url{www.AFiD.eu}.
+
+The domain was discretized by $n_x \times n_y \times n_z = 360 \times 360
+\times 288$ grid points.  In both horizontal directions, the grid was
+uniformly divided, and in the vertical direction the points were clustered
+near the top and bottom plates.  A number of simulations were conducted to
+test the aspect ratio dependence and the grid independence.  These tests did
+not show any significant differences in the range of Rayleigh numbers used in
+this study.  For RB convection, a series of exact relationships which link the
+Nusselt number to the global kinetic energy dissipation ($\nu \nabla^2 u$) and
+the thermal dissipation ($\kappa \nabla^2 \theta$) exist
+\citep{Shraiman1990,Ahlers2009},
+and they have been further used to check the spatial accuracy of the
+simulation \citep{Stevens2010}.  The size of the time steps was chosen
+dynamically by imposing that the Courant-Friedrichs-Lewy (CFL) number in the
+grid would not exceed $1.2$.%
+
+The main response of the system is the Nusselt number ($\Nuss$), which is the
+heat transfer non-dimensionalized using the purely conductive heat transfer:%
+\begin{equation}
+    \Nuss = \frac{\left< u_z \theta\right>_A - \kappa\partial_z
+    \left<\theta\right>_A}{\kappa \Delta L_z}, 
+\end{equation}
+where $\left<\cdot \right>_A$ indicates the average over any horizontal plane.
+The simulations were run between 50 and 100 large-eddy turnover times based on
+$U_f$ and $H$. Statistical convergence is assessed by calculating
+differences in $\Nuss$ between final and half the amount of measurement
+points. These are shown as error bars in the plots.
+
+In the classical RB case, both the top and bottom plates have a homogeneous
+boundary condition, i.e. they are perfectly conducting. Here, we use this
+boundary condition only for the bottom plate, while top plate is taken to have
+periodic patches of insulating regions which do not contribute to the heat
+transfer from fluid to plate. The definition of these patches are similar to
+those in other work \citep{Ripesi2014}:
+%
+\begin{equation}
+    \begin{aligned}
+        \theta(\hat{x},\hat{y},\hat{z}=1) &= 0 &&
+        \sin(\pi\hat x) \geq 0, \forall \hat y \\
+        \partial_z \theta(\hat{x},\hat{y},\hat{z}=1)  &= 0 &&
+        \sin(\pi\hat x) < 0, \forall \hat y \\
+        \theta(\hat{x},\hat{y},\hat{z}=0) &= 1 && \forall \hat x, \hat y.  
+    \end{aligned}
+\label{eq:boundaryConditions} \end{equation}
+%
+Here $L_p$ is the width of a pair of patches.  $L_{p1}$ is the width of the
+conducting part, $L_{p2}$ is the insulating part, and the hat on the spatial
+coordinates indicates non-dimensionalizations.  For most of this study we keep
+the insulating and conducting areas equal, i.e. $\ell_C=1/2$.  The BC on the
+top plate depends only on the $x$-coordinate, which results in sets of
+insulating and conducting stripes.  The number of stripe pairs in a horizontal
+direction L were defined as $f = L / L_p$, which is a central control
+parameter of this study.
+A two-dimensional schematic is shown in \reff{figure1}.
+
+\begin{figure}
+\centering
+\includegraphics[scale=1]{fig1.pdf}
+\caption{%
+Two-dimensional $y$-cut of the geometry. The domain has the
+dimensions $L_x \times L_y \times H$. The bottom plate, at $\hat{z}=0$,
+has $\theta=1$. The top plate is divided into stripes of conducting
+($\theta=0$) and insulating ($\partial_z \theta = 0$) regions.}
+\label{figure1}
+\end{figure}
+
+There are limitations on the value of $f$. As each stripe has to be an integer
+number of grid points, only integer multiples of the grid resolution are
+valid. In addition, the width of all stripes summed should fit inside the
+system, e.g. the width in grid points should exactly be the number of grid
+points in the x-direction. This results in a total of 18 different pattern
+frequencies. For the smallest possible frequency, $f=1$, we have one
+conducting and one insulating stripe, which both have a width of 180 grid
+points. The pattern with the largest frequency, $f=90$, has 90 stripe pairs
+where each stripe has a width of two grid points. In this \docname we will use
+the wavenumber $k_x = \left( 2 \pi f \right) / L_x$, to describe the stripe
+distribution.
+
+To give an idea of how the flow in such a system looks like, two different
+instantaneous snapshots of the RB system with two different stripe frequencies
+are shown in \reff{figure2}. Both cases have exactly the same conducting
+and insulating areas, but a different stripe pattern. In section
+\ref{mixedTwoDimensions}, we also vary the BC in y-direction, while keeping
+both the insulating and conducting areas equal, which results in a
+checkerboard pattern.
+
+\begin{figure}
+\centering
+\includegraphics[width=0.46\textwidth]{fig2a.pdf}
+\qquad
+\includegraphics[width=0.46\textwidth]{fig2b.pdf}
+\caption{%
+Two 3D visualizations of the instantaneous temperature field with
+different pattern frequencies applied to the top boundary.  $\ell_C=0.5$,
+$\Ray=10^8$ and $\Pran=1$ for both cases.
+Only the extremes of the temperature are shown, such that
+hot fluid is shown in red while
+the cold fluid has a blue color. At the boundary, this results that the
+conducting regions are blue and the insulating regions transparent.
+The left visualization shows $f=4$, four
+insulating stripes and four conducting stripes. The right visualization
+shows five times as many stripe pairs, with $f=20$.  Plumes of colder
+fluid are ejected primarily from the conducting areas for $f=4$ while for
+$f=20$ the plumes also eject on areas below insulating regions.  }
+\label{figure2}
+\end{figure}%
+
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Results}\label{VariationPattern}%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{The effect of the number of stripes}\label{NumberofStripes}%
+In this subsection we present results of a series of simulations in which we
+varied the number of stripes while keeping $\ell_C = 1/2$. Four sets of cases
+were run for $\Ray = 10^7$, $10^8$, and $10^9$ and $\Pran = 1$ and $10$.
+%
+%%%%%%%%%%%% Nus(Ra) %%%%%%%%%%%%%
+%
+\begin{figure}
+\centering
+\subfloat{%
+    \includegraphics{fig3a.pdf}%
+\label{figure:raVSnus}%
+}
+\subfloat{%
+    \includegraphics{fig3b.pdf}%
+\label{figure:raVSnusra}%
+}
+\caption{%
+(a) Nusselt number $Nu$  and (b)
+compensated Nusselt number $NuRa^{-0.3}$  against $Ra$ for various $f$ and
+$Pr=1$. The markers show the actual results while the dotted lines
+indicate the trend between these simulations. $\ell_C$ was fixed to
+$\ell_C=0.5$ for all simulations.}
+\label{figure:raVSnusboth}%
+\end{figure}%
+
+First we show in \reff{figure:raVSnus} the curves of $\Nuss$($\Ray$) for
+the fully conducting case and three striped cases with $f=$ 1, 10, and 90.
+The markers show the actual results from the simulations and the dotted lines
+indicate the trend between the measurements.  From this figure we see that the
+scaling does not differ significantly between all cases and all curves are
+almost parallel.  We do see a strong dependence on the wavenumber of the
+pattern.  For $f=1$, we computed that $\Nuss$ is approximately $2/3$ of the
+fully conducting case.  Increasing $f$ results in a larger $\Nuss$ and the
+values almost converge with the fully conducting case.  Both the $f=90$ and
+$f=10$ cases are relatively closer to the fully conducting case at $\Ray=10^7$
+than at $\Ray=3 \times 10^9$. Our interpretation is that, due to the lower
+$\Ray$, the thermal BL is thicker which results in larger horizontal
+conduction of heat.  As all curves have approximately the same scaling we have
+compensated the data using $\Ray^{-0.3}$, which is shown in 
+\reff{figure:raVSnusra}.  Here it is clearly visible that for low $\Ray$, the
+$f=90$ case is almost as efficient as the fully conducting case, but the
+differences increase with increasing $\Ray$.  The two extreme cases, $f=1$ and
+the fully conducting case, follow a similar trend, however, the $f=1$ case is
+shifted to a lower, less efficient level.  Both figures clearly show that an
+increase in wavenumber of the pattern results in an increase in $\Nuss$.
+
+
+To make this point even more clear, we plotted $\Nuss$($k_x$) in 
+\reff{figure3a}.  All datasets show a clear $k_x$ dependence: $\Nuss$ quite
+strongly increases with $k_x$.  The gray area indicates the data points for
+which the width of the stripes $L_p$ is smaller than the thermal boundary
+layer thickness $\lambda_T$, which can be estimated as $\lambda_T = H / (2
+\Nuss)$.  Ripesi \text{et al}. showed that the heat transfer monotonically
+increases with increasing $k_x$ until $L_p$ is comparable to $\lambda_T$.  A
+similar trend is visible for $\Ray=\num{1e7}$ and $\Ray=\num{1e8}$ even if the
+$\Ray=\num{1e7}$ case shows minor increases in heat transfer when $L_p$ is
+further decreased beyond $\lambda_T$.  The change in $\Pran$ from $\Pran=1$ to
+$\Pran=10$ does not have a significant effect for the heat transfer, at least
+not for $\Ray = 10^8$, for which the two datasets are practically overlapping.
+This behavior is similar to the standard Rayleigh-B\'enard case, in which the
+$\Pran$ of $\Nuss$ is also weak \citep{Ahlers2009}.
+
+
+To perform a better comparison between the different $\Ray$, we normalize the
+resulting $\Nuss$ using $\Nuss_{fc}$, the Nusselt number of the fully conducting
+case.  The normalized $\Nuss$ for different stripe configurations are shown in
+\reff{figure3b}.  We see the same trend for all $\Ray$ and $\Pran$.  At
+the lowest $k_x$, in which we only have a single conducting and single
+insulating stripe, the2effective $\Nuss$ is approximately two-thirds of the
+fully conducting case.  When the number of stripes, i.e. $k_x$, is increased,
+we see that for all tested $\Ray$ and $\Pran$, the Nusselt number slowly
+converges to almost the fully conducting case.  So remarkably even if only
+half of the plate is conducting, it can be almost as effective as if the plate
+is fully conducting.  In this compensated plot it is also clearly visible that
+for the largest $k_x$ of $\Ray=\num{1e7}$, for which $L_p$ goes below the size
+of $\lambda_T$, the heat transfer is still increasing.
+
+%
+%%%%%%%%%%%% Nus(kx) %%%%%%%%%%%%%
+%
+
+\begin{figure}
+\centering
+\subfloat{
+    \includegraphics{fig4a.pdf}
+\label{figure3a}
+}
+\subfloat{
+    \includegraphics{fig4b.pdf}
+\label{figure3b} }
+\caption{%
+(a) Nusselt number $\Nuss$ for various $\Ray$
+and $\Pran$ versus pattern wavenumber $k_x$. The shaded area shows the
+data points for which the stripe width is smaller than the thermal
+boundary layer. (b) The same data but normalized by $\Nuss_{fc}$. The dark
+points are the same as in the shaded area of 4a. For both plots, the error
+bars shows the statistical convergence error.}
+\label{figure3}
+\end{figure}
+
+The differences between the different $\Ray$ are not so clear at the lowest
+$k_x$; however, for a slight increase of $k_x$ we see that the curves order
+themselves.  $\Ray = 10^9$ increases slightly slower with $k_s$ when comparing
+it to the $\Ray = 10^8$ case.  The $\Ray = 10^7$ case increases slightly
+faster than the $\Ray = 10^8$ case and it ends at 99.7\% of the fully
+conducting case for the largest number of stripes used.  The explanation for
+this trend is the difference in boundary layer thickness, which decreases when
+we increase $\Ray$.  The boundary layer controls the heat transport from the
+bulk to the conducting region.  Below the insulating region, this heat
+transport must also go in the horizontal direction.  By increasing $\Ray$ and
+thus decreasing the thickness of the boundary layer, the same amount of heat
+needs to be conducted through a smaller 'channel'.  This explains the
+decreased effectiveness with increasing $\Ray$.
+
+In these sets of simulations, we also compare $\Pran = 10$ with $\Pran = 1$
+for $\Ray = 10^8$.  The results for both $\Pran$ are quite similar.  At lower
+$k_x$, we see that the $\Pran =10$ case has only a marginally larger $\Nuss$
+and these differences become smaller with increasing $k_x$ and are within the
+uncertainty of the simulation.
+
+%
+%%%%%%%%%%%% bulk temp / insulating region temp %%%%%%%%%%%%%
+%
+Figure\,\ref{figure4a} shows the average bulk temperature of the fluid plotted
+against the wavenumber.  This average was computed over the horizontal plane
+at mid-height of the system.  The effect is similar to what we see for
+$\Nuss/\Nuss_{fc}$ in \reff{figure3b}.  At the lowest $k_x$ the average
+bulk temperature has increased to about $2/3$.  In that case top plate is
+split in half and only one half is contributing to heat transfer.  While
+ignoring the adiabatic area, we can divide the conducting areas into three
+equally sized parts with two parts on the bottom plate and one on the top
+plate.  Using the same reasoning to that used for the symmetric case, we
+obtain the following equality for the average bulk temperature: $\theta_{bulk}
+= \frac{2}{3} \theta_{bottom} + \frac{1}{3} \theta_{top} = 2/3$.  As with
+$\Nuss/\Nuss_{fc}$, we see that the average bulk temperature approaches the
+fully conducting case of $\theta_{bulk}=1/2$ for increasing $k_x$.  When
+comparing the various curves, they all appear similar, with a maximum
+difference of about 0.02 to 0.03 in the average bulk temperature.
+Unfortunately, similar experiments do not report their average
+temperature \citep{Wang2017} and a comparison to their calculations with large-wavelength
+imperfect boundary conditions is impossible.
+
+\begin{figure}
+\centering
+\subfloat{
+    \includegraphics[width=0.48\textwidth]{fig5a.pdf}%
+\label{figure4a}
+}
+%\quad
+\subfloat{
+    \includegraphics[width=0.48\textwidth]{fig5b.pdf}
+\label{figure4b}
+}
+\caption{(a) Temperature of the bulk fluid $\theta_{bu}$
+for various $\Nuss$ and $\Pran$ versus pattern wavenumber $k_x$. (b)
+Temperature below the insulating stripes $\theta_{in}$, averaged over the
+entire insulating area, for different $\Ray$ and $\Pran$ against pattern
+wavenumber $k_x$.}
+\label{figure4}
+\end{figure}%
+
+In \reff{figure4b} we show the horizontally and time averaged
+temperature below the insulating area of the top plate as function of the
+wavenumber.  At the lowest wavenumber (top plate split into equal conducting
+and insulating regions), we see that the averaged temperature is almost equal
+for all $\Ray$ and $\Pran$.  When increasing $k_x$, a dependence on $\Ray$
+emerges.  After just a few additional divisions in stripes, all curves order
+themselves according to $\Ray$, with the lower $\Ray$ values approaching the
+lower bounds faster than the larger ones.  At the largest $k_x$, the
+temperature difference between $\Ray =10^9$ and $\Ray=10^7$ is 15\%.  As the
+temperature below the insulating area is slightly higher than for the area
+below the conducting area because of lack of cooling, we can conclude that for
+larger $\Ray$, the whole top layer is, on average, hotter than for the lower
+$\Ray$.
+
+These results suggest that it could be possible to account for the $\Nuss(k_x)$
+relationship by using corrected non-dimensional variables 
+\citep{Verzicco2004}. However, changing the (effective) thermal conductivity, ignores
+the heterogeneities of the plate which is the main source of the observed
+behavior. In \reff{figure5}, we show the corrected Nusselt number
+$\Nuss^*=\Nuss/\theta^*$ against the corrected Rayleigh number $\Ray^*=\Ray
+\theta^*$, where $\theta^*$ is the non-dimensional average temperature
+difference given by $\theta^*=L_{p2}\theta_{in}/L_p$. No logical ordering can
+be seen, and as expected, an attempt to describe the results with some global
+effective thermal conductivity fails.
+
+
+\begin{figure}
+\centering
+\includegraphics[width=0.46\textwidth]{fig6a.pdf}
+\includegraphics[width=0.46\textwidth]{fig6b.pdf}
+\caption{%
+(a) Corrected Nusselt number against compensated Rayleigh number
+for selected pattern wavelengths. (b): Compensated and corrected
+Nusselt number against corrected Rayleigh number.
+No collapse, or natural ordering of the 
+curves can be seen.  }
+\label{figure5}
+\end{figure}
+
+
+%
+%%%%%%%%%% 2d fft
+For horizontal slices of the instantaneous temperature field, a discrete
+two-dimensional Fourier transform can be applied, which is defined as:
+%
+\begin{equation} \Theta(\gamma) = \left| \left< \sum\limits_{y=0}^{n_y-1}
+\sum\limits_{x=0}^{n_x-1} e^{-i\left[ (2\pi / n_x)j_x x + (2\pi/n_y)j_y
+y\right]} \theta(x,y,t) \right>_{t} \right|_{j_x=\gamma,j_y=0} \end{equation}
+%
+where $\left< . \right>_t$ is the time average and the $j_y$ mode was set to
+zero, leaving a single wavenumber parameter $\gamma \equiv j_x$.
+Using the described method on the horizontal slice just below the top boundary
+we can identify the imprint the stripe structured BC leave on the flow.
+
+Using the Fourier transform we one identify the imprint of the BC just below
+the top boundary in the flow itself.  Using this distinct signature we can
+find out how far this pattern is still present once one moves away from the
+boundary wall.  The distance from the top boundary wall is indicated using
+$\hat{z}$.  In \reff{figure7}, we see the compensated spectra for $f=1$
+at five different planes for increasing $\hat{z}$.  The colors are used to
+identify the different modes and except for \reff{figure7}d)
+are compiled using a single dataset (odd or even value). 
+When moving away from the wall, we see that the two distinct
+modes approach each other and just outside the boundary layer, at
+$\hat{z}=0.970$, it is hard to distinct the two different curves at all.
+Within the boundary layer the signature of the pattern almost completely fades
+away and in the bulk flow is not visible at all.  The difference between the
+Fourier transform just outside the BL ($\hat{z}=0.970$) and at mid-height of
+the system ($\hat{z}=0.5$) is marginal.  These findings hold for the complete
+range of $f$.
+
+It is quite remarkable that even for the most extreme case at $f=1$, the
+pattern is not visible in the bulk region.  This means that in the boundary
+layer, in which conduction dominates, the temperature differences of the top
+plate are averaged such that an effective, slightly higher cold plate is seen
+by the bulk flow.
+
+\begin{figure}
+\centering
+\includegraphics{fig7.pdf}
+\caption{%
+Premultiplied two-dimensional Fourier transform of a horizontal slice at
+various distances from the top boundary wall, averaged in time.  Except
+for \reff{figure7}d, each figure is compiled using a single dataset.
+The colors help to identify the different modes which are present in each
+single dataset and are identified by the odd or even value.  a) At the closest
+gridpoint ($\hat{z}=0.998$), the two different modes are clearly visible.  b)
+One gridpoint further ($\hat{z}=0.996$), the distinction slowly fades.  c)
+While still inside the boundary layer at $\hat{z}=0.992$, both modes are
+practically overlapping.  d) Just outside the boundary layer, it is impossible
+to distinguish two different modes at all.  As a reference, we also show the
+spectrum at the centre of the system ($\hat{z}=0.5$).  }
+\label{figure7}
+\end{figure}
+
+%
+%%%%%%%%%% double-sided pattern
+\subsection{Patterns on both plates}\label{BothPlates}
+Until now we only applied the insulating and conducting patches to the top
+boundary.  This resulted in a normalized heat transfer of approximately
+two-thirds for the lowest $k_x$ and almost the fully conducting case at the
+highest $k_x$.  Using a simple argument we could indeed rationalize the value
+of two-thirds for the normalized heat transfer for the lowest wavenumber.  If
+we now apply the same pattern also on the bottom plate, can we still get to
+the same efficiency as if we only applied the pattern to the top boundary
+wall?
+
+The comparison of the normalized Nusselt number $\Nuss/\Nuss_{fc}$ between the
+single- and double-sided case is shown in \reff{figure8a}.  For the
+lowest $k_x$ we see that the double-sided case conducts heat at approximately
+half the rate of the fully conducting case.  This is in line with the
+expectations, as we only have half the effective area on both boundary walls.
+What also is visible is that the curve for the double-sided case is steeper
+than the curve of the single-sided case and therefore reducing the difference
+between both cases with increasing $k_x$.  For the largest $k_x$ the heat
+transfer of this system again is almost as efficient as if it were fully
+conducting.  There is only half of the area available for heat entering the
+system and only half the area for heat leaving the system.  Still, the same
+amount of heat transfer as if the system were fully conducting is achieved.
+For the single-sided case as for the double-sided one, for the lowest $k_x$
+the efficiency is not exactly $2/3$ and $1/2$ but slightly above these values.
+The geometry of the double-sided case can be decomposed into a regular
+Rayleigh-B\'enard cell and a neutral domain, both with identical dimensions,
+positioned next to each other.  The top and bottom boundaries from this
+neutral domain are both insulating and heat can only enter and exit from the
+sides.  As we have periodic BC in the horizontal direction, both sides of the
+regular RB area are connected to this neutral domain which acts as a buffer
+for heat.  This extra buffer is the only difference and thus the cause for the
+small difference.
+
+\begin{figure}
+\centering
+\subfloat{%
+    \includegraphics{fig8a.pdf}%
+\label{figure8a}
+}
+%\qquad
+\subfloat{%
+    \includegraphics{fig8b.pdf}
+\label{figure8b}
+}
+\label{figure8}
+\caption{%
+(a) Comparison of the normalized Nusselt
+number $\Nuss/\Nuss_{fc}$ for the single and double-sided cases with
+$\Ray=10^8$, $\Pran=1$, and $\ell_C=0.5$.  For the lowest $k_s$ we see
+that the system is about $2/3$ and $1/2$ of the fully conducting case for
+the single and double-sided case, respectively.  (b) Average temperature
+above or below the insulating stripes for the single- and double-sided
+case with $\Ray=10^8$, $\Pran=1$, and $\ell_C=0.5$.  The dashed line shows
+the average bulk temperature, calculated at mid-height for the double-sided
+system.}
+\end{figure}
+
+The average temperature just below or above the insulating boundaries are
+shown against $k_x$ in \reff{figure8b}.  The difference in temperature
+below the top insulating boundary between the single-sided case, shown in
+green cirlces , and the double-sided case shown in orange squares is only
+significant at the lowest $k_x$.  Only at the lower $k_x$, the single-sided
+system is hotter, just below the boundary.  At larger $k_x$, the asymmetry
+does not make a difference on the temperatures and both temperatures converge
+to the conducting plate temperature.  In the same plot, we also show the
+temperature just above the insulating area of the bottom plate and the bulk
+temperature.  For the double-sided case for the lowest $k_x$, the top, bottom,
+and bulk temperatures are very similar.  This indicates that for the lowest
+$k_x$ all the fluid in neutral domain, the large area confined by the
+insulating bottom and top plate, has approximately the same temperature and
+hardly contributes to the heat transfer.  This fully agrees with
+$\Nuss/\Nuss_{fc}\approx 0.5$ seen in \reff{figure8a}.  The bulk
+temperature of the double-sided case stays approximately 0.5 for the full
+range of $k_x$, as must hold for a symmetric system.  Temperatures above the
+bottom boundary and below the top boundary are also symmetric with respect to
+the bulk temperature confirming statistical convergence of our calculations.
+As for the single-sided case, \reff{figure8b} shows that for the largest
+$k_x$ the temperature close to the insulating areas are very close to their
+conducting counterpart.  The heat conduction in the boundary layer makes the
+bulk fluid see an almost perfect heat conductor.
+
+%
+%%%%%%%%%% Varying the insulating fraction
+\subsection{Variation of the insulating fraction}\label{VariationFraction} All
+systems which we discussed until now had a conducting area with the size equal
+to the insulating area, i.e. $\ell_C = 1/2$.  We can now vary $\ell_C$ and
+look into its effect on the heat transfer.  In the previous simulations we
+used $k_x$ as the wavenumber and this sets the number of insulating and
+conducting stripes in the two-dimensional case.  The width of the system,
+$L_x$, was divided in $f$ equal pairs of these stripes.  In the previous
+subsection, these divisions were of equal areas.  Now we will change the ratio
+of areas to make the top plate less and less conducting.  For these
+simulations we fixed $k_x = 9$, $\Ray=10^8$ and $\Pran=1$.  Then the ratio
+between the insulating and conducting area was varied, namely we simulated
+$\ell_C = 1.0, 0.875, 0.75, 0.625, 0.50,$ and $0.25$, thus gradually reducing
+the conducting area of the top plate from 85\% to 25\%.
+
+{ Figure\,\ref{figure9} shows the results of the simulations, as well 
+as the data from the rectangular tank of from experiments \citep{Wang2017}
+(extrapolated from Table 1).}
+In the case where
+only 12.5\% of the area is insulating we see that the difference with the fully
+conducting case is almost negligible and within the statistical error.
+Increasing the amount of insulating area to 25\%, the heat transfer is still
+more than 90\% of the fully conducting case.  Even at 50\% conducting region
+we still get the effectiveness of 80\%.  At the largest ratio of 75\%
+insulating fraction we are still above 60\% of the heat transfer of the fully
+conducting case.  In other words, the effective area of the top plate is only
+a quarter of the fully conducting case but still we get a system that is only
+40\% less effective. 
+
+{ The rectangular tank in the experiment \citep{Wang2017} has patches 
+with dimensions comparable to the system size. Two data points for the
+two different
+wavelengths are available for each $\ell_C$. 
+The data point with a smaller wavelength (`ACA' and `CAC' patterns)
+corresponds to the higher values of $Nu$. While
+the points at $\ell_C=1/3$ show a considerably lower $Nu$ 
+than the DNS with a much smaller wavelength, 
+a relatively good match between DNS and the experiment 
+for $\ell_C=2/3$ provides some indication that at higher 
+values of $\ell_C$ the saturation wavenumbers, for which $Nu \approx Nu_{fc}$ 
+are smaller.}
+
+\begin{figure}
+\centering
+\subfloat{%
+    \includegraphics{fig9a.pdf}%
+\label{figure9a}
+}
+\subfloat{
+    \includegraphics{fig9b.pdf}%
+\label{figure9b}
+}
+\caption{%
+(a) Normalized Nusselt number
+$\Nuss/\Nuss_{fc}$ for various fraction $\ell_C$ of the conducting plate,
+while keeping the pattern frequency $f=9$, $\Ray=10^8$, and $\Pran=1$ (green circles),
+and the rectangular tank experimental data \citep{Wang2017} (orange squares).
+(b) Average temperature just below the insulating area $\theta_{in}$ and
+average bulk temperature $\theta_{bu}$, both plotted against $\ell_C$.
+Other parameters are the same as for (a).}
+\label{figure9}%
+\end{figure}%
+
+Figure\,\ref{figure9b} shows two different temperatures, namely, the average
+temperature just below the insulating region $\theta_{in}$ and the average
+bulk temperature $\theta_{bu}$ measured at mid-height of the system.  For
+$\ell_C=0.85$, $\theta_{in}$ is very close to zero, i.e. the top wall
+temperature.  This is consistent with $\Nuss$ nearly having the value of the
+conducting case (\reff{figure9a}).  Also the bulk temperature is very
+close to the fully conducting case $\theta=0.5$.  When $\ell_C$ is decreased,
+making the top plate less and less conducting, $\theta_{in}$ increases
+gradually, reaching $\theta_{in}=0.5$ when $\ell_C=0.25$.  This equals the
+bulk temperature in a fully conducting system.  However, when $\ell_C$ is
+decreased, also the bulk temperature gradually increases and nearly reaches
+0.6 for $\ell_C=0.25$.  This rise in the bulk temperature is much slower than
+the rise in the temperature above the insulating area, meaning that the
+gradient between insulating regions at the plate and the bulk decreases and
+thus does the heat transfer, see \reff{figure9a}.  Even though these
+simulations were conducted using only $f=9$, one expects similar trends to
+apply for other values of $f$.  From the previous simulations we found that
+when increasing $f$, $\Nuss/\Nuss_{fc}$ will rise and $\Theta_{ins}$ will
+decrease.  The same response can be achieved by increasing $\ell_C$ as we
+increase the conducting area and approach the case of the fully conducting
+system.
+
+%
+%%%%%%%%%% Varying the insulating fraction
+\subsection{Mixed insulating and conducting patterns in two
+dimensions}\label{mixedTwoDimensions} Until now, all patterns that have been
+applied to the top and bottom boundary wall were one-dimensional stripe-like
+patterns.  We only varied the width of the patches and the ratio between the
+insulating and conducting fractions.  In this subsection we add an additional
+spatial dependence to these patterns to make them checkerboard-like:
+%
+\begin{equation}
+\begin{aligned}
+\theta(\hat{x},\hat{y},\hat{z}=1) &= 0 &&
+\sin(\pi\hat x) \sin(\pi\hat y) \geq 0 \\ 
+%
+\partial_z
+\theta(\hat{x},\hat{y},\hat{z}=1) &= 0 &&
+\sin(\pi\hat x) \sin(\pi\hat y) < 0 \\ 
+%    
+\theta(\hat{x},\hat{y},\hat{z}=0) &= 1 &&
+\forall \hat{x},\hat{y}.
+\end{aligned} \label{eq:boundaryConditions2d}
+\end{equation}
+
+A schematic of a set of four patches, two insulating and two conducting, is
+shown in \reff{figure12}.  The dimensions of both types of patches were
+kept equal, i.e. $L_{px1} = L_{py1} = L_{px2} = L_{py2}$, meaning
+$\ell_c=1/2$.
+
+\begin{figure}
+\centering
+\includegraphics{fig10.pdf}
+\caption{%
+Top view of the top plate boundary conditions with applied checkerboard
+pattern ($f=1$).  $L_{px}$ and $L_{py}$ are the horizontal and vertical
+dimensions of a set of patches.  The set itself is divided in two
+insulating (white) and two conducting (black) areas, all with equal
+dimensions: $L_{px1} = L_{py1} = L_{px2} = L_{py2}$.}
+\label{figure12}
+\end{figure}
+
+As we took both horizontal dimensions to be equal, we define a single
+frequency $f$ in both directions.  The plate is divided in $f$ sets of patches
+which have dimensions $L_{px}=L_{py}=L_p$.  When $f=1$ the complete boundary
+consists of a single set of patches.  By increasing $f$ to 2, the plate will
+consist of four sets of four patches each.  To give a further impression how
+the temperature fields resulting from these boundary conditions look like, two
+visualizations of instantaneous temperature fields for $f=4$ and $f=20$ are
+shown in \reff{figure13}.  The visualizations show respectively 16 and
+400 sets of patches, which each consists of two insulating and two conducting
+areas. 
+
+\begin{figure}
+\centering%
+\includegraphics[width=0.46\textwidth]{fig11a.pdf}
+\qquad
+\includegraphics[width=0.46\textwidth]{fig11b.pdf}
+\caption{%
+Two 3D visualizations of the instantaneous temperature field with
+different pattern frequencies at the top boundary.
+Only the extremes of the temperature are shown, such that
+hot fluid is shown in red while
+the cold fluid has a blue color. At the boundary, this results that the
+conducting regions are blue and the insulating regions transparent.
+For both visualizations,
+$\Ray=10^8$ and $\Pran=1$. The left visualization shows $f=4$, which
+results in 16 sets of patches containing each two insulating patches and
+two conducting patches. The right visualization has $f=20$ which results
+in 400 sets of patches. Hot plumes rise from the bottom plate while cold
+plumes are ejected from the top boundary.}
+\label{figure13}
+\end{figure}
+
+\begin{figure}
+\centering
+\subfloat{%
+    \includegraphics{fig12a.pdf}
+\label{figure14a}
+}
+\subfloat{%
+    \includegraphics{fig12b.pdf}%
+\label{figure14b}%
+}
+\caption{%
+(a) Normalized Nusselt number $\Nuss/\Nuss_{fc}$ for 1D and 2D patterning
+versus $k_x$ for $\Ray=10^8$ and
+$\Pran=1$.  The error bars show the statistical convergence error.  (b)
+Average temperature $\theta_{in}$ just below the insulating area and
+average bulk temperature $\theta_{bu}$, both as function of $k_x$ for the
+1D and 2D patternings.  The $\Ray$ and $\Pran$ are the same as for (a).  }
+\label{figure14}%
+\end{figure}%
+
+Figure\,\ref{figure14a} shows the normalized Nusselt number $\Nuss/\Nuss_{fc}$
+for the 1D- (stripe) and 2D (checkerboard) patterns as function of $k_x$.  For
+these cases, $\Ray=10^8$, $\Pran=1$ and the error bars indicate the
+statistical convergence error.  On first sight, the heat transfer is not that
+different when applying one-dimensional or two-dimensional patterning.  At the
+lowest division, where we have divided the system into two or four areas for
+the 1D and 2D case respectively, the difference is negligible.  Also at the
+highest value of $k_x$, the difference is inside statistical errors and seems
+insignificant. 
+
+On first glance, the 1D stripe pattern and the 2D checkerboard pattern may
+seem idealized representations. However, all other stripe and rectangular
+checkerboard patterns fall within these extreme cases, as the stripe pattern
+has $L_{px}/L_{py} \to \infty$ (or conversely $\to 0$), while for the
+checkerboard pattern $L_{px}/L_{py}=1$.  Our work shows that, for the
+relatively small wavelengths considered here, the shape of these patterns do
+not have a significant influence on the flow dynamics. While we do not expect
+$\ell_C$ to considerably affect this statement, larger wavelength patterns
+could show some dependence on their shape. In experiments,
+the patches have wavelengths comparable to the system height
+and their distribution considerably affects the flow structure \citep{Wang2017}. Here, we
+consider wavelengths that are much smaller, affecting the flow only below the
+thermal boundary layer thickness, and reducing the Nusselt number.  The
+largest wavelength considered in this work is still smaller than the smallest
+wavelength in the rectangular tank \citep{Wang2017}. There appear to be two
+clear regimes: the large patch regime, which show a clear influence on the
+flow dynamics and whose effect is likely to be shape-dependent, and the small
+patch regime, which only affect the boundary layers and thus the heat
+transfer. While there must exist a cross-over regime between both, it appears
+to be just outside the wavelengths we are considering. 
+
+When we look at $\theta_{in}$, the temperature just below the insulating
+region in \reff{figure14b}, we see a similar trend.  The temperature
+just below the insulating region is on average always lower for the 2D pattern.
+This is even the case for the higher and lower limit of $k_x$.  The average
+temperature just below the conducing area is very close to zero, regardless of
+which $k_x$.  Therefore, the distance of the colder regions is shorter for the
+2D- as for the 1D-pattern.  This also explains that $\theta_{in}$ for the 2D
+case is slightly lower when compared to the 1D case.  The bulk temperature for
+both the 1D and 2D cases are almost identical which means that the change in
+pattern has no effect on this quantity.  From these results we can conclude
+that the impact of the two different patterns is very similar, and the
+quantitative differences between stripe and checkerboard patterns are at most
+small.
+
+\section{Summary and conclusions}\label{Conclusion}
+
+A series of DNS of turbulent Rayleigh-B\'enard convection using mixed
+conducting- and insulating boundary conditions were conducted.  First, we
+applied a stripe-like pattern on the top boundary and varied the amount of
+stripes while keeping conduction-insulation ratio constant at $\ell_C=1/2$.
+When the top plate is divided in half, $\Nuss$ has a value of approximately
+two-thirds of the fully conducting case.  By increasing the frequency of the
+pattern, the $\Nuss$ also increases, with a maximum value very close to as if
+it were fully conducting.  With only half the effective conducting area on the
+top plate, when applying a dense pattern, the effect of the insulating patches
+almost completely vanishes.  An increase in $\Ray$ results only in a marginal
+decrease in $\Nuss/\Nuss_{fc}$ for the largest $f$.  This shift towards the
+fully conducting efficiency as seen with the Nusselt number when increasing
+the pattern frequency is also visible in $\theta_{bulk}$ and $\theta_{ins}$.
+
+Using a two-dimensional Fourier transform, calculated from a horizontal slice
+of the instantaneous temperature it is possible to identify the imprint of the
+boundary conditions inside the flow.  By comparing different spectra, each
+calculated from a horizontal slice slightly further away from the top boundary
+wall, the penetration depth of the boundary conditions inside the flow was
+investigated.  The imprint of the striped pattern slowly fades away when
+moving from the top wall towards the border of the thermal boundary layer.
+Outside of the thermal boundary layer the imprint has completely vanished,
+even for the extreme case $f=1$.  The thermal boundary layer masks the actual
+boundary, including all insulating imperfections and presents a new effective
+boundary to the bulk flow.  In the thermal boundary layer, the heat is
+conducted to the conducting areas.  This transport is more efficient when the
+pattern frequency is large.  A lower Rayleigh number increases the thickness
+of the boundary layer and thereby, also increases the effectiveness of the
+heat transport.
+
+Extending the pattern to both, the top and bottom boundary wall, resulted in
+similar behavior for the heat transfer and the average temperature just below the
+insulating area.  The primary difference is for the lowest pattern frequency
+where we practically have only half a RB cell and we find a Nusselt number
+with half the value of the fully conducting case.  Adding an additional
+dimension to the pattern, creating a checkerboard-like pattern, also did not
+change the behavior significantly.
+
+Our results demonstrate that small and even large imperfections in the
+temperature boundary conditions are barely felt in the system dynamics in
+terms of global heat transfer and local temperature measurements.  Only in
+extreme cases as a half-and-half conducting and adiabatic plate was the effect
+significant. The effect of imperfect temperature boundary conditions of fully
+turbulent RB is weaker than the effects of velocity boundary conditions in
+two-dimensional RB \citep{vanderPoel2014}, or the effect of rough elements near the
+boundaries \citep{Tisserand2011}. It is not yet clear if these boundary imperfections
+lead to significant changes in the dynamics of the bulk flow and this remains
+an open question for future works.
+
+Going beyond the scope of the present \docname, we mention that other simulations
+and experiments \citep{Cooper2013,Wang2017} show that with even
+larger adiabatic patches, changes in the flow topology can happen due to the
+arrangement of patches.
+The patches can also be varied in time, which is a way to control the bulk
+temperature or to fine tune the heat transfer, which is relevant for many
+industrial applications.
+The combination of shear and
+mixed boundary conditions could also play a critical role in the system
+dynamics \citep{Whitehead2015}.
+Understanding the deeper reasons for this behavior may lead to better models
+for natural convection for geo- and astro-physically relevant flows.
+
+\graphicspath{{fig/}}
+

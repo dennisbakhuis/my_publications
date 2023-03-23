@@ -1,0 +1,263 @@
+\documentclass[
+    tikz,%
+    border={0mm 0mm 0mm 0mm},% left bottom right top
+]{standalone}
+\usepackage{pgfplots}
+\usepackage{amsmath}
+\usepackage{siunitx}
+
+\usetikzlibrary{decorations.markings}
+
+\definecolor{azure}{rgb}{0.0, 0.5, 1.0}
+\definecolor{awesome}{rgb}{1.0, 0.13, 0.32}
+\definecolor{emerald}{rgb}{0.31, 0.78, 0.47}
+\definecolor{darkorange}{rgb}{1.0, 0.55, 0.0}
+\definecolor{greenpigment}{rgb}{0.0, 0.65, 0.31}
+\definecolor{redpigment}{rgb}{0.93, 0.11, 0.14}
+
+\definecolor{myblue}{RGB}{57,106,203}
+\definecolor{myorange}{RGB}{218,124,48}
+\definecolor{mygreen}{RGB}{62,150,81}
+\definecolor{myred}{RGB}{204,37,41}
+
+%\definecolor{color1}{RGB}{166,118,29}
+%\definecolor{color2}{RGB}{217,95,2}
+%\definecolor{color3}{RGB}{231,41,138}
+%\definecolor{color4}{RGB}{117,112,179}
+%\definecolor{color5}{RGB}{27,158,119}
+%\definecolor{color6}{RGB}{102,166,30}
+%\definecolor{color7}{RGB}{230,171,2}
+
+% remove arrows from second axis
+\pgfplotsset{ every non boxed x axis/.append style={x axis line style=-},
+     every non boxed y axis/.append style={y axis line style=-}}
+
+\def\AddLabel(#1,#2)#3{\node [align = center] at (axis cs: #1,#2) {#3};}%
+
+% Style to select only points from #1 to #2 (inclusive)
+\pgfplotsset{select coords between index/.style 2 args={
+    x filter/.code={
+        \ifnum\coordindex<#1\def\pgfmathresult{}\fi
+        \ifnum\coordindex>#2\def\pgfmathresult{}\fi
+    }
+}}
+
+\newcommand{\etal}{\mbox{\emph{et al.\ }}}
+
+\begin{document}
+\begin{tikzpicture}
+
+% Draw exact dimensions bounding box
+\newcommand{\figwidth}{6.745cm}
+\newcommand{\figheight}{4.8375cm} % golden ratio
+\draw[use as bounding box, white] (0,0) rectangle (\figwidth,\figheight);
+
+ \begin{axis}[
+    xshift=1.325cm,
+    yshift=0.9cm,
+    clip mode=individual,
+    xmin=0, xmax=100,
+    ymin=0.75,ymax=1.21,
+    enlargelimits=false,
+    axis on top=true,
+    xlabel=$\alpha$,
+    ylabel=$\tau / \tau_{\alpha=0}$,
+    legend pos=south west,
+    legend style={draw=none, 
+                  font=\footnotesize,
+                  fill=none,
+                 },
+    legend cell align=left,
+    width = 6.70cm,
+    height = 5.0cm,
+    ylabel near ticks, 
+    xtick pos=left,
+  ]
+
+  \addplot[
+    forget plot,
+    mark=none,
+    black,
+    dashed] coordinates {(0,1) (100,1)};
+
+  \addplot+[
+    color=mygreen,
+    mark=o,
+    only marks,
+    very thick,
+    line join=round,
+   ] table [
+    x = alpha,
+    y = torquenorm,
+    col sep=comma,
+] {alpha_torque_fic=17.5_set=1.csv};
+  \addlegendentryexpanded{data set 1}
+
+  \addplot+[
+    color=myorange,
+    mark=o,
+    only marks,
+    very thick,
+    line join=round,
+   ] table [
+    x = alpha,
+    y = torquenorm,
+    col sep=comma,
+] {alpha_torque_fic=17.5_set=2.csv};
+  \addlegendentryexpanded{data set 2}
+
+  %%%%%%%%%%%%%%%
+  % Water Added %
+  %%%%%%%%%%%%%%%
+  \addplot+[
+    color=myblue,
+    no marks,
+    very thick,
+    line join=round,
+    select coords between index={0}{18}
+   ] table [
+    x = alpha100,
+    y = torquenorm,
+    col sep=comma,
+    ] {alphasweep_wateradded_alpha=73_toAlpha=50.csv};
+  \addlegendentryexpanded{Sweep 1}
+  \addplot+[
+    forget plot,
+    color=myblue,
+    no marks,
+    dashed,
+    very thick,
+    line join=round,
+    select coords between index={18}{20},
+    postaction={decorate, decoration={markings,
+      mark=at position 0.218 with {\arrow{<};},
+      mark=at position 0.778 with {\arrow{<};}
+    }}
+   ] table [
+    x = alpha100,
+    y = torquenorm,
+    col sep=comma,
+    ] {alphasweep_wateradded_alpha=73_toAlpha=50.csv};
+  \addplot+[
+    forget plot,
+    color=myblue,
+    no marks,
+    very thick,
+    line join=round,
+    select coords between index={20}{300}
+   ] table [
+    x = alpha100,
+    y = torquenorm,
+    col sep=comma,
+    ] {alphasweep_wateradded_alpha=73_toAlpha=50.csv};
+
+  %%%%%%%%%%%%%
+  % oil Added %
+  %%%%%%%%%%%%%
+  \addplot+[
+    color=myred,
+    no marks,
+    very thick,
+    line join=round,
+    select coords between index={0}{74}
+   ] table [
+    x = alpha100,
+    y = torquenorm,
+    col sep=comma,
+    ] {alphasweep_oiladded_alpha=64_toAlpha=73.csv};
+  \addlegendentryexpanded{Sweep 2}
+  \addplot+[
+    forget plot,
+    color=myred,
+    no marks,
+    dashed,
+    very thick,
+    line join=round,
+    select coords between index={74}{76},
+    postaction={decorate, decoration={markings,
+      mark=at position 0.218 with {\arrow{>};},
+      mark=at position 0.778 with {\arrow{>};}
+    }}
+   ] table [
+    x = alpha100,
+    y = torquenorm,
+    col sep=comma,
+    ] {alphasweep_oiladded_alpha=64_toAlpha=73.csv};
+  \addplot+[
+    forget plot,
+    color=myred,
+    no marks,
+    very thick,
+    line join=round,
+    select coords between index={76}{100}
+   ] table [
+    x = alpha100,
+    y = torquenorm,
+    col sep=comma,
+    ] {alphasweep_oiladded_alpha=64_toAlpha=73.csv};
+
+% error indicators
+%\draw [solid, black] (axis cs:6e12,4.622) -- (axis cs:7e12,4.622) -- 
+%(axis cs:6.48e12,4.622) -- (axis cs: 6.48e12,4.772) -- (axis cs:6e12,4.772)
+%-- (axis cs:7e12,4.772);
+
+%\draw [solid, black] (axis cs:6e12,4.6) -- (axis cs:7e12,4.6) -- (axis cs:6.48e12,4.6) --
+%(axis cs: 6.48e12,4.772) -- (axis cs:6e12,4.772) -- (axis cs:7e12,4.772);
+
+%\draw [solid, black] (axis cs:2e11,4.3) -- (axis cs:2.3e11,4.3) -- (axis cs:2.14e11,4.3) --
+%(axis cs: 2.14e11,4.378) -- (axis cs:2e11,4.378) -- (axis cs:2.3e11,4.378);
+
+ \end{axis}
+
+\node at (-1.1 , 3.2) {(a)};
+ 
+ %\begin{loglogaxis}[
+    %xshift=1.325cm,
+    %yshift=0.9cm,
+    %clip mode=individual,
+    %xmin=229769.63526406392, xmax=2568902.61807889,
+    %ymin=100,ymax=600,
+    %%axis y line*=none,
+    %enlargelimits=false,
+    %axis on top=true,
+    %width = 6.7cm,
+    %height = 5.0cm,
+    %%ytick={100,200,300,400,500,600},
+    %ytick={1000,2000},
+    %ylabel near ticks, 
+    %yticklabel={
+      %\pgfkeys{/pgf/fpu=true}
+      %\pgfmathparse{exp(\tick)}%
+      %\pgfmathprintnumber[fixed relative, precision=3]{\pgfmathresult}
+      %\pgfkeys{/pgf/fpu=false}
+    %},
+    %axis x line*=top,
+    %xtick pos=right,
+    %xtick={3e5, 5e5, 1e6, 2e6},
+    %xticklabels={0.3, 0.5, 1.0, 2.0},
+    %minor xtick={2e5, 3e5, 4e5, 5e5, 6e5, 7e5, 8e5, 9e5, 1e6,2e6},
+    %xlabel=$\text{Re}_\text{i}$,
+    %x label style={
+        %at={(0.5,1.25)},
+        %anchor=south,
+    %},
+    %legend style={draw=none, 
+                  %font=\scriptsize,
+                  %fill=none,
+                 %},
+    %legend style={at={(1.03, 0)}, anchor=south east},
+    %legend cell align=left,
+    %legend entries={%
+        %van Gils \etal 2013,
+        %Verschoof \etal 2016,
+        %van den Berg \etal 2005}
+  %]
+  %\node at (axis cs: 2.5e6, 820) {$\times 10^6$};
+
+%\addlegendimage{only marks, black, mark=o}
+%\addlegendimage{mark=0, black, dashed}
+%\addlegendimage{only marks, black, mark=square}
+
+ %\end{loglogaxis}
+\end{tikzpicture} 
+\end{document}

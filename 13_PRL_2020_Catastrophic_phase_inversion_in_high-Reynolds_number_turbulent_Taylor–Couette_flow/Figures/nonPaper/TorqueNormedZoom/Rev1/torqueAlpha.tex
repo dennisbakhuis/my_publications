@@ -1,0 +1,224 @@
+\documentclass[
+    tikz,%
+    border={0mm 0mm 0mm 0mm},% left bottom right top
+]{standalone}
+\usepackage{pgfplots}
+\usepackage{amsmath}
+\usepackage{siunitx}
+
+\usetikzlibrary{decorations.markings}
+\usepgfplotslibrary{units}
+
+\definecolor{azure}{rgb}{0.0, 0.5, 1.0}
+\definecolor{awesome}{rgb}{1.0, 0.13, 0.32}
+\definecolor{emerald}{rgb}{0.31, 0.78, 0.47}
+\definecolor{darkorange}{rgb}{1.0, 0.55, 0.0}
+\definecolor{greenpigment}{rgb}{0.0, 0.65, 0.31}
+\definecolor{redpigment}{rgb}{0.93, 0.11, 0.14}
+
+\definecolor{myblue}{RGB}{57,106,203}
+\definecolor{myorange}{RGB}{218,124,48}
+\definecolor{mygreen}{RGB}{62,150,81}
+\definecolor{myred}{RGB}{204,37,41}
+\definecolor{indigo}{rgb}{0.29, 0.0, 0.51}
+
+% remove arrows from second axis
+\pgfplotsset{ every non boxed x axis/.append style={x axis line style=-},
+     every non boxed y axis/.append style={y axis line style=-}}
+
+\def\AddLabel(#1,#2)#3{\node [align = center] at (axis cs: #1,#2) {#3};}%
+
+% Style to select only points from #1 to #2 (inclusive)
+\pgfplotsset{select coords between index/.style 2 args={
+    x filter/.code={
+        \ifnum\coordindex<#1\def\pgfmathresult{}\fi
+        \ifnum\coordindex>#2\def\pgfmathresult{}\fi
+    }
+}}
+
+\newcommand{\etal}{\mbox{\emph{et al.\ }}}
+
+\begin{document}
+\begin{tikzpicture}
+
+% Draw exact dimensions bounding box
+\newcommand{\figwidth}{6.745cm}
+\newcommand{\figheight}{4.8375cm} % golden ratio
+\draw[use as bounding box, white] (0,0) rectangle (\figwidth,\figheight);
+
+ \begin{axis}[
+    xshift=1.325cm,
+    yshift=1.05cm,
+    clip mode=individual,
+    xmin=48, xmax=75,
+    ymin=0.74,ymax=1.21,
+    enlargelimits=false,
+    axis on top=true,
+    xlabel=$\alpha$,
+    ylabel=$\tau / \tau_{\alpha=0}$,
+    legend pos=south west,
+    legend style={draw=none, 
+                  font=\footnotesize,
+                  fill=none,
+                 },
+    legend cell align=left,
+    width = 6.70cm,
+    height = 5.0cm,
+    ylabel near ticks, 
+    xtick pos=left,
+    x unit=\si{\percent},
+  ]
+
+  \addplot[
+    forget plot,
+    mark=none,
+    black,
+    dashed] coordinates {(0,1) (100,1)};
+
+  \addplot+[
+    color=mygreen,
+    mark=o,
+    only marks,
+    very thick,
+    line join=round,
+   ] table [
+    x = alpha,
+    y = torquenorm,
+    col sep=comma,
+] {alpha_torque_fic=17.5_set=1.csv};
+
+  \addplot+[
+    color=myorange,
+    mark=o,
+    only marks,
+    very thick,
+    line join=round,
+   ] table [
+    x = alpha,
+    y = torquenorm,
+    col sep=comma,
+] {alpha_torque_fic=17.5_set=2.csv};
+
+  %%%%%%%%%%%%%%%
+  % Water Added %
+  %%%%%%%%%%%%%%%
+  \addplot+[
+    color=myblue,
+    no marks,
+    very thick,
+    line join=round,
+    select coords between index={0}{18}
+   ] table [
+    x = alpha100,
+    y = torquenorm,
+    col sep=comma,
+    ] {alphasweep_wateradded_alpha=73_toAlpha=50.csv};
+  \addplot+[
+    forget plot,
+    color=myblue,
+    no marks,
+    dashed,
+    very thick,
+    line join=round,
+    select coords between index={18}{20},
+    postaction={decorate, decoration={markings,
+      mark=at position 0.218 with {\arrow{<};},
+      mark=at position 0.778 with {\arrow{<};}
+    }}
+   ] table [
+    x = alpha100,
+    y = torquenorm,
+    col sep=comma,
+    ] {alphasweep_wateradded_alpha=73_toAlpha=50.csv};
+  \addplot+[
+    forget plot,
+    color=myblue,
+    no marks,
+    very thick,
+    line join=round,
+    select coords between index={20}{300}
+   ] table [
+    x = alpha100,
+    y = torquenorm,
+    col sep=comma,
+    ] {alphasweep_wateradded_alpha=73_toAlpha=50.csv};
+
+  %%%%%%%%%%%%%%
+  %% oil Added %
+  %%%%%%%%%%%%%%
+  \addplot+[
+    color=myred,
+    no marks,
+    very thick,
+    line join=round,
+    select coords between index={0}{74}
+   ] table [
+    x = alpha100,
+    y = torquenorm,
+    col sep=comma,
+    ] {alphasweep_oiladded_alpha=64_toAlpha=73.csv};
+  \addplot+[
+    forget plot,
+    color=myred,
+    no marks,
+    dashed,
+    very thick,
+    line join=round,
+    select coords between index={74}{76},
+    postaction={decorate, decoration={markings,
+      mark=at position 0.218 with {\arrow{>};},
+      mark=at position 0.778 with {\arrow{>};}
+    }}
+   ] table [
+    x = alpha100,
+    y = torquenorm,
+    col sep=comma,
+    ] {alphasweep_oiladded_alpha=64_toAlpha=73.csv};
+  \addplot+[
+    forget plot,
+    color=myred,
+    no marks,
+    very thick,
+    line join=round,
+    select coords between index={76}{100}
+   ] table [
+    x = alpha100,
+    y = torquenorm,
+    col sep=comma,
+    ] {alphasweep_oiladded_alpha=64_toAlpha=73.csv};
+
+ \end{axis}
+
+\begin{scope}[
+    xshift=2.5cm,
+    yshift=1.7cm
+]
+
+    % 1 cSt 
+    \node at (0.8cm/3, 1.0cm) (1) {};
+    \node at (0.8cm,   1.0cm) (2) {};
+    \node at (0.8cm/3*2, 1.0cm) (3) {};
+    \node[myorange, very thick] at (1) {\pgfuseplotmark{o}};
+    \node[mygreen, very thick] at (3) {\pgfuseplotmark{o}};
+    \path[black] (2) node[right=-1mm]{\scriptsize $\mu=$ 1 cSt};
+
+     %oil added
+    \node at (0.0cm, 0.7cm) (1) {};
+    \node at (0.5cm, 0.7cm) (2) {};
+    \node at (0.6cm, 0.7cm) (3) {};
+    \draw[myred, very thick] (1) -- (2);
+    \path[black] (3) node[right=-1mm]{\scriptsize $\alpha = 63\% \rightarrow 73\%$};
+
+    %%%% water added
+    \node at (0.0cm, 0.4cm) (1) {};
+    \node at (0.5cm, 0.4cm) (2) {};
+    \node at (0.6cm, 0.4cm) (3) {};
+    \draw[myblue, very thick] (1) -- (2);
+    \path[black] (3) node[right=-1mm]{\scriptsize $\alpha = 74\% \rightarrow 50\%$};
+
+\end{scope}
+
+\node at (-1.1 , 3.2) {(a)};
+ 
+\end{tikzpicture} 
+\end{document}

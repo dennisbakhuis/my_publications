@@ -1,0 +1,254 @@
+\documentclass[
+    tikz,%
+    border={0mm 0mm 0mm 0mm},% left bottom right top
+]{standalone}
+\usepackage{pgfplots}
+\usepackage{amsmath}
+\usepackage{siunitx}
+\usetikzlibrary{arrows,decorations.markings}
+
+\usepgfplotslibrary{units}
+
+\definecolor{azure}{rgb}{0.0, 0.5, 1.0}
+\definecolor{awesome}{rgb}{1.0, 0.13, 0.32}
+\definecolor{emerald}{rgb}{0.31, 0.78, 0.47}
+\definecolor{darkorange}{rgb}{1.0, 0.55, 0.0}
+\definecolor{greenpigment}{rgb}{0.0, 0.65, 0.31}
+\definecolor{redpigment}{rgb}{0.93, 0.11, 0.14}
+
+\definecolor{myblue}{RGB}{57,106,177}
+\definecolor{myorange}{RGB}{218,124,48}
+\definecolor{mygreen}{RGB}{62,150,81}
+\definecolor{myred}{RGB}{204,37,41}
+\definecolor{mypurple}{RGB}{107,76,154}
+\definecolor{mypurple}{RGB}{107,76,154}
+
+\definecolor{indigo}{rgb}{0.29, 0.0, 0.51}
+\definecolor{iris}{rgb}{0.35, 0.31, 0.81}
+
+%\definecolor{color1}{HTML}{f9ed69}
+%\definecolor{color2}{HTML}{f08a5d}
+%\definecolor{color3}{HTML}{b83b5e}
+%\definecolor{color4}{HTML}{6a2c70}
+
+%\definecolor{color1}{HTML}{006BA6}
+%\definecolor{color2}{HTML}{0496FF}
+%\definecolor{color3}{HTML}{FFBC42}
+%\definecolor{color5}{HTML}{E03171}
+%\definecolor{color6}{HTML}{FF91BF}
+
+% wel aardig
+\definecolor{color1}{RGB}{1,120,180}
+\definecolor{color2}{RGB}{66,206,227}
+\definecolor{color3}{RGB}{1,160,44}
+\definecolor{color4}{RGB}{78,223,138}
+\definecolor{color5}{HTML}{E03171}
+\definecolor{color6}{HTML}{FF91BF}
+\definecolor{color7}{rgb}{0.35, 0.31, 0.81}
+\definecolor{color8}{rgb}{0.35, 0.31, 0.81}
+\definecolor{color9}{rgb}{0.29, 0.0, 0.51}
+
+% sequential
+\definecolor{seqa}{RGB}{204,235,197}
+\definecolor{seqb}{RGB}{165,218,181}
+\definecolor{seqc}{RGB}{123,204,196}
+\definecolor{seqd}{RGB}{67,162,202}
+\definecolor{seqe}{RGB}{8,104,172}
+
+% remove arrows from second axis
+\pgfplotsset{ every non boxed x axis/.append style={x axis line style=-},
+     every non boxed y axis/.append style={y axis line style=-}}
+
+\def\AddLabel(#1,#2)#3{\node [align = center] at (axis cs: #1,#2) {#3};}%
+
+% Style to select only points from #1 to #2 (inclusive)
+\pgfplotsset{select coords between index/.style 2 args={
+    x filter/.code={
+        \ifnum\coordindex<#1\def\pgfmathresult{}\fi
+        \ifnum\coordindex>#2\def\pgfmathresult{}\fi
+    }
+}}
+
+\newcommand{\etal}{\mbox{\emph{et al.\ }}}
+
+\begin{document}
+\begin{tikzpicture}
+
+% Draw exact dimensions bounding box
+\newcommand{\figwidth}{6.745cm}
+\newcommand{\figheight}{4.8375cm} % golden ratio
+\draw[use as bounding box, white] (0,0) rectangle (\figwidth,\figheight);
+
+ \begin{axis}[
+    xshift=1.325cm,
+    yshift=1.05cm,
+    clip mode=individual,
+    xmin=40, xmax=80,
+    ymin=0.72,
+    ymax=1.5,
+    enlargelimits=false,
+    axis on top=true,
+    xlabel=$\alpha$,
+    ylabel=$\tau / \tau_{\alpha=0}$,
+    %legend pos=south west,
+    legend style={draw=none, 
+                  font=\footnotesize,
+                  fill=none,
+                 },
+    legend cell align=left,
+    legend style={at={(-0.01, 1)}, anchor=north west},
+    x unit=\si{\percent},
+    width = 6.70cm,
+    height = 5.0cm,
+    ylabel near ticks, 
+    xtick pos=left,
+  ]
+
+  \addplot[
+    forget plot,
+    mark=none,
+    black,
+    dashed] coordinates {(0,1) (100,1)};
+
+  \addplot[
+    forget plot,
+    mark=none,
+    black,
+    dashed] coordinates {(0,0.835) (100,0.835)};
+
+  %%%%%%%%%%%%%%%%%
+  %%% Water Added %
+  %%%%%%%%%%%%%%%%%
+  \addplot+[
+    color=seqe,
+    no marks,
+    very thick,
+    line join=round,
+   ] table [
+    x = alpha100,
+    y = torquenorm,
+    col sep=comma,
+    ] {alphasweep_wateradded_alpha=73_toAlpha=50.csv};
+    \addlegendentryexpanded{$f_{ic}=\SI{17.5}{\hertz}$}
+
+  \addplot+[
+    color=seqd,
+    no marks,
+    very thick,
+    line join=round,
+    solid,
+    %select coords between index={0}{18}
+   ] table [
+    x = alpha100,
+    y = torquenorm,
+    col sep=comma,
+    ] {alphasweep_wateradded_alpha=77_toAlpha=48_fic=15.csv};
+    \addlegendentryexpanded{$f_{ic}=\SI{15.0}{\hertz}$}
+
+  \addplot+[
+    color=seqc,
+    no marks,
+    very thick,
+    line join=round,
+    solid,
+    %select coords between index={0}{18}
+   ] table [
+    x = alpha100,
+    y = torquenorm,
+    col sep=comma,
+    ] {alphasweep_wateradded_alpha=74_toAlpha=40_fic=12.csv};
+    \addlegendentryexpanded{$f_{ic}=\SI{12.0}{\hertz}$}
+
+  %%%%%%%%%%%%%%%
+  %%% oil Added %
+  %%%%%%%%%%%%%%%
+  \addplot+[
+    color=seqe,
+    no marks,
+    very thick,
+    solid,
+    line join=round,
+   ] table [
+    x = alpha100,
+    y = torquenorm,
+    col sep=comma,
+    ] {alphasweep_oiladded_alpha=64_toAlpha=73.csv};
+
+  \addplot+[
+    color=seqd,
+    no marks,
+    very thick,
+    line join=round,
+    solid,
+    %select coords between index={0}{18}
+   ] table [
+    x = alpha100,
+    y = torquenorm,
+    col sep=comma,
+    ] {alphasweep_oiladded_alpha=67_toAlpha=78_fic=15.csv};
+
+  \addplot+[
+    color=seqc,
+    no marks,
+    very thick,
+    line join=round,
+    solid,
+    %select coords between index={0}{18}
+   ] table [
+    x = alpha100,
+    y = torquenorm,
+    col sep=comma,
+    ] {alphasweep_oiladded_alpha=65_toAlpha=77_fic=12.csv};
+
+
+\draw[thick, black, ->, >=stealth] (axis cs: 48, 0.8) -- (axis cs: 48, 1.1);
+\draw[thick, black, ->, >=stealth] (axis cs: 74.0, 1.18) -- (axis cs: 74.0, 0.9);
+ \end{axis}
+
+%\draw[thick, black, ->, >=stealth] (3.81cm, 1.25cm) -- (3.81cm, 2.50cm);
+%\draw[thick, black, ->, >=stealth] (5.15cm, 2.90cm) -- (5.15cm, 1.75cm);
+ 
+%\begin{scope}[
+    %xshift=1.3cm,
+    %yshift=4.30cm
+%]
+    %% 10 cSt 
+    %\node at (0.475cm, -0.6cm) (1) {};
+    %\node at (0.9cm,   -0.6cm) (2) {};
+    %\node[darkorange, very thick] at (1) {\pgfuseplotmark{diamond}};
+    %\path[black] (2) node[right=-1mm]{\footnotesize $\mu=$ 10 cSt};
+
+    %% 1 cSt 
+    %\node at (0.95cm/3, -0.9cm) (1) {};
+    %\node at (0.9cm,   -0.9cm) (2) {};
+    %\node at (0.95cm/3*2, -0.925cm) (3) {};
+    %\node[color1, very thick] at (1) {\pgfuseplotmark{o}};
+    %\node[color2, very thick] at (3) {\pgfuseplotmark{triangle}};
+    %\path[black] (2) node[right=-1mm]{\footnotesize $\mu=$ 1 cSt};
+
+    %% oil added
+    %\node at (0.00cm, -0.0cm) (1) {};
+    %\node at (0.55cm, -0.0cm) (2) {};
+    %\node at (0.40cm, -0.0cm) (4) {};
+    %\node at (0.95cm, -0.0cm) (5) {};
+    %\node at (0.9cm, -0.0cm) (3) {};
+    %\draw[darkorange, very thick] (1) -- (2);
+    %\draw[color6, very thick] (4) -- (5);
+    %\path[black] (3) node[right=-1mm]{\footnotesize $\alpha = \text{low} \rightarrow \text{high}$};
+
+    %%% water added
+    %\node at (0.00cm, -0.3cm) (1) {};
+    %\node at (0.55cm, -0.3cm) (2) {};
+    %\node at (0.40cm, -0.3cm) (4) {};
+    %\node at (0.95cm, -0.3cm) (5) {};
+    %\node at (0.9cm, -0.3cm) (3) {};
+    %\draw[color8, very thick] (1) -- (2);
+    %\draw[color4, very thick] (4) -- (5);
+    %\path[black] (3) node[right=-1mm]{\footnotesize $\alpha = \text{high} \rightarrow \text{low}$};
+
+%\end{scope}
+
+%\node at (-1.1 , 3.2) {(a)};
+
+\end{tikzpicture} 
+\end{document}

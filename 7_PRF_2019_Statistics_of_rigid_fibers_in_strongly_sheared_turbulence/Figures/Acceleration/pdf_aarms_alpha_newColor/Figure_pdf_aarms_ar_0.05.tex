@@ -1,0 +1,95 @@
+\documentclass[tikz,border=5pt]{standalone}
+\usepackage{pgfplots}
+\usepackage{amsmath}
+\usepackage{siunitx}
+\usepackage{xcolor}
+
+% original colors
+\definecolor{color1}{RGB}{166,118,29}
+\definecolor{color2}{RGB}{217,95,2}
+\definecolor{color3}{RGB}{231,41,138}
+\definecolor{color4}{RGB}{117,112,179}
+\definecolor{color5}{RGB}{27,158,119}
+\definecolor{color6}{RGB}{102,166,30}
+\definecolor{color7}{RGB}{230,171,2}
+
+\begin{document}
+\begin{tikzpicture}
+  \begin{semilogyaxis}[
+    clip mode=individual,
+    xmin=-15,
+    xmax=15,
+    ymin=1e-7,
+    ymax=1,
+    enlargelimits=false,
+    axis on top=true,
+    xlabel=$a_r / \left< a_r^2 \right>^{1/2}$,
+    ylabel=$\text{PDF}$,
+    legend style={draw=none, 
+                  font=\footnotesize,
+                  fill=none,
+    },
+    legend style={at={(0.52, 0)}, anchor=south},
+    legend cell align=left,
+    reverse legend,
+    width = 6.2cm,
+    height = 5.7cm,
+    ylabel near ticks,
+    xtick={-15, -7.5, 0, 7.5, 15},
+  ]
+
+  \addplot+[
+    color=color1,
+    mark=none,
+    very thick,
+    line join=round,
+   ] table [
+    x = bins,
+    y = hist,
+    col sep=comma,
+] {ar_0.005_8.27e+04.csv};
+\addlegendentryexpanded{Re$_i = \num{8.3e4}$}
+
+  \addplot+[
+    color=color3,
+    mark=none,
+    very thick,
+    line join=round,
+   ] table [
+    x = bins,
+    y = hist,
+    col sep=comma,
+] {ar_0.005_1.65e+05.csv};
+\addlegendentryexpanded{Re$_i = \num{1.7e5}$}
+
+  \addplot+[
+    color=color5,
+    mark=none,
+    very thick,
+    line join=round,
+   ] table [
+    x = bins,
+    y = hist,
+    col sep=comma,
+] {ar_0.005_2.48e+05.csv};
+\addlegendentryexpanded{Re$_i = \num{2.5e5}$}
+
+  \addplot+[
+    color=black,
+    mark=none,
+    very thick,
+    dashed,
+    forget plot,
+    line join=round,
+   ] table [
+    x = bins,
+    y = hist,
+    col sep=comma,
+] {curvefitMordant200415.csv};
+\node at (axis cs: -15.4, 1) [anchor=north west]{$\alpha = \SI{0.05}{\percent}$};
+
+ \end{semilogyaxis}
+
+ 
+\end{tikzpicture} 
+\end{document}
