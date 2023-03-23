@@ -1,0 +1,366 @@
+% arara: pdflatex
+
+\documentclass[
+    tikz,%
+    border={0mm 0mm 0mm 0mm},% left bottom right top
+]{standalone}
+\usepackage{pgfplots}
+\usepackage{amsmath}
+\usepackage{siunitx}
+\usepackage{commath}
+
+\usetikzlibrary{arrows,decorations.markings}
+\usetikzlibrary{shapes.arrows}
+
+
+\usepgfplotslibrary{units}
+
+% remove arrows from second axis
+\pgfplotsset{ every non boxed x axis/.append style={x axis line style=-},
+     every non boxed y axis/.append style={y axis line style=-}}
+
+
+% % Style to select only points from #1 to #2 (inclusive)
+% \pgfplotsset{select coords between index/.style 2 args={
+%     x filter/.code={
+%         \ifnum\coordindex<#1\def\pgfmathresult{}\fi
+%         \ifnum\coordindex>#2\def\pgfmathresult{}\fi
+%     }
+% }}
+
+\definecolor{myblue}{RGB}{57,106,177}
+\definecolor{static}{RGB}{67,162,202}
+% \definecolor{static}{RGB}{74,159,202}
+% \definecolor{static}{RGB}{0,113,104}%Olijf groen
+% \definecolor{static}{RGB}{82,177,166}% light olive green
+% \definecolor{static}{RGB}{58,86,125}% dark blue
+
+% \definecolor{static}{RGB}{225,129,87}
+% \definecolor{static}{RGB}{252,141,89}
+% \definecolor{static}{RGB}{49,130,189}
+% \definecolor{static}{RGB}{49,163,84}
+
+
+\definecolor{addwater1}{RGB}{252,141,89}
+\definecolor{addwater2}{RGB}{253,204,138}
+
+\definecolor{addwater1}{RGB}{155,91,134}
+\definecolor{addwater2}{RGB}{209,144,163}
+
+\definecolor{addwater1}{RGB}{135,177,250}
+\definecolor{addwater2}{RGB}{88,133,230}
+
+
+% \definecolor{addwater1}{RGB}{251,106,74}
+% \definecolor{addwater2}{RGB}{242,177,151}
+
+% \definecolor{addwater1}{RGB}{178,171,210}
+% \definecolor{addwater2}{RGB}{128,115,172}
+
+\definecolor{zeroline}{RGB}{0.5,0.5,0.5}
+
+\definecolor{addoil1}{RGB}{194,230,153}
+\definecolor{addoil2}{RGB}{120,198,121}
+
+\definecolor{addoil1}{RGB}{104,204,108}
+\definecolor{addoil2}{RGB}{82,168,108}
+
+\definecolor{addoil1}{RGB}{247,149,124} % redish
+\definecolor{addoil2}{RGB}{224,90,78}
+
+% \definecolor{addoil1}{RGB}{155,91,134}
+% \definecolor{addoil2}{RGB}{209,144,163}
+
+% \definecolor{addoil1}{RGB}{210,160,92} % gold brown
+% \definecolor{addoil2}{RGB}{156,91,30}
+
+
+
+\definecolor{ambivalence}{RGB}{198,219,239}
+\definecolor{ambivalence}{RGB}{253,204,138}
+\definecolor{ambivalence}{RGB}{217,232,244}
+\definecolor{ambivalence}{RGB}{184,215,233}
+\definecolor{ambivalence}{RGB}{177,227,219}
+% \definecolor{ambivalence}{RGB}{194,230,153}
+% \definecolor{ambivalence}{RGB}{238,213,183}
+\definecolor{ambivalenceborder}{RGB}{248,233,220}
+\definecolor{ambivalenceborder}{RGB}{237,240,244}
+\newcommand{\ambiOpacity}{0.3}
+
+\def\nuwater{0.000000977827852}
+
+\DeclareRobustCommand\circled[1]{%
+            \tikz[
+              baseline=-1mm,
+            ]{%
+                \clip (0mm,-0.05mm) circle [radius=1.55mm];
+                \draw[black, line width=0.2mm]
+                   (0mm,-0.05mm) circle [radius=1.5mm];%
+                \node[black, anchor=center, scale=0.75, yshift=0.05mm]
+                (0mm,0mm) {#1};%
+            }}%
+
+\begin{document}
+\begin{tikzpicture}
+% Nature settings:
+% For guidance, Nature’s standard figure sizes are 89 mm (single column) and
+    % 183 mm (double column) and the full depth of the page is 247 mm.
+% Draw exact dimensions bounding box
+\newcommand{\figwidth}{8.64cm}
+\newcommand{\figheight}{5.5005cm}
+\newcommand{\goldenratio}{1.618033988749895}
+\newcommand{\axiswidth}{7.50cm}
+\newcommand{\axisheight}{\axiswidth/\goldenratio} % golden ratio
+\newcommand{\startx}{0.85cm}
+\newcommand{\starty}{0.83cm}
+
+\newcommand{\vmax}{3.5}
+
+\draw[use as bounding box, white] (0,0) rectangle (\figwidth,\figheight);
+
+ \begin{axis}[
+    xshift=\startx,
+    yshift=\starty,
+    clip mode=individual,
+    xmin=0, xmax=100,
+    ymin=0, ymax=\vmax,
+    enlargelimits=false,
+    axis on top=true,
+    xlabel=$\alpha$,
+    x unit=\si{\percent},
+    ylabel=$\nu_\text{eff} / \nu_\text{w}$,
+    width = \axiswidth,
+    height = \axisheight,
+    scale only axis,
+    ylabel near ticks,
+    minor tick num=1,
+    xlabel style={yshift=2.5mm},
+    ylabel style={yshift=-1mm},
+  ]
+
+    % ambivalence region
+    \draw[
+        rectangle,
+        left color=ambivalenceborder,
+        right color=ambivalence,
+        % draw=none,
+        opacity=\ambiOpacity,
+        line width=0.14mm,
+        draw opacity=1.0,
+        draw=none,
+        densely dotted,
+    ] (axis cs: 49, 0) rectangle (axis cs: 52, \vmax);
+    \draw[
+        rectangle,
+        fill=ambivalence,
+        opacity=\ambiOpacity,
+        draw=black,
+        line width=0.12mm,
+        draw opacity=1.0,
+        densely dashed,
+        draw opacity=0.9,
+    ] (axis cs: 52, 0) rectangle (axis cs: 72, \vmax);
+    \draw[
+        rectangle,
+        left color=ambivalence,
+        right color=ambivalenceborder,
+        % draw=none,
+        opacity=\ambiOpacity,
+        line width=0.14mm,
+        draw opacity=1.0,
+        draw=none,
+        densely dotted,
+    ] (axis cs: 72, 0) rectangle (axis cs: 76, \vmax);
+    % \draw[
+    %     black,
+    %     line width=0.15mm,
+    %     densely dotted
+    %     ]  (axis cs: 49, 0) -- (axis cs: 49, \vmax);
+    % \draw[
+    %     black,
+    %     line width=0.15mm,
+    %     densely dotted
+    %     ]  (axis cs: 76, 0) -- (axis cs: 76, \vmax);
+
+  % zero line
+  \addplot[
+    forget plot,
+    mark=none,
+    color=zeroline,
+    dashed] coordinates {(0,1) (100,1)};
+
+  % Jump arrows
+  \draw[thick, gray, ->, >=latex, line width=1pt]
+          (5.75cm, 4.40cm) --
+          node[right]{\circled{\footnotesize{J1}}}
+          ++(0cm, -3.52cm);
+  \draw[thick, gray, ->, >=latex, line width=1pt]
+          (4.10cm, 0.80cm) --
+          node[right]{\circled{\footnotesize{J2}}}
+          ++(0cm, 2.50cm);
+
+  % static
+  \addplot+[
+    color=static,
+    mark=o,
+    only marks,
+    solid,
+    very thick,
+    line join=round,
+   ] table [
+    x = alpha,
+    y expr = \thisrow{nu} / \nuwater,
+    col sep=comma,
+] {apparentviscosity1cSt.csv};
+
+  %%%%%%%%%%%%%%%%%
+  %%% Water Added %
+  %%%%%%%%%%%%%%%%%
+
+  \addplot+[
+    color=myblue,
+    densely dotted,
+    no marks,
+    % very thick,
+    line width=0.5mm,
+    line join=round,
+   ] table [
+    x expr = \thisrow{alpha} * 100,
+    y expr = \thisrow{nueff},
+    col sep=comma,
+    % ] {additional/torque_70to35_compact_droplet_eff_curveoftruth.csv};
+    ] {additional/torque_70to35_compact_droplet_eff_Lineoftruth.csv};
+
+  \addplot+[
+    color=addwater2,
+    no marks,
+    very thick,
+    line join=round,
+    solid,
+    %select coords between index={0}{18}
+   ] table [
+    x = alpha100,
+    y expr = \thisrow{nucor} / \nuwater,
+    col sep=comma,
+    ] {alphasweep_from100to27.csv};
+
+  \addplot+[
+    color=addwater1,
+    no marks,
+    very thick,
+    line join=round,
+   ] table [
+    x = alpha100,
+    y expr = \thisrow{nucor} / \nuwater,
+    col sep=comma,
+    ] {alphasweep_from74to50.csv};
+
+
+  %%%%%%%%%%%%%%
+  %% oil Added %
+  %%%%%%%%%%%%%%
+  \addplot+[
+    color=addoil1,
+    no marks,
+    very thick,
+    line join=round,
+    solid,
+   ] table [
+    x = alpha100,
+    y expr = \thisrow{nucor} / \nuwater,
+    col sep=comma,
+    ] {alphasweep_from65to74.csv};
+
+  \addplot+[
+    color=addoil2,
+    no marks,
+    very thick,
+    line join=round,
+    solid,
+   ] table [
+    x = alpha100,
+    y expr = \thisrow{nucor} / \nuwater,
+    col sep=comma,
+    ] {alphasweep_from65to73.csv};
+
+  %%%%%%%%%%%
+  %% taylor %
+  %%%%%%%%%%%
+  % \addplot+[
+  %   color=green,
+  %   no marks,
+  %   very thick,
+  %   line join=round,
+  %  ] table [
+  %  x expr = \thisrow{aleft} * 100,
+  %   y = tayleft,
+  %   col sep=comma,
+  %   ] {taylorapprox.csv};
+  % \addplot+[
+  %   color=green,
+  %   no marks,
+  %   very thick,
+  %   line join=round,
+  %  ] table [
+  %  x expr = \thisrow{aright} * 100,
+  %   y = tayright,
+  %   col sep=comma,
+  %   ] {taylorapprox.csv};
+
+ \end{axis}
+
+% DR arrows
+\draw[thick, black, ->, >=latex, line width=1pt]
+        (1.2cm, 2.8cm) --
+        node[above]{\circled{a}}
+        ++(2.2cm, 1.15cm);
+\draw[thick, black, ->, >=latex, line width=1pt]
+        (8.2cm, 1.95cm) --
+        node[below]{\circled{b}}
+        ++(-1.7cm, -0.60cm);
+
+\begin{scope}[
+    xshift=0.950cm,
+    yshift=4.75cm
+]
+    % 1 cSt
+    \node at (0.475cm, +0.4cm) (1) {};
+    \node at (0.9cm,   +0.4cm) (2) {};
+    \node[static, very thick] at (1) {\pgfuseplotmark{o}};
+    \path[black] (2) node[right=-1mm]{Fixed $\alpha$};
+
+    % oil added
+    \node at (0.00cm, -0.0cm) (1) {};
+    \node at (0.55cm, -0.0cm) (2) {};
+    \node at (0.40cm, -0.0cm) (4) {};
+    \node at (0.95cm, -0.0cm) (5) {};
+    \node at (0.9cm, -0.0cm) (3) {};
+    \draw[addoil1, very thick] (1) -- (2);
+    \draw[addoil2, very thick] (4) -- (5);
+    \draw[black, thick, anchor=west] (0.8cm, 0cm) node
+        {$\dif{\alpha}/\dif{t} > 0$};
+
+    %% water added
+    \node at (0.00cm, -0.4cm) (1) {};
+    \node at (0.55cm, -0.4cm) (2) {};
+    \node at (0.40cm, -0.4cm) (4) {};
+    \node at (0.95cm, -0.4cm) (5) {};
+    \node at (0.9cm, -0.4cm) (3) {};
+    \draw[addwater1, very thick] (1) -- (2);
+    \draw[addwater2, very thick] (4) -- (5);
+    \draw[black, thick, anchor=west] (0.8cm, -0.4cm) node
+        {$\dif{\alpha}/\dif{t} < 0$};
+
+    %% additional measurement
+    \node at (0.10cm, -3.0cm) (1) {};
+    \node at (0.90cm, -3.0cm) (2) {};
+    \draw[myblue, line width=0.5mm, densely dotted, line join=round] (1) -- (2);
+    \draw[black, thick, anchor=west] (0.8cm, -3.0cm) node
+        {$\dif{\alpha}/\dif{t} < 0$ \footnotesize{($\SI{8}{\hertz}$)}};
+
+\end{scope}
+
+\node[black] at (1.8cm, 1.15cm) {$T=\SI{21}{\celsius}$};
+
+\end{tikzpicture}
+\end{document}

@@ -1,0 +1,108 @@
+\documentclass[tikz,border=5pt]{standalone}
+\usepackage{pgfplots}
+\usepackage{amsmath}
+\usepackage{siunitx}
+
+% Setup colorbrewer cycle list
+\usetikzlibrary{
+      pgfplots.colorbrewer,
+  }
+\pgfplotsset{
+    % define a `cycle list' for marker
+    cycle list/.define={my marks}{
+        every mark/.append style={solid,fill=\pgfkeysvalueof{/pgfplots/mark list fill}},mark=o\\
+        every mark/.append style={solid,fill=\pgfkeysvalueof{/pgfplots/mark list fill}},mark=square\\
+        every mark/.append style={solid,fill=\pgfkeysvalueof{/pgfplots/mark list fill}},mark=triangle\\
+        every mark/.append style={solid,fill=\pgfkeysvalueof{/pgfplots/mark list fill}},mark=diamond\\
+    },
+}
+
+\tikzset{>=latex}
+
+\newcommand{\vasymptote}[2][]{
+    \draw [densely dashed,#1] ({rel axis cs:0,0} -| {axis cs:#2,0}) -- ({rel axis cs:0,1} -| {axis cs:#2,0});
+}
+
+\usepgfplotslibrary{units}
+
+\begin{document}
+\begin{tikzpicture}
+  \begin{axis}[
+    clip mode=individual,
+    xmin=-90, xmax=90,
+    ymin=0,
+    ymax=0.0075,
+    enlargelimits=false,
+    axis on top=true,
+    xlabel=$\text{Orientation}$,
+    ylabel=$\text{PDF}$,
+    %x unit=\si{Degrees},
+    legend pos=south east,
+    legend style={draw=none, 
+                  font=\scriptsize,
+                  fill=none,
+    },
+    %legend style={at={(axis cs:-91, 0.06)}, anchor=north west},
+    legend cell align=left,
+    reverse legend,
+    width = 6.2cm,
+    height = 5.7cm,
+    ylabel near ticks,
+    % load a color `cycle list' from the `colorbrewer' library
+    cycle list/Dark2-4,
+    % mark list fill={.!75!white},  define fill color for the marker
+    % create new `cycle list` from existing `cycle list's and an
+    cycle multiindex* list={
+        Dark2-4
+            \nextlist
+        my marks
+            \nextlist
+        [3 of]linestyles
+            \nextlist
+        very thick
+            \nextlist
+    }
+  ]
+
+  %\pgfplotsset{cycle list shift=1}
+
+  \addplot+[
+    only marks,
+    %forget plot,
+   ] table [
+    x = centers,
+    y = pdf,
+    col sep=comma,
+] {pdf_anglec_dis0.05_complete.csv};
+\addlegendentryexpanded{$\alpha=\SI{0.05}{\percent}$, all}
+
+  %\pgfplotsset{cycle list shift=2}
+
+   \addplot+[
+    only marks,
+    %forget plot,
+   ] table [
+    x = centers,
+    y = pdf,
+    col sep=comma
+] {pdf_anglec_dis0.05_bulk.csv};
+\addlegendentryexpanded{$\alpha=\SI{0.05}{\percent}$, bulk}
+
+  \pgfplotsset{cycle list shift=2}
+
+   %\addplot+[
+    %only marks,
+    %%forget plot,
+   %] table [
+    %x = centers,
+    %y = pdf,
+    %col sep=comma
+%] {pdf_anglec_dis0.05_ICOCBL.csv};
+%\addlegendentryexpanded{$\alpha=\SI{0.05}{\percent}$, BL}
+
+%\node at (axis cs:1.3e11, 0.6) {(b)};
+
+ \end{axis}
+ 
+\end{tikzpicture} 
+\end{document}

@@ -15,7 +15,7 @@
 ## Intermediate documents:
 *.dvi
 *.xdv
-*-converted-to.*
+# *-converted-to.*
 # these rules might exclude image files for figures etc.
 # *.ps
 # *.eps
@@ -274,3 +274,7 @@ TSWLatexianTemp*
 
 # Makeindex log files
 *.lpz
+
+.DS_Store
+**\.DS_Store
+

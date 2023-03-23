@@ -1,0 +1,7 @@
+#!/bin/bash
+# convert pdf to eps
+# do: 'brew install ghostscript' first
+for fn in fig*.pdf
+do
+    gs -q -dNOCACHE -dNOPAUSE -dBATCH -dSAFER -sDEVICE=eps2write -sOutputFile=${fn%%.*}.eps $fn
+done

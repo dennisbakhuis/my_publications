@@ -1,0 +1,332 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% PhD Thesis template of Dennis Bakhuis       %
+% Based on a design from Sander Huisman       %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Title : Multi-phase wall-bounded turbulence %
+% Date  : 8th of October 2018                 %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Compiling is using arara, which is included %
+% in texlive 2012 or higher. Type arara in    %
+% the shell to check if it works:             %
+% command: arara thesis.tex                   %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% build chain (these lines are required):
+% arara: xelatex
+% arara: bibtex
+% arara: xelatex
+% arara: xelatex
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Main document start %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[
+    11pt,
+    a4paper,
+    twoside
+    ]{book} %A4 is overruled by the geometry package later
+
+\usepackage[
+    usenames,
+    dvipsnames
+    ]{xcolor}
+
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+
+\usepackage{titlesec}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+\usepackage{siunitx}
+\sisetup{separate-uncertainty = true}
+
+\usepackage{subfig}
+\usepackage[hang,flushmargin,symbol]{footmisc}
+
+\usepackage[font=small]{caption}
+
+\usepackage{tikz}
+\usepackage{commath}
+\usetikzlibrary{plotmarks}
+\usetikzlibrary{backgrounds, shapes, shapes.geometric}
+% Bibliography
+% \usepackage[square,numbers]{natbib}
+\bibliographystyle{jasanum}
+\newcommand{\citep}[1]{\cite{#1}}
+\newcommand{\citet}[1]{Ref. \cite{#1}}
+
+%%%%%%%%%%%%%%%%%
+% Custom colors %
+%%%%%%%%%%%%%%%%%
+\definecolor{linkcolor}{rgb}{0,0,0} % All clickable links
+\definecolor{urlcolor}{rgb}{0,0,0} % All clickable url
+\definecolor{citecolor}{rgb}{0,0,0} % All clickable citations
+\definecolor{ChapterNumber}{rgb}{1,1,1} % Chapter number on chapter title page
+\definecolor{ChapterText}{rgb}{1,1,1} % Chapter number on chapter title page
+\definecolor{ChapterBackground}{cmyk}{0.5798,0.0947,0.0367,0.0} % back ground
+% New colors
+\definecolor{ChapterNumber}{rgb}{0,0,0} % Chapter number on chapter title page
+\definecolor{ChapterText}{rgb}{0,0,0} % Chapter number on chapter title page
+\definecolor{ChapterBackground}{rgb}{1,1,1} % back ground
+\definecolor{footnotelinecolor}{rgb}{0.5,0.5,0.5} % back ground
+\definecolor{footnotelinecolor}{rgb}{0.2,0.2,0.2} % back ground
+\definecolor{footnotetextcolor}{rgb}{0.3,0.3,0.3} % back ground
+\definecolor{footnotetextcolor}{rgb}{0.2,0.2,0.2} % back ground
+\definecolor{footnotenotsymbolcolor}{rgb}{0.0,0.0,0.0} % back ground
+
+\usepackage{fontspec} % custom fonts (compile with xe(la)tex)
+\usepackage[nottoc]{tocbibind} % include or not include elements in TOC
+
+\usepackage{xeCJK}
+\setCJKmainfont{SimSun}
+
+\usepackage{geometry}
+ % change a4 sizes to thesis-size
+\setlength{\paperwidth}{17cm}
+\setlength{\paperheight}{24cm}
+\usepackage{lscape} % landscape page
+%\usepackage[figuresright]{rotating}
+
+\usepackage{afterpage}
+\usepackage[pagecolor=white]{pagecolor} %change color of pages
+
+\usepackage{placeins} % floatbarrier
+\usepackage{framed}   %for quotes and stuff
+
+\usepackage{marginnote}
+
+%%%%%%%%%%%%%%%%%%%
+% Custom commands %
+%%%%%%%%%%%%%%%%%%%
+\newcommand{\makered}[1]{\textcolor{red}{#1}} %used to insert red text
+\newcommand{\makeblue}[1]{\textcolor{blue}{#1}} %used to insert blue text
+
+% turn off hyphenation
+\tolerance=1
+\emergencystretch=\maxdimen
+\hyphenpenalty=10000
+\hbadness=10000
+
+% Used for adding links in mono-spaced font:
+\newcommand{\publink}[1]{\href{#1}{\texttt{[Link]}}}
+
+% \setlength{\parindent}{0mm}
+\setlength{\parindent}{5mm}
+
+ %new environment that is a packed version of an itemize:
+\newenvironment{packeditemize}{
+\begin{itemize}
+  \setlength{\itemsep}{1pt}
+  \setlength{\parskip}{0pt}
+  \setlength{\parsep}{0pt}
+}{\end{itemize}}
+
+% turn on/off star wars footnotes (by commenting out)
+\def\starwarsfootnotes{starwarsfootnotes}
+% Setup starwars footnote or circles
+\ifdefined\starwarsfootnotes
+    % Star wars Footnote settings
+    \newcommand\blfootnote[1]{%
+      \begingroup
+      \renewcommand\thefootnote{}\footnote{#1}%
+      \addtocounter{footnote}{-1}%
+      \endgroup
+    } 
+    \newcommand{\swsymsize}{2.5mm}
+    \newcommand{\swfnsymsize}{2.0mm}
+\else
+    % footnote with colored star, text, and line
+    \renewcommand{\thefootnote}{%
+        \ifcase\value{footnote}\or{$\circ$}\or{$\odot$}\or
+            {$\circledcirc$}\or{$\circledast$}\or($\infty$)
+        \fi
+    }
+    % footnotesymbol to star
+    % \renewcommand{\thefootnote}{\fnsymbol{footnote}} 
+    % change color of only footnote symbol
+    \makeatletter
+    \renewcommand\@makefnmark{%
+        \hbox{%
+            \@textsuperscript{%
+                \normalfont%
+                \color{footnotenotsymbolcolor}%
+                \@thefnmark%
+            }%
+        }%
+    }%
+    \makeatother
+\fi
+\renewcommand{\footnoterule}{%
+  \color{footnotelinecolor}
+  \kern -3pt
+  \hrule width \textwidth height 1pt
+  \kern 2pt
+}
+
+\newcommand{\thesistitle}{Multiphase wall-bounded turbulence}
+\newcommand{\thesistitledutch}{Meerfasen wandbegrensde turbulentie}
+\renewcommand{\bibname}{References}
+
+\newcommand\Nus{\text{Nu}}
+\newcommand\Tay{\text{Ta}}
+\newcommand\Ta{\text{Ta}}
+\newcommand\rey{\text{Re}}
+\newcommand\Ray{\text{Ra}}  % Rayleigh number
+\newcommand\Rey{\text{Re}}  % Reynolds number
+\newcommand\Pran{\text{Pr}} % Prandtl number, cf TeX's \Pr product
+\newcommand\Nuss{\text{Nu}} % Nusselt number
+\newcommand\Nuw{\text{Nu}_\omega}
+\newcommand\nue{\nu_\text{eff}}
+\newcommand\omegai{\omega_\text{ic}} % capital subscript?
+\newcommand\omegao{\omega_\text{oc}} % small caps look a bit friendlier…
+\newcommand\ri{r_\text{ic}}
+\newcommand\ro{r_\text{oc}}
+% needed for chapter headers / will be redefined
+\newcommand{\mychaptertitle}{}
+\newcommand{\mychaptershorttitle}{}
+\newcommand{\mychapterauthors}{}
+\newcommand{\mychapterabstract}{}
+\newcommand{\mychaptermark}{}
+\newcommand{\mychapterlabel}{}
+\newcommand{\mychaptericon}{}
+%referencing
+\newcommand{\refc}[1]{chapter\,\ref{#1}}
+\newcommand{\refC}[1]{Chapter\,\ref{#1}}
+\newcommand{\refsec}[1]{section\,\ref{#1}}
+\newcommand{\refSec}[1]{Section\,\ref{#1}}
+\newcommand{\reff}[1]{figure\,\ref{#1}}
+\newcommand{\refF}[1]{Figure\,\ref{#1}}
+\newcommand{\refe}[1]{equation\,\ref{#1}}
+% more stuff
+\DeclareRobustCommand\circled[1]{%
+    \tikz[
+      baseline=-1mm,
+    ]{%
+        \clip (0mm,-0.05mm) circle [radius=1.55mm];
+        \draw[black, line width=0.2mm]
+           (0mm,-0.05mm) circle [radius=1.5mm];%
+        \node[black, anchor=center, scale=0.75, yshift=0.05mm]
+        (0mm,0mm) {#1};%
+    }}%
+\newcommand\marksymbol[2]{\tikz[#2,scale=1.2]\pgfuseplotmark{#1};}
+\newcommand{\docname}{chapter } % easy to change to chapter / thesis
+\def\thesissections{thesissections}
+
+\makeatletter
+\newcommand{\globalcolor}[1]{%
+  \color{#1}\global\let\default@color\current@color
+}
+\makeatother
+
+% Thesis margins and offsets 
+% Don't touch these!
+\setlength{\hoffset}{-0.5cm}
+\setlength{\textwidth}{13cm}
+\setlength{\textheight}{18.5cm}
+\setlength{\voffset}{-0.8cm}
+\setlength{\headheight}{0.5cm}
+\setlength{\headsep}{0.8cm}
+\setlength{\footskip}{1cm}
+\setlength{\oddsidemargin}{0cm}
+\setlength{\evensidemargin}{0cm}
+\setcounter{tocdepth}{1} %set depth of the table of contents
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Chapter style definition %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Chapter format
+\newcommand\chapnumx{\paperwidth - 2.5cm}
+\newcommand\chapnumy{-4.0cm}
+\newcommand\chapnumr{1.0cm}
+\titleformat{\chapter}[display]% chapter format of display type
+    {% typeset for both label and text
+        \small%
+    }%
+    {% settings of the label
+        \begin{tikzpicture}[remember picture, overlay]
+            \node[xshift=0.5cm, yshift=0.8cm] at (current page.north west){
+                \begin{tikzpicture}[remember picture, overlay]
+                    % \clip (\chapnumx,\chapnumy) circle [radius=\chapnumr];
+                    % \draw[black, line width=0.2mm, fill=gray, fill opacity=0.5]
+                    %    (\chapnumx,\chapnumy) circle [radius=\chapnumr];%
+                    % \node[black, anchor=center] at (\chapnumx,\chapnumy) {%
+                    %     \fontsize{60}{10}%
+                    %     \color{white}%
+                    %     \fontspec{MyriadPro-Bold}{\thechapter}%
+                    % };
+                    \node[black, anchor=center] at (\chapnumx,\chapnumy) {%
+                        \fontsize{100}{10}%
+                        \color{ChapterNumber}%
+                        \fontspec{MyriadPro-Regular}{\thechapter}%
+                    };
+                \end{tikzpicture}
+            };
+        \end{tikzpicture}
+    }%
+    {1ex}% Horizontal separation between label and title body
+    {% settings of the title
+        \filleft%
+        \huge%
+        \fontspec{MyriadPro-LightSemiCn}%
+        % \color{white}%
+    }%
+    [% Optional code followed after title body
+        % \vspace{0ex}
+    ]%
+%titlespacing> command / left space / before space / after space
+\titlespacing*{\chapter}{0pt}{2cm}{0.2cm} 
+% Section format
+\titleformat{\section}[display]{\Large}{}{0.5ex}{\Large \fontspec{MyriadPro-Regular}{\thesection} \ \fontspec{MyriadPro-SemiCn}}
+\titleformat{name=\section,numberless}[display]{\Large}{}{0.5ex}{\Large \fontspec{MyriadPro-Regular}{} \fontspec{MyriadPro-SemiCn}}
+\titleformat{\subsection}[display]{\large}{}{1ex}{\large \fontspec{MyriadPro-Regular}{\thesubsection} \ \fontspec{MyriadPro-SemiCn}}
+\titleformat{\subsubsection}[display]{\large}{}{1ex}{\large\fontspec{MyriadPro-Regular}{}\fontspec{MyriadPro-SemiCn}}
+
+\usepackage[
+    colorlinks=true,
+    urlcolor=urlcolor,
+    linkcolor=linkcolor,
+    citecolor=citecolor,
+    plainpages=false,
+    bookmarks=true,
+    bookmarksopen=true,
+    bookmarksnumbered=true,
+    xetex
+    ]{hyperref} % hyperref should be last
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Start of main document structure %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+
+\frontmatter  %start front matter
+\input{frontmatter.tex} % all stuff before toc
+
+\cleardoublepage % Start at correct side of left/right pages
+\pagenumbering{roman} % change numbering to roman numerals (I II III IV)
+\pdfbookmark[1]{Contents}{contents}
+\tableofcontents
+\cleardoublepage
+\pagenumbering{arabic} \setcounter{page}{1} %set the counter to 1
+
+\mainmatter
+\input{Introduction/index}
+
+% Chapters
+\input{ChapterOne/index}   % Spheres
+\input{ChapterTwo/index}   % Fibers
+\input{ChapterThree/index} % Emulsion
+\input{ChapterFour/index}  % Mixed boundaries
+\input{ChapterFive/index}  % Spanwise roughness
+
+\input{Conclusion/index}
+
+\bibliography{DennisBakhuis.min.bib}
+
+\backmatter
+\include{backmatter/summary}  %summary English (obligatory)
+\include{backmatter/samenvatting} %summary Dutch (obligatory)
+\include{backmatter/acknowledgements}
+\include{backmatter/scientificoutput}
+
+\cleardoublepage
+\end{document}

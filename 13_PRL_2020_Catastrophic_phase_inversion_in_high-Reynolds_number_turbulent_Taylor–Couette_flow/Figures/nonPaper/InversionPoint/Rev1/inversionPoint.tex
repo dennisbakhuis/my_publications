@@ -1,0 +1,169 @@
+\documentclass[
+    tikz,%
+    border={0mm 0mm 0mm 0mm},% left bottom right top
+]{standalone}
+\usepackage{pgfplots}
+\usepackage{amsmath}
+\usepackage{siunitx}
+\usetikzlibrary{arrows,decorations.markings}
+
+\usepgfplotslibrary{units}
+
+% wel aardig
+\definecolor{color1}{RGB}{1,120,180}
+\definecolor{color2}{RGB}{66,206,227}
+\definecolor{color3}{RGB}{1,160,44}
+\definecolor{color4}{RGB}{78,223,138}
+\definecolor{color5}{HTML}{E03171}
+\definecolor{color6}{HTML}{FF91BF}
+\definecolor{color7}{rgb}{0.35, 0.31, 0.81}
+\definecolor{color8}{rgb}{0.35, 0.31, 0.81}
+\definecolor{color9}{rgb}{0.29, 0.0, 0.51}
+
+% sequential
+\definecolor{seqa}{RGB}{204,235,197}
+\definecolor{seqb}{RGB}{165,218,181}
+\definecolor{seqc}{RGB}{123,204,196}
+\definecolor{seqd}{RGB}{67,162,202}
+\definecolor{seqe}{RGB}{8,104,172}
+
+% remove arrows from second axis
+\pgfplotsset{ every non boxed x axis/.append style={x axis line style=-},
+     every non boxed y axis/.append style={y axis line style=-}}
+
+\def\AddLabel(#1,#2)#3{\node [align = center] at (axis cs: #1,#2) {#3};}%
+
+% Style to select only points from #1 to #2 (inclusive)
+\pgfplotsset{select coords between index/.style 2 args={
+    x filter/.code={
+        \ifnum\coordindex<#1\def\pgfmathresult{}\fi
+        \ifnum\coordindex>#2\def\pgfmathresult{}\fi
+    }
+}}
+
+\newcommand{\etal}{\mbox{\emph{et al.\ }}}
+
+\begin{document}
+\begin{tikzpicture}
+
+% Draw exact dimensions bounding box
+\newcommand{\figwidth}{6.745cm}
+\newcommand{\figheight}{4.8375cm} % golden ratio
+\draw[use as bounding box, white] (0,0) rectangle (\figwidth,\figheight);
+
+ \begin{axis}[
+    xshift=1.325cm,
+    yshift=1.05cm,
+    clip mode=individual,
+    xmin=10,
+    xmax=20,
+    ymin=0.40,
+    ymax=0.80,
+    enlargelimits=false,
+    axis on top=true,
+    xlabel=$f_{ic}$,
+    ylabel=$\alpha$,
+    %legend pos=south west,
+    legend style={draw=none, 
+                  font=\footnotesize,
+                  fill=none,
+                 },
+    legend cell align=left,
+    legend style={at={(-0.01, 1)}, anchor=north west},
+    x unit=\si{\percent},
+    width = 6.70cm,
+    height = 5.0cm,
+    ylabel near ticks, 
+    xtick pos=left,
+  ]
+
+  %\addplot[
+    %forget plot,
+    %mark=none,
+    %black,
+    %dashed] coordinates {(0,1) (100,1)};
+
+  %\addplot[
+    %forget plot,
+    %mark=none,
+    %black,
+    %dashed] coordinates {(0,0.835) (100,0.835)};
+
+  \addplot+[
+    color=seqe,
+    mark=o,
+    %only marks,
+    dashed,
+    very thick,
+    line join=round,
+   ] table [
+    x = fic,
+    y = alpha1,
+    col sep=comma,
+    ] {jumpdataow.csv};
+    %\addlegendentryexpanded{$f_{ic}=\SI{17.5}{\hertz}$}
+
+  \addplot+[
+    color=seqe,
+    mark=triangle,
+    %only marks,
+    dashed,
+    very thick,
+    line join=round,
+   ] table [
+    x = fic,
+    y = alpha1,
+    col sep=comma,
+    ] {jumpdatawo.csv};
+
+%\draw[thick, black, ->, >=stealth] (axis cs: 48, 0.8) -- (axis cs: 48, 1.1);
+%\draw[thick, black, ->, >=stealth] (axis cs: 74.0, 1.18) -- (axis cs: 74.0, 0.9);
+ \end{axis}
+
+%\draw[thick, black, ->, >=stealth] (3.81cm, 1.25cm) -- (3.81cm, 2.50cm);
+%\draw[thick, black, ->, >=stealth] (5.15cm, 2.90cm) -- (5.15cm, 1.75cm);
+ 
+%\begin{scope}[
+    %xshift=1.3cm,
+    %yshift=4.30cm
+%]
+    %% 10 cSt 
+    %\node at (0.475cm, -0.6cm) (1) {};
+    %\node at (0.9cm,   -0.6cm) (2) {};
+    %\node[darkorange, very thick] at (1) {\pgfuseplotmark{diamond}};
+    %\path[black] (2) node[right=-1mm]{\footnotesize $\mu=$ 10 cSt};
+
+    %% 1 cSt 
+    %\node at (0.95cm/3, -0.9cm) (1) {};
+    %\node at (0.9cm,   -0.9cm) (2) {};
+    %\node at (0.95cm/3*2, -0.925cm) (3) {};
+    %\node[color1, very thick] at (1) {\pgfuseplotmark{o}};
+    %\node[color2, very thick] at (3) {\pgfuseplotmark{triangle}};
+    %\path[black] (2) node[right=-1mm]{\footnotesize $\mu=$ 1 cSt};
+
+    %% oil added
+    %\node at (0.00cm, -0.0cm) (1) {};
+    %\node at (0.55cm, -0.0cm) (2) {};
+    %\node at (0.40cm, -0.0cm) (4) {};
+    %\node at (0.95cm, -0.0cm) (5) {};
+    %\node at (0.9cm, -0.0cm) (3) {};
+    %\draw[darkorange, very thick] (1) -- (2);
+    %\draw[color6, very thick] (4) -- (5);
+    %\path[black] (3) node[right=-1mm]{\footnotesize $\alpha = \text{low} \rightarrow \text{high}$};
+
+    %%% water added
+    %\node at (0.00cm, -0.3cm) (1) {};
+    %\node at (0.55cm, -0.3cm) (2) {};
+    %\node at (0.40cm, -0.3cm) (4) {};
+    %\node at (0.95cm, -0.3cm) (5) {};
+    %\node at (0.9cm, -0.3cm) (3) {};
+    %\draw[color8, very thick] (1) -- (2);
+    %\draw[color4, very thick] (4) -- (5);
+    %\path[black] (3) node[right=-1mm]{\footnotesize $\alpha = \text{high} \rightarrow \text{low}$};
+
+%\end{scope}
+
+%\node at (-1.1 , 3.2) {(a)};
+
+\end{tikzpicture} 
+\end{document}

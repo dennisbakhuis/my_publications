@@ -1,0 +1,120 @@
+% This is file JFM2esam.tex
+% first release v1.0, 20th October 1996
+%       release v1.01, 29th October 1996
+%       release v1.1, 25th June 1997
+%       release v2.0, 27th July 2004
+%       release v3.0, 16th July 2014
+%   (based on JFMsampl.tex v1.3 for LaTeX2.09)
+% Copyright (C) 1996, 1997, 2014 Cambridge University Press
+\RequirePackage{rotating}
+
+% \documentclass[referee]{jfm}
+\documentclass{jfm}
+%\usepackage{lineno}
+%\linenumbers
+
+\usepackage{graphicx}
+\usepackage{epstopdf, epsfig}
+\usepackage{amsmath}
+\usepackage{xargs}                      % Use more than one optional parameter in a new commands
+\usepackage[pdftex,dvipsnames]{xcolor}  % Coloured text etc.
+\usepackage{color}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage{import}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.6}
+\usepgfplotslibrary{fillbetween}
+\usetikzlibrary{patterns}
+\usetikzlibrary{plotmarks}
+\usetikzlibrary{matrix}
+\newcommand{\figwidth}{\textwidth}
+\newcommand{\figheight}{6.16cm} % Golden ratio
+\usepackage{layouts}
+\usepackage[colorlinks = true,allcolors = {blue}]{hyperref}
+\usepackage{multirow}
+\usepackage{subcaption}
+\usepackage{siunitx}
+\usepackage{tabularx}
+
+\usepackage{parnotes}
+\usepackage{makecell}
+\usepackage{rotating}
+
+\sisetup{range-phrase=\text{--}, range-units=single, separate-uncertainty=true}
+
+\newcommand{\perc}[1]{ \SI{#1}{\percent} }
+\newcommand\We{\mbox{\textit{We}}}  % Reynolds number
+\newcommand{\e}[1]{\times 10^{#1}}
+\definecolor{darkgreen}{rgb}{0.13, 0.55, 0.13}
+\newcommand{\remove}[1]{\textcolor{red}{#1}}
+\newcommand{\add}[1]{\textcolor{black}{#1}}
+
+% \newcommand{\red}[1]{\textcolor{red}{#1}}
+
+%\usepackage{setspace}
+%\doublespacing
+
+\shorttitle{Bubbly DR using a hydrophobic IC in TC turbulence}
+\shortauthor{P. A. Bullee and others} %, Verschoof, Bakhuis, Ezeta, Huisman, Sun, Lammertink, Lohse }
+
+\title{Bubbly drag reduction using a hydrophobic inner cylinder in Taylor--Couette turbulence}
+
+
+\author{Pim A. Bullee\aff{1,2},
+  Ruben A. Verschoof\aff{1},
+  Dennis Bakhuis\aff{1},
+  Sander~G.~Huisman\aff{1},
+  Chao~Sun\aff{4,1}
+	  \corresp{\email{chaosun@tsinghua.edu.cn}},
+  Rob~G.~H.~Lammertink\aff{2}
+	  \corresp{\email{r.g.h.lammertink@utwente.nl}},
+\and Detlef~Lohse\aff{1,3}
+ \corresp{\email{d.lohse@utwente.nl}}
+ }
+
+\affiliation{
+\aff{1}Physics of Fluids, Max Planck Center Twente for Complex Fluid Dynamics, MESA+ Research Institute and J. M. Burgers Centre for Fluid Dynamics, University of Twente, P.O. Box 217, 7500 AE Enschede, The Netherlands
+\aff{2}Soft matter, Fluidics and Interfaces, MESA+ Research Institute, University of Twente, P.O. Box 217, 7500 AE Enschede, The Netherlands
+\aff{3}Max Planck Institute for Dynamics and Self-Organization, Am Fassberg 17, 37077 G\"{o}ttingen, Germany
+\aff{4}Center for Combustion Energy and Department of Energy and Power Engineering, Tsinghua University, 100084 Beijing, China
+}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+In this study we experimentally investigate bubbly drag reduction in a highly turbulent flow of water with dispersed air at $5.0 \e{5} \leq \Rey \leq 1.7\e{6}$ over a non-wetting surface containing micro-scale roughness. To do so, the Taylor--Couette geometry is used, allowing for both accurate global drag and local flow measurements. The inner cylinder -- coated with a rough, hydrophobic material -- is rotating, whereas the smooth outer cylinder is kept stationary. The crucial control parameter is the air volume fraction $\alpha$ present in the working fluid. For small volume fractions ($\alpha < \SI{4}{\percent}$), we observe that the surface roughness from the coating increases the drag. For large volume fractions of air ($\alpha \geq \SI{4}{\percent}$), the drag decreases compared to the case with both the inner and outer cylinders uncoated, i.e. smooth and hydrophilic, using the same volume fraction of air. This suggests that two competing mechanisms are at place: on the one hand the roughness invokes an extension of the log-layer -- resulting in an increase in drag -- and on the other hand there is a drag-reducing mechanism of the {hydrophobic} surface interacting with the bubbly liquid. The balance between these two effects determines whether there is overall drag reduction or drag enhancement. For further increased bubble concentration $\alpha = \SI{6}{\percent}$ we find a saturation of the drag reduction effect. Our study gives guidelines for industrial applications of bubbly drag reduction in hydrophobic wall-bounded turbulent flows.
+
+%% Conference abstract
+%We investigate the drag of a highly turbulent flow over a non-wetting surface of micro-scale roughness. The Taylor--Couette geometry is used, allowing accurate drag and flow measurements. In this study, the inner cylinder is rotating, whereas the outer cylinder is kept stationary. The gap-width based Reynolds number is $\mathcal{O}(10^6)$. The inner cylinder is coated with a rough, hydrophobic material. whereas the outer cylinder is kept smooth. We vary the void fraction of air $\alpha$ present in the working fluid to introduce bubbles to the flow. For smaller volume fractions of air, up to $\alpha \leq 2\%$, we observe that the increased surface roughness from the coating increases the drag. For larger fractions of air, $\alpha > 2\%$, the drag decreases compared to a smooth hydrophilic, uncoated cylinder using the same volume fraction of air. This suggests that two mechanisms play a role: the roughness invokes a shift in the log-layer --- resulting in an increase in drag ---  and the more effective drag-reducing mechanism of the {hydrophobic} surface. The balance between these two effects determines whether bubble drag reduction is more effective when using a {hydrophobic} surface compared to using a smooth hydrophilic surface.
+
+\end{abstract}
+
+\begin{keywords}
+% picked from: https://www.cambridge.org/core/services/aop-file-manager/file/577245f575fc11ff73cc3197/jfm-keywords.pdf
+Taylor--Couette flow, drag reduction, coating
+\end{keywords}
+%
+\include{introduction}
+\include{experimental}
+\include{results}
+\include{summary_conclusions}
+
+\section*{Conflict of interest}
+The authors declare no conflicts of interests.
+
+
+\begin{acknowledgments}
+\section*{Acknowledgements}
+We would like to thank Gert-Wim Bruggert, Martin Bos and Bas Benschop for their continuous technical support over the years with the T$^3$C. We thank Ineke Punt and Jan van Nieuwkasteele for their help with the {hydrophobic} coating and all related issues. We acknowledge stimulation discussions with Pieter Berghout on roughness, and on numerous of other related topics with Jeffery Wood. We thank Arne te Nijenhuis for his help in the lab and Rodrigo Ezeta for his help with the PIV experiments. The wetting experiments with TritonX where done together with Remco van der Maat as part of his Bachelor graduation assignment. This research is supported by the project ``GasDrive: Minimizing emissions and energy losses at sea with LNG combined prime movers, underwater exhausts and nano hull material'' (project 14504) of the Netherlands Organisation for Scientific Research (NWO), domain Applied and Engineering Sciences (TTW). R.A.V. acknowledges NWO-TTW (project 13265). S.H. acknowledges financial support from MCEC. C.S. and D.B. acknowledge financial support from VIDI grant No. 13477, and the Natural Science Foundation of China under grant no. 11672156.
+\end{acknowledgments}
+
+\bibliographystyle{jfm}
+\bibliography{biblio}
+
+\end{document}

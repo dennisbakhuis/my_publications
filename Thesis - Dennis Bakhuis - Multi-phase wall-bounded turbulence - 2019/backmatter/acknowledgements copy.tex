@@ -1,0 +1,225 @@
+%%%%%%%%%%%%%%%
+%%%% Flags %%%%
+%%%%%%%%%%%%%%%
+% % Dutch flag
+% \definecolor{flagnlred}{RGB}{191, 57, 34}
+% \definecolor{flagnlblue}{RGB}{25, 49, 83}
+% \DeclareRobustCommand\flagnl[1]{%
+%     \tikz[
+%       scale=#1,
+%     ]{%
+%         \fill[flagnlred] (-3mm, 2mm) rectangle (3mm, 0.666mm);%
+%         \fill[white] (-3mm, 0.666mm) rectangle (3mm, -0.666mm);%
+%         \fill[flagnlblue] (-3mm, -0.666mm) rectangle (3mm, -2mm);%
+%     }%
+% }%
+% % American flag
+% \definecolor{Cardinal}{HTML}{C41E3A}
+% \definecolor{Sapphire}{HTML}{012B7F}
+% \def\usflagheight{4}
+% \def\usflagwidth{1.9 * \usflagheight}
+% \def\usflagstripe{0.077 * \usflagheight}
+% \tikzstyle{usstars}=[star, star point ratio=2.61, minimum size=0.8 * \usflagstripe mm, fill=White]
+% \DeclareRobustCommand\flagus[1]{%
+%     \tikz[
+%       scale=#1,
+%     ]{%
+%         % Stripes
+% 	    \foreach \x [evaluate=\i as \y using int(2*\x+1)] in {0, ..., 6}{
+% 	    	\fill[Cardinal] (0 mm, 2*\x*\usflagstripe mm) rectangle
+%                (\usflagwidth mm,\y*\usflagstripe mm);
+% 	    }
+%         % blue box
+% 	        \fill[Sapphire] (0, 6*\usflagstripe mm) rectangle
+%                (0.4*\usflagwidth mm, \usflagheight mm);
+% 	    % Stars
+% 	    \foreach \y in {1, 3, ..., 9}{ \foreach \x in {1, 3, ..., 11}{
+% 	      \node[usstars, scale=#1 * 0.02] at (0.033*\usflagwidth*\x mm,
+%              6*\usflagstripe mm + 0.054*\usflagheight*\y mm){};
+% 	    }}
+% 	    \foreach \y in {1, ..., 4}{ \foreach \x in {1, ..., 5}{
+% 	      \node[usstars, scale=#1 * 0.02] at (0.066*\usflagwidth*\x mm,
+%              6*\usflagstripe mm + 0.108*\usflagheight*\y mm){};
+% 	    }}
+%     }%
+% }%
+% % German flag
+% \definecolor{flagdered}{RGB}{255, 0, 0}
+% \definecolor{flagdegold}{RGB}{255, 204, 0}
+% \DeclareRobustCommand\flagde[1]{%
+%     \tikz[
+%       scale=#1,
+%     ]{%
+%         \fill[black] (-3.33mm, 2mm) rectangle (3.33mm, 0.666mm);%
+%         \fill[flagdered] (-3.33mm, 0.666mm) rectangle (3.33mm, -0.666mm);%
+%         \fill[flagdegold] (-3.33mm, -0.666mm) rectangle (3.33mm, -2mm);%
+%     }%
+% }%
+% % China flag
+% \definecolor{flagcnred}{RGB}{255, 0, 0}
+% \definecolor{flagcngold}{RGB}{255, 255, 0}
+% \tikzstyle{cnstars}=[star, star point ratio=2.61,
+%                      minimum size=0.2 * 6mm, fill=flagcngold]
+% \DeclareRobustCommand\flagcn[1]{%
+%     \tikz[
+%       scale=#1,
+%     ]{%
+%         \fill[flagcnred] (-3mm, 2mm) rectangle (3mm, -2mm);%
+%         \node[cnstars, scale=#1 * 0.13] at (-3mm + 0.1667 * 6mm,
+%             2mm - 0.25 * 4mm){};
+%         \node[cnstars, scale=#1 * 0.045, rotate=45] at 
+%             (-3mm + 0.3333 * 6mm, 2mm - 0.10 * 4mm){};
+%         \node[cnstars, scale=#1 * 0.045, rotate=-45] at 
+%             (-3mm + 0.40 * 6mm, 2mm - 0.20 * 4mm){};
+%         \node[cnstars, scale=#1 * 0.045, rotate=0] at 
+%             (-3mm + 0.40 * 6mm, 2mm - 0.35 * 4mm){};
+%         \node[cnstars, scale=#1 * 0.045, rotate=45] at 
+%             (-3mm + 0.3333 * 6mm, 2mm - 0.45 * 4mm){};
+%     }%
+% }%
+% german flag
+\DeclareRobustCommand\flagde[1]{%
+    \tikz[
+    ]{%
+        \node[inner sep=0pt] at (0,0)
+            {\includegraphics[width=#1]{germany.png}};
+    }%
+}%
+% china flag
+\DeclareRobustCommand\flagcn[1]{%
+    \tikz[
+    ]{%
+        \node[inner sep=0pt] at (0,0)
+            {\includegraphics[width=#1]{china.png}};
+    }%
+}%
+% dutch flag
+\DeclareRobustCommand\flagnl[1]{%
+    \tikz[
+    ]{%
+        \node[inner sep=0pt] at (0,0)
+            {\includegraphics[width=#1]{nederland.png}};
+    }%
+}%
+% Spanish flag
+\DeclareRobustCommand\flagsp[1]{%
+    \tikz[
+    ]{%
+        \node[inner sep=0pt] at (0,0)
+            {\includegraphics[width=#1]{spain.png}};
+    }%
+}%
+% usa flag
+\DeclareRobustCommand\flagus[1]{%
+    \tikz[
+    ]{%
+        \node[inner sep=0pt] at (0,0)
+            {\includegraphics[width=#1]{usa.png}};
+    }%
+}%
+% margin command
+\newcommand\flagsize{5mm}
+\newcommand\mf[1]{%
+    \marginnote{#1{\flagsize}}%
+}%
+\newcommand\mfl[1]{%
+    \marginnote[\hspace*{-1.4cm} #1{\flagsize}]{}%
+    % \hspace{1.2cm}%
+}%
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% Acknowledgements %%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+\chapter{Acknowledgements}
+% General
+\mf{\flagus}\indent In the years I have read many acknowledgements from other
+theses, however, writing your own acknowledgements for your own thesis is a
+strange sensation.  It makes you realize that a four year period that seemed
+so long in the beginning is now ending and what an unbelievable journey it has
+been.  The Physics of Fluids group is an unique environment which has the
+property to cluster and attract amazing people.  It always felt as a privilege
+to be part of this group, from which I have benefited tremendously.  I am
+thankful to the many people I met or worked with over the years, and I do my
+best to mention them all. \\
+% Chao
+\mf{\flagus}\indent Dear Chao, I still remember the day that we first met. I
+was doing my internship together with Julian and Vivek and you entered the
+water tunnel lab in your black \emph{Nike Air Max} shoes.  A few years later,
+you asked me for this project and I think this was one of the best choices of
+my life. I was able to learn from one of the best experimentalists in the
+world and your enthousiastic guidance helped me to get where I am now. What I
+really appreciated was that you do not hesitate to call from Beijing when I
+was in need of a pep talk. Also the peking duck we had together in Beijing
+showed your generous hospitality. \mf{\flagcn} 谢谢 for being a brilliant
+supervisor and a great friend.\\
+% Detlef
+\mf{\flagde}\indent Detlef, we both speak fluent Dutch and German, still we
+generally end up speaking English. Therefore, I think this part should be in
+German.\\
+% Sander
+\mf{\flagnl}\indent Beste Sander, ik hoorde van jou bestaan door een
+schaterend gelach door de gangen van Meander. Een aantal maanden later zaten
+we samen hoog volumineus te lachen terwijl jij mij de fijne kneepjes van de
+Taylor-Couette liet zien. Ons gevoel voor humor ligt duidelijk op \'e\'en lijn
+en er zijn alvast twee eersterangs plaatsen op een specifieke plek gereserveerd.
+Jouw bijdrage aan mijn onderzoek was onmisbaar en ik heb het gevoel dat sinds
+jij terug bent in de groep, alles in een stroomversnelling is geraakt.
+Bijna dagelijks kwam ik bij jouw kantoor met kleine vragen of om gewoon de
+snoepla te plunderen. Bedankt voor al je tijd, raad, en snoep door de jaren
+heen en ik kijk uit naar de komende projecten die wij nog samen gaan doen.\\
+% work committee
+\mfl{\flagnl}Beste Tom, Bert, Peter, Leo, en Ren\'e, dit
+project is in samenwerking met verschillende industri\"ele partners en
+hiervoor hadden wij jaarlijks een gezamelijke bijeenkomst. Deze heb ik altijd
+als zeer prettig en nuttig ervaren.\\
+% Jacco Snoeier & Laura Stricker
+\mfl{\flagus}Dear Jacco, dear Laura, during my pre-master program I
+followed the course \emph{Physics of fluids}, which was amazingly lectured by
+Jacco and ta'ed by Laura. This made me actually choose for the fluids track.\\
+% Rodolfo
+\mfl{\flagus}Dear Rodolfo, it was always fun to work with you and now,
+after having multiple students myself, admire your patients. The numerous
+``how is the manuscript going'' are still haunting me in my sleep. In the end
+we got the manuscript published and the whole process helped me a lot with all
+the articles I wrote later. I have good memories of my first and only
+thanksgiving in Boston. We still need to go diving together!\\
+% Roberto Verzicco
+\mfl{\flagus}Dear Roberto, thank you for all the help during the writing of my
+first manuscript, together with Rodolfo.\\
+% Lab: Ruben
+\mfl{\flagnl}Beste Ruben, ik heb altijd graag met jou samen gewerkt.
+Tijdens het sleutelen hadden we altijd uitgebreide maatschappelijke
+discussies, en wat moesten we toch vaak sleutelen. Ook leerde je mij om soms
+iets eenvoudiger te denken, hierdoor gingen de projecten later ook een stuk
+vlotter. Weet jij trouwens waar de imbus-acht is gebleven?\\
+% lab: Rodrigo
+\mfl{\flagus}Dear Rodrigo, first I would like to appologize for all the
+Mexican stereotypical jokes. Next, I want to thank you for all your effort as
+the lab has never been so clean in years. Jokes aside, it was always a great
+pleasure to work with you. You are always very careful and precise, which is a
+valueable addition to my sometimes blunt approaches. We shared the nightshift
+during our MSc., later the night shift at the end of our PhD, and finally we
+will also share the night shift of our graduation. One thing\\
+\mfl{\flagsp}\hspace{-0.6cm} you should know is that that day \emph{soy un pinguino.}\\
+% lab: Pim
+\mfl{\flagnl}Beste Pim, wij hebben heel wat lagen op de TC geplakt en weer
+verwijderd. Tijdens meerdere bijeenkomsten hebben wij gediscussieerd over onze
+uitkomsten, tenminste als je niet naar de kapper moest. Bedankt voor alle hulp
+en waarschijnlijk werken we nog even samen.\\
+% lab: Roeland + students
+\mfl{\flagnl}Dear Roeland, dank je wel voor je hulp aan het begin van mijn
+promotie.\\
+\mfl{\flagus}Dear Valentin, Charles, Michah, Raymond, and Dominic, I had big
+fun working with you guys on the various projects. We have achieved great
+things, including two publications.\\
+% Alvaro Marin
+
+
+% Dennis v. Gils
+
+% fellow adventurers
+
+% Erwin van der Poel
+
+% Matthijs Neut
+
+

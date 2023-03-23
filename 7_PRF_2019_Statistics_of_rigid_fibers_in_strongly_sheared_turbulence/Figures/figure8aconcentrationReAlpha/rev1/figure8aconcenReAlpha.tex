@@ -1,0 +1,234 @@
+% arara: pdflatex
+
+\documentclass[tikz,border=5pt]{standalone}
+\usepackage{pgfplots}
+\usepackage{amsmath}
+\usepackage{siunitx}
+
+\usepgfplotslibrary{units}
+
+% original colors
+\definecolor{color1}{RGB}{166,118,29}
+\definecolor{color2}{RGB}{217,95,2}
+\definecolor{color3}{RGB}{231,41,138}
+\definecolor{color4}{RGB}{117,112,179}
+\definecolor{color5}{RGB}{27,158,119}
+\definecolor{color6}{RGB}{102,166,30}
+\definecolor{color7}{RGB}{230,171,2}
+
+% darkend first colors
+\definecolor{color1a}{RGB}{116,68,0}
+\definecolor{color3a}{RGB}{181,0,88}
+\definecolor{color4a}{RGB}{67,62,119}
+\definecolor{color6a}{RGB}{52,116,0}
+
+% lightend second colors
+\definecolor{color1b}{RGB}{216,168,79}
+\definecolor{color3b}{RGB}{255,91,188}
+\definecolor{color4b}{RGB}{167,162,229}
+\definecolor{color6b}{RGB}{152,216,80}
+
+\begin{document}
+\begin{tikzpicture}
+
+% width is 8.64cm
+\newcommand{\figwidth}{8.64cm}
+\newcommand{\figheight}{5.40cm}
+
+\newcommand{\goldenratio}{1.618033988749895} 
+\newcommand{\axiswidth}{8.1cm} 
+\newcommand{\axisheight}{\axiswidth / \goldenratio * 0.85} 
+
+\newcommand{\startx}{0.65cm} 
+\newcommand{\starty}{0.80cm} 
+
+\draw[use as bounding box, white] (0,0) rectangle (\figwidth,\figheight);
+  
+  \begin{axis}[
+    xshift=\startx,
+    yshift=\starty,
+    clip mode=individual,
+    xmin=0.1,
+    xmax=0.9,
+    ymin=0,
+    ymax=3.9e5,
+    enlargelimits=false,
+    axis on top=true,
+    ylabel=$\text{N}$,
+    xlabel=$\tilde{r}$,
+    %legend pos=south west,
+    legend style={at={(1.00, 1.00)}, anchor=east},
+    legend style={draw=none, 
+                  font=\footnotesize,
+                  fill=none,
+    },
+    legend cell align=left,
+    legend columns=1, 
+    reverse legend,
+    scale only axis,
+    width = \axiswidth,
+    height = \axisheight,
+    ylabel near ticks,
+    xlabel near ticks,
+    xtick={0.2, 0.4, 0.6, 0.8},
+    minor xtick={0.1, 0.3, 0.5, 0.7, 0.9},
+    minor ytick={0.5e5, 1.5e5, 2.5e5, 3.5e5}
+  ]
+
+  \addplot+[
+      color=color4b,
+      mark=none,
+      very thick,
+    line join=round,
+   ] table [
+    x = bins,
+    y = hist,
+    col sep=comma,
+] {concentration0.005_8.27e+04.csv};
+
+  \addplot+[
+      color=color4,
+      mark=none,
+      very thick,
+    line join=round,
+   ] table [
+    x = bins,
+    y = hist,
+    col sep=comma,
+] {concentration0.005_1.65e+05.csv};
+
+  \addplot+[
+      color=color4a,
+      mark=none,
+      very thick,
+    line join=round,
+   ] table [
+    x = bins,
+    y = hist,
+    col sep=comma,
+] {concentration0.005_2.48e+05.csv};
+
+  \addplot+[
+      color=color3b,
+      mark=none,
+      very thick,
+    line join=round,
+     forget plot,
+   ] table [
+    x = bins,
+    y = hist,
+    col sep=comma,
+] {concentration0.0025_8.27e+04.csv};
+
+  \addplot+[
+      color=color3,
+      mark=none,
+      very thick,
+    line join=round,
+     forget plot,
+   ] table [
+    x = bins,
+    y = hist,
+    col sep=comma,
+] {concentration0.0025_1.65e+05.csv};
+
+  \addplot+[
+      color=color3a,
+      mark=none,
+      very thick,
+    line join=round,
+     forget plot,
+   ] table [
+    x = bins,
+    y = hist,
+    col sep=comma,
+] {concentration0.0025_2.48e+05.csv};
+
+  \addplot+[
+      color=color6b,
+      mark=none,
+      very thick,
+    line join=round,
+     forget plot,
+   ] table [
+    x = bins,
+    y = hist,
+    col sep=comma,
+] {concentration0.01_8.27e+04.csv};
+
+  \addplot+[
+      color=color6,
+      mark=none,
+      very thick,
+    line join=round,
+     forget plot,
+   ] table [
+    x = bins,
+    y = hist,
+    col sep=comma,
+] {concentration0.01_1.65e+05.csv};
+
+  % \addplot+[
+  %     color=color6a,
+  %     mark=none,
+  %     very thick,
+  %   line join=round,
+  %    forget plot,
+  %  ] table [
+  %   x = bins,
+  %   y = hist,
+  %   col sep=comma,
+% ] {concentration0.01_2.48e+05.csv};
+
+  \end{axis} 
+
+  \begin{scope}[
+      xshift=5.30cm,
+      yshift=4.6cm
+      ]
+     \begin{scope}[
+         xshift=0cm,
+         yshift=0cm
+         ]
+      \fill[color3a] (-0.75mm,-0.75mm) rectangle (0.75mm,0.75mm);
+      \fill[color4a] (1.50mm,-0.75mm) rectangle (3.00mm,0.75mm);
+      \fill[color6a] (3.75mm,-0.75mm) rectangle (5.25mm,0.75mm);
+      \node[anchor=west, black] at (5.35mm, 0.2mm)
+      {$\text{Re} = \num{2.48e5}$};
+    \end{scope}
+    \begin{scope}[
+         xshift=0cm,
+         yshift=-0.35cm
+         ]
+      \fill[color3] (-0.75mm,-0.75mm) rectangle (0.75mm,0.75mm);
+      \fill[color4] (1.50mm,-0.75mm) rectangle (3.00mm,0.75mm);
+      \fill[color6] (3.75mm,-0.75mm) rectangle (5.25mm,0.75mm);
+      \node[anchor=west, black] at (5.35mm, 0.2mm)
+      {$\text{Re} = \num{1.65e5}$};
+    \end{scope}
+    \begin{scope}[
+         xshift=0cm,
+         yshift=-0.70cm
+         ]
+      \fill[color3b] (-0.75mm,-0.75mm) rectangle (0.75mm,0.75mm);
+      \fill[color4b] (1.50mm,-0.75mm) rectangle (3.00mm,0.75mm);
+      \fill[color6b] (3.75mm,-0.75mm) rectangle (5.25mm,0.75mm);
+      \node[anchor=west, black] at (5.35mm, 0.2mm)
+      {$\text{Re} = \num{8.27e4}$};
+    \end{scope}
+  \end{scope}
+
+% labels
+  \node[anchor=center, black, rotate=-2] at (4.55cm, 1.40cm) {
+  $\alpha=\SI{0.025}{\percent}$};
+
+  \node[anchor=center, black, rotate=-4] at (4.8cm, 2.55cm) {
+  $\alpha=\SI{0.1}{\percent}$};
+
+  \node[anchor=center, black] at (3.0cm, 3.90cm) {
+  $\alpha=\SI{0.05}{\percent}$};
+
+  % \node at (-0.6, 3.2) {(a)};
+
+\end{tikzpicture} 
+\end{document}

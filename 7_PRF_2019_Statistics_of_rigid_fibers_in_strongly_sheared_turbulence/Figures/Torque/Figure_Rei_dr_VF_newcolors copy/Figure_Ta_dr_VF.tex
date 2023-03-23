@@ -1,0 +1,142 @@
+\documentclass[tikz,border=5pt]{standalone}
+\usepackage{pgfplots}
+\usepackage{amsmath}
+\usepackage{siunitx}
+
+\usepgfplotslibrary{units}
+% original colors
+\definecolor{color1}{RGB}{166,118,29}
+\definecolor{color2}{RGB}{217,95,2}
+\definecolor{color3}{RGB}{231,41,138}
+\definecolor{color4}{RGB}{117,112,179}
+\definecolor{color5}{RGB}{27,158,119}
+\definecolor{color6}{RGB}{102,166,30}
+\definecolor{color7}{RGB}{230,171,2}
+
+\begin{document}
+\begin{tikzpicture}
+  \begin{semilogxaxis}[
+    clip mode=individual,
+    xmin=6e4,
+    xmax=1.5e6,
+    ymin=-2.5,
+    ymax=10,
+    enlargelimits=false,
+    axis on top=true,
+    xlabel=$\text{Re}_i$,
+    ylabel=$\text{DR}$,
+    y unit=\si{\percent},
+    %legend pos=north east,
+    legend style={draw=none, 
+                  font=\scriptsize,
+                  fill=none,
+    },
+    legend style={at={(0.93, 1.03)}, anchor=north east},
+    legend cell align=left,
+    %reverse legend,
+    width = 6.2cm,
+    height = 5.0cm,
+    ylabel near ticks,
+    minor ytick={-1,0,1,2,3,4,5,6,7,8,9},
+    xtick pos=left,
+  ]
+
+  %\addplot+[
+      %color=color1,
+      %mark=none,
+      %very thick,
+    %line join = round,
+   %] table [
+    %x = rei,
+    %y = dr,
+    %col sep=comma,
+%] {../../../Measurements/Torque/Data/b2_glycerol=50.0_alpha=0.5.csv};
+%\addlegendentryexpanded{$\alpha=\SI{0.5}{\percent}$}
+
+   %\addplot+[
+       %color=color3,
+      %mark=none,
+      %very thick,
+    %line join = round,
+   %] table [
+    %x = rei,
+    %y = dr,
+    %col sep=comma
+%] {../../../Measurements/Torque/Data/b3_glycerol=50.0_alpha=1.0.csv};
+%\addlegendentryexpanded{$\alpha=\SI{1.0}{\percent}$}
+
+  %\addplot+[
+      %color=color4,
+      %mark=none,
+      %very thick,
+    %line join = round,
+   %] table [
+    %x = rei,
+    %y = dr,
+    %col sep=comma
+%] {../../../Measurements/Torque/Data/b4_glycerol=50.0_alpha=1.5.csv};
+%\addlegendentryexpanded{$\alpha=\SI{1.5}{\percent}$}
+
+  %\addplot+[
+      %color=color6,
+      %mark=none,
+      %very thick,
+    %line join = round,
+   %] table [
+    %x = rei,
+    %y = dr,
+    %col sep=comma
+%] {../../../Measurements/Torque/Data/b5_glycerol=50.0_alpha=1.8.csv};
+%\addlegendentryexpanded{$\alpha=\SI{1.8}{\percent}$}
+
+  %\addplot+[
+    %color = black,
+    %mark = none,
+    %very thick,
+    %line join = round,
+    %%forget plot,
+   %] table [
+    %x = rei,
+    %y = dr,
+    %col sep=comma
+%] {7_glycerol=14.0_alpha=2_size=1.5_avg.csv};
+%\addlegendentryexpanded{$\SI{1.5}{\milli\metre}/ \SI{2}{\percent}$}
+
+%\node at (axis cs:1.3e11, 0.6) {(b)};
+
+ \end{semilogxaxis}
+
+ %\begin{loglogaxis}[
+    %clip mode=individual,
+    %xmin=62925.0061319311, xmax=363297.69229029294,
+    %ymin=0.0038,ymax=0.0053,
+    %axis y line*=none,
+    %enlargelimits=false,
+    %axis on top=true,
+    %xlabel=$\text{Re}_\text{i}$,
+    %width = 6.2cm,
+    %height = 5.0cm,
+    %ylabel near ticks, 
+    %ytick={100,200,300,400,500,600},
+    %yticklabel={
+      %\pgfkeys{/pgf/fpu=true}
+      %\pgfmathparse{exp(\tick)}%
+      %\pgfmathprintnumber[fixed relative, precision=3]{\pgfmathresult}
+      %\pgfkeys{/pgf/fpu=false}
+    %},
+    %axis x line*=top,
+    %x label style={
+        %at={(0.5,1.25)},
+        %anchor=south,
+    %},
+    %xtick pos=right,
+    %xtick={7e4, 1e5, 2e5, 3e5},
+    %xticklabels={0.7, 1.0, 2.0, 3.0},
+    %minor xtick={7e4, 8e4, 9e4, 1e5, 2e5, 3e5},
+  %]
+  %\node at (axis cs: 3.3e5, 0.00563) {$\times 10^5$};
+ %\end{loglogaxis}
+
+ 
+\end{tikzpicture} 
+\end{document}

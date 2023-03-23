@@ -1,0 +1,274 @@
+\documentclass[tikz,border=5pt]{standalone}
+\usepackage{pgfplots}
+\usepackage{amsmath}
+\usepackage{siunitx}
+
+\usepgfplotslibrary{units}
+
+% Setup colorbrewer cycle list
+\usetikzlibrary{
+      pgfplots.colorbrewer,
+  }
+
+\definecolor{color1}{RGB}{255,0,0}
+\definecolor{color2}{RGB}{233,0,21}
+\definecolor{color3}{RGB}{212,0,42}
+\definecolor{color4}{RGB}{191,0,63}
+\definecolor{color5}{RGB}{170,0,85}
+\definecolor{color6}{RGB}{148,0,106}
+\definecolor{color7}{RGB}{127,0,127}
+\definecolor{color8}{RGB}{106,0,148}
+\definecolor{color9}{RGB}{85,0,170}
+\definecolor{color10}{RGB}{63,0,191}
+\definecolor{color11}{RGB}{42,0,212}
+\definecolor{color12}{RGB}{21,0,233}
+\definecolor{color13}{RGB}{0,0,255}
+
+\pgfplotsset{
+    colormap={redtoblue}%
+    {
+        color=(color1) color=(color2) color=(color3) color=(color4)
+        color=(color5) color=(color6) color=(color7) color=(color8)
+        color=(color9) color=(color10) color=(color11) color=(color12)
+        color=(color13)
+    },
+    compat=1.13
+}
+
+\begin{document}
+\begin{tikzpicture}
+ \begin{semilogxaxis}[
+    clip mode=individual,
+    xmin=4e4, xmax=2.2e6,
+    ymin=0, ymax=0.08,
+    enlargelimits=false,
+    axis on top=true,
+    xlabel=$\text{Re}_\text{i}$,
+    ylabel=$\text{G} \text{Re}_\text{i}^{-1.80}$,
+    legend pos=north west,
+    legend style={draw=none, 
+                  font=\footnotesize,
+                  fill=none,
+                 },
+    legend columns=1,
+    % transpose legend,
+    %legend style={at={(1, 1)}, anchor=north east},
+    legend cell align=left,
+    width = 6.2cm,
+    height = 5.7cm,
+    ylabel near ticks,
+    point meta min = 0,
+    point meta max = 13,
+    colorbar as palette,
+    colorbar style={%
+      samples=13,
+      xlabel = $\alpha$,
+      xlabel style={at={(axis cs:1,-1.6)},anchor=south},
+      %xlabel style={at={(axis cs:3.5,3.5)},rotate=90,anchor=south},
+      % ylabel={$\text{Re}_i$},
+      ytick={.5, 1.5, 2.5, 3.5, 4.5, 5.5, 6.5, 7.5, 8.5, 9.5, 10.5, 11.5,
+            12.5, 13.5},
+      yticklabels={0.00, 0.05, 0.10, 0.20, 0.30, 0.40, 0.50, 0.60, 0.70, 0.80,
+                    0.90, 0.95, 1.00},
+    },
+  ]
+
+  \addplot+[
+    only marks,
+    mark=o,
+    mark options={
+      solid,
+      thick
+    },
+    color=color1,
+   ] table [
+       x = rei,
+       y = grei,
+    col sep=comma,
+   ] {a1_alpha=0_linear.csv};
+   %\addlegendentryexpaded{$\alpha=0.00$}
+
+  \addplot+[
+    only marks,
+    mark=o,
+    mark options={
+      solid,
+      thick
+    },
+    color=color2,
+   ] table [
+       x = rei,
+       y = grei,
+    col sep=comma,
+   ] {a2_alpha=5_linear.csv};
+   %\addlegendentryexpanded{$\alpha=0.05$}
+
+  \addplot+[
+    only marks,
+    mark=o,
+    mark options={
+      solid,
+      thick
+    },
+    color=color3,
+   ] table [
+       x = rei,
+       y = grei,
+    col sep=comma,
+   ] {a3_alpha=10_linear.csv};
+   %\addlegendentryexpaded{$\alpha=0.00$}
+
+  \addplot+[
+    only marks,
+    mark=o,
+    mark options={
+      solid,
+      thick
+    },
+    color=color4,
+   ] table [
+       x = rei,
+       y = grei,
+    col sep=comma,
+   ] {a4_alpha=20_linear.csv};
+   %\addlegendentryexpanded{$\alpha=0.05$}
+
+  \addplot+[
+    only marks,
+    mark=o,
+    mark options={
+      solid,
+      thick
+    },
+    color=color5,
+   ] table [
+       x = rei,
+       y = grei,
+    col sep=comma,
+   ] {a5_alpha=30_linear.csv};
+   %\addlegendentryexpaded{$\alpha=0.00$}
+
+  \addplot+[
+    only marks,
+    mark=o,
+    mark options={
+      solid,
+      thick
+    },
+    color=color6,
+   ] table [
+       x = rei,
+       y = grei,
+    col sep=comma,
+   ] {a6_alpha=40_linear.csv};
+   %\addlegendentryexpanded{$\alpha=0.05$}
+
+  \addplot+[
+    only marks,
+    mark=o,
+    mark options={
+      solid,
+      thick
+    },
+    color=color7,
+   ] table [
+       x = rei,
+       y = grei,
+    col sep=comma,
+    ] {a7_alpha=50_linear.csv};
+   %\addlegendentryexpaded{$\alpha=0.00$}
+
+  \addplot+[
+    only marks,
+    mark=o,
+    mark options={
+      solid,
+      thick
+    },
+    color=color8,
+   ] table [
+       x = rei,
+       y = grei,
+    col sep=comma,
+   ] {a8_alpha=60_linear.csv};
+   %\addlegendentryexpanded{$\alpha=0.05$}
+
+  \addplot+[
+    only marks,
+    mark=o,
+    mark options={
+      solid,
+      thick
+    },
+    color=color9,
+   ] table [
+       x = rei,
+       y = grei,
+    col sep=comma,
+   ] {a9_alpha=70_linear.csv};
+   %\addlegendentryexpanded{$\alpha=0.05$}
+
+  \addplot+[
+    only marks,
+    mark=o,
+    mark options={
+      solid,
+      thick
+    },
+    color=color10,
+   ] table [
+       x = rei,
+       y = grei,
+    col sep=comma,
+   ] {a10_alpha=80_linear.csv};
+   %\addlegendentryexpaded{$\alpha=0.00$}
+
+  \addplot+[
+    only marks,
+    mark=o,
+    mark options={
+      solid,
+      thick
+    },
+    color=color11,
+   ] table [
+       x = rei,
+       y = grei,
+    col sep=comma,
+   ] {a11_alpha=90_linear.csv};
+   %\addlegendentryexpanded{$\alpha=0.05$}
+
+  \addplot+[
+    only marks,
+    mark=o,
+    mark options={
+      solid,
+      thick
+    },
+    color=color12,
+   ] table [
+       x = rei,
+       y = grei,
+    col sep=comma,
+    ] {a12_alpha=95_linear.csv};
+   %\addlegendentryexpaded{$\alpha=0.00$}
+
+  \addplot+[
+    only marks,
+    mark=o,
+    mark options={
+      solid,
+      thick
+    },
+    color=color13,
+   ] table [
+       x = rei,
+       y = grei,
+    col sep=comma,
+   ] {a13_alpha=100_linear.csv};
+   %\addlegendentryexpanded{$\alpha=0.05$}
+
+  \end{semilogxaxis}
+ \end{tikzpicture} 
+\end{document}
+

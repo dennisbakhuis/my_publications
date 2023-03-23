@@ -1,0 +1,228 @@
+% arara: pdflatex
+
+\documentclass[tikz,border=5pt]{standalone}
+\usepackage{pgfplots}
+\usepackage{amsmath}
+\usepackage{siunitx}
+
+\usepgfplotslibrary{units}
+\usepgfplotslibrary{fillbetween}
+
+% original colors
+\definecolor{color1}{RGB}{166,118,29}
+\definecolor{color2}{RGB}{217,95,2}
+\definecolor{color3}{RGB}{231,41,138}
+\definecolor{color4}{RGB}{117,112,179}
+\definecolor{color5}{RGB}{27,158,119}
+\definecolor{color6}{RGB}{102,166,30}
+\definecolor{color7}{RGB}{230,171,2}
+
+% more colors
+\definecolor{color8}{RGB}{173,216,230} % light blue
+\definecolor{color9}{RGB}{0,0,255} % blue
+\definecolor{color10}{RGB}{255,0,0} % blue
+
+\definecolor{seq1}{RGB}{186,228,188}
+\definecolor{seq2}{RGB}{123,204,196}
+\definecolor{seq3}{RGB}{67,162,202}
+\definecolor{seq4}{RGB}{8,104,172}
+
+\definecolor{seqa}{RGB}{204,235,197}
+\definecolor{seqb}{RGB}{165,218,181}
+\definecolor{seqc}{RGB}{123,204,196}
+\definecolor{seqd}{RGB}{67,162,202}
+\definecolor{seqe}{RGB}{8,104,172}
+
+\definecolor{oppo}{RGB}{188,93,53}
+\definecolor{oppo}{RGB}{253,204,138}
+\definecolor{oppo}{RGB}{252,141,89}
+\definecolor{darkorange}{rgb}{1.0, 0.55, 0.0}
+
+\begin{document}
+\begin{tikzpicture}
+
+% width is 8.64cm
+\newcommand{\figwidth}{8.64cm}
+\newcommand{\figheight}{4.80cm}
+\newcommand{\goldenratio}{1.618033988749895} 
+
+% \newcommand{\axiswidth}{6.96cm} 
+\newcommand{\axiswidth}{7.80cm} 
+% \newcommand{\axisheight}{\axiswidth / \goldenratio} 
+\newcommand{\axisheight}{4.30cm} 
+
+\newcommand{\xstart}{0.92cm} 
+\newcommand{\ystart}{0.56cm} 
+
+\draw[use as bounding box, white] (0,0) rectangle (\figwidth,\figheight);    
+
+  % min/max area
+  \begin{axis}[
+    clip mode=individual,
+    xshift=\xstart,
+    yshift=\ystart,
+    xmin=0, xmax=1,
+    ymin=0, ymax=1,
+    enlargelimits=false,
+    axis on top=true,
+    legend style={draw=none, 
+                  font=\normalsize,
+                  fill=none,
+    },
+    legend style={at={(0.50, 0.80)}, anchor=north west},
+    legend cell align=left,
+    legend columns=1, 
+    width = \axiswidth,
+    height = \axisheight,
+    scale only axis,
+    ylabel near ticks,
+    xlabel near ticks,
+    stack plots=y,smooth, no marks,
+  ]
+  \addlegendimage{draw=seq3, fill=seq2, area legend, fill opacity=0.4, draw
+  opacity=0.4}
+  \addlegendentryexpanded{$\left[ \min \text{v}_\theta, \max \text{v}_\theta \right]$}
+    
+  \addplot+[
+    line join=round,
+    draw=seq3,
+    draw opacity=0.4,
+    line width=0.1mm,
+   ] table [
+        x = r,
+        y = umin,
+        col sep=comma,
+   ] {velocitydata.csv};
+  \addplot+[
+    line join=round,
+    fill=seq2,
+    fill opacity=0.4,
+    draw opacity=0.4,
+    draw=seq3,
+    line width=0.1mm,
+   ] table [
+        x = r,
+        y expr = \thisrow{umax} - \thisrow{umin},
+        col sep=comma,
+   ] {velocitydata.csv}\closedcycle;
+  \end{axis}
+    
+  % std dev area
+  \begin{axis}[
+    clip mode=individual,
+    xshift=\xstart,
+    yshift=\ystart,
+    xmin=0, xmax=1,
+    ymin=0, ymax=1,
+    enlargelimits=false,
+    axis on top=true,
+    legend style={draw=none, 
+                  font=\normalsize,
+                  fill=none,
+    },
+    legend style={at={(0.50, 0.90)}, anchor=north west},
+    legend cell align=left,
+    legend columns=1, 
+    width = \axiswidth,
+    height = \axisheight,
+    scale only axis,
+    ylabel near ticks,
+    xlabel near ticks,
+    stack plots=y,smooth,
+  ]
+  \addlegendimage{draw=seq4, fill=seq3, area legend, fill opacity=0.4, draw
+  opacity=0.4}
+  \addlegendentryexpanded{$\left< \text{v}_\theta \right> \pm \sigma$}
+  \addplot+[
+    line join=round,
+    draw=seq4,
+    no marks,
+    draw opacity=0.4,
+    line width=0.1mm,
+   ] table [
+        x = r,
+        y = stdmin,
+        col sep=comma,
+   ] {velocitydata.csv};
+  \addplot+[
+    line join=round,
+    fill=seq3,
+    fill opacity=0.4,
+    draw opacity=0.4,
+    draw=seq4,
+    no marks,
+    line width=0.1mm,
+   ] table [
+        x = r,
+        y expr = \thisrow{stdmax} - \thisrow{stdmin},
+        col sep=comma,
+   ] {velocitydata.csv}\closedcycle;
+  \end{axis}
+
+  \begin{axis}[
+    clip mode=individual,
+    xshift=\xstart,
+    yshift=\ystart,
+    xmin=0, xmax=1,
+    ymin=0, ymax=1,
+    enlargelimits=false,
+    axis on top=true,
+    xlabel=$\tilde{r}$,
+    ylabel=$\text{v}_\theta/\text{u}_i$,
+    legend style={draw=none, 
+                  font=\normalsize,
+                  fill=none,
+    },
+    legend style={at={(0.50, 1.00)}, anchor=north west},
+    legend cell align=left,
+    legend columns=1, 
+    width = \axiswidth,
+    height = \axisheight,
+    scale only axis,
+    ylabel near ticks,
+    xlabel near ticks,
+    xlabel style={yshift=1mm},
+    ylabel style={yshift=-1mm},
+  ]
+
+  \addplot+[
+      color=seq4,
+      opacity=1,
+      mark=none,
+      very thick,
+    line join=round,
+   ] table [
+    x = r,
+    y = unorm,
+    col sep=comma,
+] {velocitydata.csv};
+\addlegendentryexpanded{$\left< \text{v}_\theta \right>$}
+
+  \addplot+[
+        color=color10,
+        mark=none,
+        densely dashed,
+        very thick,
+        line join=round,
+        forget plot,
+     ] table [
+      x = rnorm,
+      y = vtheta,
+      col sep=comma,
+  ] {SH_re1e6.csv};
+ \end{axis}
+
+\begin{scope}[
+    xshift=\xstart,
+    yshift=0.9cm
+]
+    \node at (0cm, 0cm) (1) {};
+    \node at (0.8cm, 0cm) (2) {};
+
+    \draw[red, dashed, very thick] (1) -- (2);
+    \path[black] (2) node[right=-1mm]{\normalsize $\text{u}_\theta /
+                \text{u}_i$ Huisman \emph{et al.} 2013};
+\end{scope}
+
+\end{tikzpicture} 
+\end{document}

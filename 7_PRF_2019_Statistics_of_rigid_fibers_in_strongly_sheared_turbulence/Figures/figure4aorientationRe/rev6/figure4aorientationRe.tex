@@ -1,0 +1,317 @@
+\documentclass[tikz,border=5pt]{standalone}
+\usepackage{pgfplots}
+\usepackage{amsmath}
+\usepackage{siunitx}
+\usepackage{xcolor}
+
+% original colors
+\definecolor{color1}{RGB}{166,118,29}
+\definecolor{color2}{RGB}{217,95,2}
+\definecolor{color3}{RGB}{231,41,138}
+\definecolor{color4}{RGB}{117,112,179}
+\definecolor{color5}{RGB}{27,158,119}
+\definecolor{color6}{RGB}{102,166,30}
+\definecolor{color7}{RGB}{230,171,2}
+
+% darkend first colors
+\definecolor{color1a}{RGB}{116,68,0}
+\definecolor{color3a}{RGB}{181,0,88}
+\definecolor{color4a}{RGB}{67,62,119}
+\definecolor{color6a}{RGB}{52,116,0}
+
+% lightend second colors
+\definecolor{color1b}{RGB}{216,168,79}
+\definecolor{color3b}{RGB}{255,91,188}
+\definecolor{color4b}{RGB}{167,162,229}
+\definecolor{color6b}{RGB}{152,216,80}
+
+\definecolor{seq1}{RGB}{186,228,188}
+\definecolor{seq2}{RGB}{123,204,196}
+\definecolor{seq3}{RGB}{67,162,202}
+\definecolor{seq4}{RGB}{8,104,172}
+
+% color symbols
+\pgfkeys{
+ /pgfplots/colorboxtitle/.style={%
+  /pgfplots/legend image code/.code={%
+      \node [rotate=90, anchor=south] at (2.0mm , 0mm) {\normalsize
+          $\alpha=\SI{0.025}{\percent}$};
+      \node [rotate=90, anchor=south] at (5.00mm , 0mm) {\normalsize 
+          $\alpha=\SI{0.050}{\percent}$};
+      \node [rotate=90, anchor=south] at (8.00mm , 0mm) {\normalsize 
+          $\alpha=\SI{0.100}{\percent}$};
+  },%
+ },
+}
+\pgfkeys{
+ /pgfplots/colorboxdark/.style={%
+  /pgfplots/legend image code/.code={%
+      \fill[color3a] (-1.00mm,-1.00mm) rectangle (1.00mm,1.00mm);
+      \fill[color4a] (2.00mm,-1.00mm) rectangle (4.00mm,1.00mm);
+      \fill[color6a] (5.00mm,-1.00mm) rectangle (7.00mm,1.00mm);
+  },%
+ },
+}
+\pgfkeys{
+ /pgfplots/colorboxmiddle/.style={%
+  /pgfplots/legend image code/.code={%
+      \fill[color3] (-1.00mm,-1.00mm) rectangle (1.00mm,1.00mm);
+      \fill[color4] (2.00mm,-1.00mm) rectangle (4.00mm,1.00mm);
+      \fill[color6] (5.00mm,-1.00mm) rectangle (7.00mm,1.00mm);
+  },%
+ },
+}
+\pgfkeys{
+ /pgfplots/colorboxlight/.style={%
+  /pgfplots/legend image code/.code={%
+      \fill[color3b] (-1.00mm,-1.00mm) rectangle (1.00mm,1.00mm);
+      \fill[color4b] (2.00mm,-1.00mm) rectangle (4.00mm,1.00mm);
+      \fill[color6b] (5.00mm,-1.00mm) rectangle (7.00mm,1.00mm);
+  },%
+ },
+}
+
+\begin{document}
+\begin{tikzpicture}
+  [
+    rec0/.style={shade,
+                rectangle,
+                minimum width=6mm,
+                minimum height=2.00mm,
+                inner sep=0pt,
+                outer sep=0pt,
+                top color=gray!60!white,
+                bottom color=gray!30!white,
+                draw=black, 
+                very thin},
+    rec45/.style={shade,
+                rectangle,
+                rotate=45,
+                minimum width=6mm,
+                minimum height=2mm,
+                inner sep=0pt,
+                outer sep=0pt,
+                top color=gray!60!white,
+                bottom color=gray!30!white,
+                draw=black, 
+                very thin},
+    rec45r/.style={shade,
+                rectangle,
+                rotate=-45,
+                minimum width=6mm,
+                minimum height=2mm,
+                inner sep=0pt,
+                outer sep=0pt,
+                top color=gray!60!white,
+                bottom color=gray!30!white,
+                draw=black, 
+                very thin},
+    rec90/.style={shade,
+                rectangle,
+                rotate=90,
+                minimum width=6mm,
+                minimum height=2mm,
+                inner sep=0pt,
+                outer sep=0pt,
+                top color=gray!60!white,
+                bottom color=gray!30!white,
+                draw=black, 
+                very thin}
+  ]
+% width is 8.64cm
+\newcommand{\figwidth}{8.64cm}
+\newcommand{\figheight}{5.33cm} % Golden ratio
+
+\draw[use as bounding box, white] (0,0) rectangle (\figwidth,\figheight);
+  
+  \begin{axis}[
+    xshift=1.2cm,
+    yshift=0.85cm,
+    clip mode=individual,
+    xmin=-90, xmax=90,
+    ymin=0,
+    ymax=0.49,
+    enlargelimits=false,
+    axis on top=false,
+    xlabel=$\theta_p$,
+    ylabel=$\text{PDF}(\theta_p)$,
+    legend style={draw=none, 
+                  font=\normalsize,
+                  fill=none,
+                  row sep=-0.9mm,
+    },
+    legend plot pos=left,
+    legend style={at={(axis cs: -80, 0.01)}, anchor=south west},
+    legend cell align=left,
+    %reverse legend,
+    width = \figwidth,
+    height = 1.15*\figheight,
+    ylabel near ticks,
+    xtick={-90, -45, 0, 45, 90},
+    xticklabels={\ang{-90}, \ang{-45}, \ang{0}, \ang{45}, \ang{90}},
+    minor ytick={0.1, 0.3},
+    minor xtick={-75, -60, -30, -15, 15, 30, 60, 75}
+  ]
+
+  % legend
+  \addlegendimage{colorboxtitle}
+  \addlegendentryexpanded{ }
+  \addlegendimage{colorboxdark}
+  \addlegendentryexpanded{$\text{Re}_i=\num{2.5e5}$}
+  \addlegendimage{colorboxmiddle}
+  \addlegendentryexpanded{$\text{Re}_i=\num{1.7e5}$}
+  \addlegendimage{colorboxlight}
+  \addlegendentryexpanded{$\text{Re}_i=\num{8.3e4}$}
+  
+  \addplot[
+    forget plot,
+    mark=none,
+    black,
+    thick,
+    dashed] coordinates {(0,0.22) (58,0.22)};
+
+  \addplot[
+    forget plot,
+    mark=none,
+    black,
+    thick,
+    dashed] coordinates {(-90,0.42) (20,0.42)};
+
+  \addplot+[
+    color=color4b,
+    mark=none,
+    very thick,
+    line join=round,
+   ] table [
+    x = bins,
+    %y = hist,
+    y expr = \thisrow{hist} * (180/3.14159265359),
+    col sep=comma,
+] {orientation_0.005_8.27e+04.csv};
+%\addlegendentryexpanded{$\alpha=\SI{0.05}{\percent}$, Re$_i = \num{8.3e4}$}
+
+  \addplot+[
+    color=color4,
+    mark=none,
+    very thick,
+    line join=round,
+   ] table [
+    x = bins,
+    %y = hist,
+    y expr = \thisrow{hist} * (180/3.14159265359),
+    col sep=comma,
+] {orientation_0.005_1.65e+05.csv};
+%\addlegendentryexpanded{$\alpha=\SI{0.05}{\percent}$, Re$_i = \num{1.7e5}$}
+
+  \addplot+[
+    color=color4a,
+    mark=none,
+    very thick,
+    line join=round,
+   ] table [
+    x = bins,
+    %y = hist,
+    y expr = \thisrow{hist} * (180/3.14159265359),
+    col sep=comma,
+] {orientation_0.005_2.48e+05.csv};
+%\addlegendentryexpanded{$\alpha=\SI{0.05}{\percent}$, Re$_i = \num{2.5e5}$}
+
+  \addplot+[
+    color=color3b,
+    mark=none,
+    very thick,
+    line join=round,
+   ] table [
+    x = bins,
+    %y = hist,
+    y expr = \thisrow{hist} * (180/3.14159265359),
+    col sep=comma,
+] {orientation_0.0025_8.27e+04.csv};
+%\addlegendentryexpanded{$\alpha=\SI{0.025}{\percent}$, Re$_i = \num{8.3e4}$}
+
+  \addplot+[
+    color=color3,
+    mark=none,
+    very thick,
+    line join=round,
+   ] table [
+    x = bins,
+    %y = hist,
+    y expr = \thisrow{hist} * (180/3.14159265359),
+    col sep=comma,
+] {orientation_0.0025_1.65e+05.csv};
+%\addlegendentryexpanded{$\alpha=\SI{0.025}{\percent}$, Re$_i = \num{1.7e5}$}
+
+  \addplot+[
+    color=color3a,
+    mark=none,
+    very thick,
+    line join=round,
+    solid,
+   ] table [
+    x = bins,
+    %y = hist,
+    y expr = \thisrow{hist} * (180/3.14159265359),
+    col sep=comma,
+] {orientation_0.0025_2.48e+05.csv};
+%\addlegendentryexpanded{$\alpha=\SI{0.025}{\percent}$, Re$_i = \num{2.5e5}$}
+
+  \addplot+[
+    color=color6b,
+    mark=none,
+    very thick,
+    line join=round,
+    solid,
+   ] table [
+    x = bins,
+    %y = hist,
+    y expr = \thisrow{hist} * (180/3.14159265359),
+    col sep=comma,
+] {orientation_0.01_8.27e+04.csv};
+%\addlegendentryexpanded{$\alpha=\SI{0.025}{\percent}$, Re$_i = \num{8.3e4}$}
+
+  \addplot+[
+    color=color6,
+    mark=none,
+    very thick,
+    line join=round,
+    solid,
+   ] table [
+    x = bins,
+    %y = hist,
+    y expr = \thisrow{hist} * (180/3.14159265359),
+    col sep=comma,
+    ] {orientation_0.01_1.65e+05.csv};
+%\addlegendentryexpanded{$\alpha=\SI{0.025}{\percent}$, Re$_i = \num{1.7e5}$}
+
+  \addplot+[
+    color=color6a,
+    mark=none,
+    very thick,
+    line join=round,
+    solid,
+   ] table [
+    x = bins,
+    %y = hist,
+    y expr = \thisrow{hist} * (180/3.14159265359),
+    col sep=comma,
+    ] {orientation_0.01_2.48e+05.csv};
+%\addlegendentryexpanded{$\alpha=\SI{0.025}{\percent}$, Re$_i = \num{1.7e5}$}
+
+  % Plot reference particles
+  \path (axis cs: 0,   0.465) coordinate[rec0];  
+  \path (axis cs: 45,  0.465) coordinate[rec45];  
+  \path (axis cs: -45, 0.465) coordinate[rec45r];  
+  \path (axis cs: -90, 0.465) coordinate[rec90];  
+  \path (axis cs: 90,  0.465) coordinate[rec90];  
+
+  \draw[black, <->, very thick, >=stealth] (axis cs: 10, 0.22) -- (axis cs:
+  10, 0.42);
+  \node[black] at (axis cs: 25, 0.325) {$\sim 40\%$};
+
+ \end{axis}
+
+\node at (-0.9, 3.2) {(a)};
+
+\end{tikzpicture} 
+\end{document}

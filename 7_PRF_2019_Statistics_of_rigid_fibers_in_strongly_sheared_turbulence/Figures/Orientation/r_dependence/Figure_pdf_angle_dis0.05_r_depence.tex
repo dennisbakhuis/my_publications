@@ -1,0 +1,93 @@
+\documentclass[tikz,border=5pt]{standalone}
+\usepackage{pgfplots}
+\usepackage{amsmath}
+\usepackage{siunitx}
+\usepackage{xcolor}
+
+% original colors
+\definecolor{color1}{RGB}{166,118,29}
+\definecolor{color2}{RGB}{217,95,2}
+\definecolor{color3}{RGB}{231,41,138}
+\definecolor{color4}{RGB}{117,112,179}
+\definecolor{color5}{RGB}{27,158,119}
+\definecolor{color6}{RGB}{102,166,30}
+\definecolor{color7}{RGB}{230,171,2}
+
+
+\begin{document}
+\begin{tikzpicture}
+  \begin{axis}[
+    clip mode=individual,
+    xmin=-90, xmax=90,
+    ymin=0,
+    ymax=0.0075,
+    enlargelimits=false,
+    axis on top=true,
+    xlabel=$\theta_p$,
+    ylabel=$\text{PDF}(\theta_p)$,
+    %legend pos=south east,
+    legend style={draw=none, 
+                  font=\scriptsize,
+                  fill=none,
+    },
+    legend style={at={(0, 0)}, anchor=south west},
+    legend cell align=left,
+    %reverse legend,
+    width = 6.2cm,
+    height = 5.7cm,
+    ylabel near ticks,
+    xtick={-90, -45, 0, 45, 90}
+  ]
+
+  \addplot+[
+    color=color1,
+    mark=none,
+    very thick,
+    line join=round,
+   ] table [
+    x = bins,
+    y = hist,
+    col sep=comma,
+] {orientation_0.1-0.3_0.005_2.48e+05.csv};
+\addlegendentryexpanded{$0.1 < r \leq 0.3$}
+
+  \addplot+[
+    color=color3,
+    mark=none,
+    very thick,
+    line join=round,
+   ] table [
+    x = bins,
+    y = hist,
+    col sep=comma,
+] {orientation_0.3-0.5_0.005_2.48e+05.csv};
+\addlegendentryexpanded{$0.3 < r \leq 0.5$}
+
+  \addplot+[
+    color=color5,
+    mark=none,
+    very thick,
+    line join=round,
+   ] table [
+    x = bins,
+    y = hist,
+    col sep=comma,
+] {orientation_0.5-0.7_0.005_2.48e+05.csv};
+\addlegendentryexpanded{$0.5 < r \leq 0.7$}
+
+  \addplot+[
+    color=color7,
+    mark=none,
+    very thick,
+    line join=round,
+   ] table [
+    x = bins,
+    y = hist,
+    col sep=comma,
+] {orientation_0.7-0.9_0.005_2.48e+05.csv};
+\addlegendentryexpanded{$0.7 < r \leq 0.9$}
+
+ \end{axis}
+ 
+\end{tikzpicture} 
+\end{document}

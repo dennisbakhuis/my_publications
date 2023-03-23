@@ -1,0 +1,35 @@
+%%%%%%%%%%%%%%%%%%%%%%
+%%% Chapter header %%%
+%%%%%%%%%%%%%%%%%%%%%%
+\globalcolor{ChapterText}
+\chapter[\mychaptershorttitle]{%
+    \mychaptertitle%
+    \ifdefined\starwarsfootnotes
+        \textsuperscript{%
+            \hspace{-1mm}%
+            \includegraphics[height=\swsymsize]{\mychaptericon}%
+        }%
+        \blfootnote{%
+            \textcolor{footnotetextcolor}{%
+                \textsf{%
+                    \vspace{0.5mm}\hspace{-1mm}%
+                    \includegraphics[height=\swfnsymsize]{\mychaptericon}%
+                    \hspace{0.5mm}%
+                    Based on: \mychapterauthors%
+                }
+            }
+        }
+    \else
+        \footnote{\textsf{%
+             Based on: \mychapterauthors%
+        }}%
+    \fi
+}
+\pagecolor{ChapterBackground}
+\afterpage{\pagecolor{White}\globalcolor{Black}} 
+\label{\mychapterlabel}
+\chaptermark{\mychaptermark}
+\noindent\rule{\textwidth}{0.4pt}%
+\vspace{0.2cm}
+\noindent\textsf{\mychapterabstract}
+\clearpage

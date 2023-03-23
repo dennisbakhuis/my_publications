@@ -1,0 +1,6 @@
+#!/bin/bash
+# convert is from the imagemagick package
+for fn in fig*.pdf
+do
+pdftops -eps $fn $(echo $fn | cut -f 1 -d '.').eps
+done
